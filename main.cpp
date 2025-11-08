@@ -1,12 +1,11 @@
 /*******************************************************************************
 Chocoholics CS314 Program
-Names: Sonia Nath,
+Names: Sonia Nath, Yollaine Brooks, 
 Description of Program: 
 *********************************************************************************/
 
 
 #include <iostream>
-#include <string>
 using namespace std;
 
 
