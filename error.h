@@ -5,9 +5,14 @@ Description of Program:
 *********************************************************************************/
 
 
-// Error while parsing provider directory
-struct ServiceParseFailure
+// No entity found in the database
+struct NoEntityFound
 {
 	string msg;
 };
 
+// error while parsing files into database
+struct FileParseError
+{
+	string msg;
+};
