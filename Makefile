@@ -1,2 +1,4 @@
-CC=gcc
+CC=g++
+CPPFLAGS= -g -Wall 
 
+PROGRAMS=

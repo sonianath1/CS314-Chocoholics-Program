@@ -1,8 +1,8 @@
 /*******************************************************************************
-Chocoholics CS314 Program: Database Interface
+  Chocoholics CS314 Program: Database Interface
 Names: Yollaine Brooks, 
 Description of Program: 
-*********************************************************************************/
+ *********************************************************************************/
 
 #include <fstream>
 #include "entities.h"
@@ -42,7 +42,7 @@ class Database
 {
 	public:
 		Database(int size_members = 10, int size_providers = 10, 
-			     int size_prov_dir = 10);							// constructor
+				int size_prov_dir = 10);							// constructor
 		~Database()													// destructor
 		void load_data();											// load data from file
 		void add_member(Member &);									// add member to the member table
@@ -73,4 +73,3 @@ class Database
 		std::vector<ProvidedService> ProvidedServices;	// vector of provided services
 
 };
-

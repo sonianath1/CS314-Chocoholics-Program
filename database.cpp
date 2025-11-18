@@ -5,43 +5,54 @@ Names: Sonia Nath, Yollaine Brooks,
 Description of Program:
 *********************************************************************************/
 
+// Sonia
 Database::Database(int size_members, int size_providers, int size_prov_dir)
 {
 
 }
 
+//Sonia
 Database::~Database()
 {
 }
 
+
+// Sonia
 void Database::load_data()
 {
 }
 
+// Sonia
 void Database::add_member(Member &)
 {
 }
 
+// Sonia
 void Database::update_member(int member_number)
 {
 }
 
+//Sonia
 void Database::delete_member(int member_number)
 {
 }
 
+// Sonia
 void Database::add_provider(Provider &)
 {
 }
 
+//Sonia
 void Database::update_provider(int provider_number)
 {
 }
 
+//Sonia
 void Database::delete_provider(int provider_number)
 {
 }
 
+// Sonia
 void Database::record_provided_service(ProvidedService &)
 {
 }
