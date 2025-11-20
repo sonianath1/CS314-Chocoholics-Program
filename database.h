@@ -52,7 +52,7 @@ class Database
 		void update_provider(int provider_number);					// update specific provider based on number
 		void delete_provider(int provider_number);					// delete provider based on number
 		void record_provided_service(ProvidedService &);			// insert provided service into table
-		void get_service_data(int service_number, service & copy);	// service to get from Providerdirectory
+		void get_service_data(int service_number, Service & copy);	// service to get from Providerdirectory
 		void generate_weekly_report();								// create the manager's weekly report
 
 	private:

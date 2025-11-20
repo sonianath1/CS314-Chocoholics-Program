@@ -61,8 +61,10 @@ void Database::get_service_data(int service_number, service& copy)
 {
 }
 
+//olga
 void Database::generate_weekly_report()
 {
+
 }
 
 void Database::verify_member(int member_number)
@@ -80,6 +82,5 @@ void Database::verify_service(int service_number)
 void Database::hash_function(string &key_value)
 {
 }
-
 
 
