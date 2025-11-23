@@ -46,7 +46,7 @@ void Database::record_provided_service(ProvidedService &)
 {
 }
 
-void Database::get_service_data(int service_number, service& copy)
+void Database::get_service_data(int service_number, Service & copy)
 {
 }
 

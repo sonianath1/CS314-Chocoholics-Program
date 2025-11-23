@@ -43,7 +43,7 @@ class Database
 	public:
 		Database(int size_members = 10, int size_providers = 10, 
 			     int size_prov_dir = 10);							// constructor
-		~Database()													// destructor
+		~Database();												// destructor
 		void load_data();											// load data from file
 		void add_member(Member &);									// add member to the member table
 		void update_member(int member_number);						// update specific member based on number
@@ -52,7 +52,7 @@ class Database
 		void update_provider(int provider_number);					// update specific provider based on number
 		void delete_provider(int provider_number);					// delete provider based on number
 		void record_provided_service(ProvidedService &);			// insert provided service into table
-		void get_service_data(int service_number, service & copy);	// service to get from Providerdirectory
+		void get_service_data(int service_number, Service & copy);	// service to get from Providerdirectory
 		void generate_weekly_report();								// create the manager's weekly report
 
 	private:
