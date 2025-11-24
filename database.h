@@ -7,6 +7,7 @@ Description of Program:
 #include <fstream>
 #include "entities.h"
 #include "node.h"
+#include "error.h"
 
 // Service Struct
 // Holds data from the Provider directory
