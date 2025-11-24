@@ -29,6 +29,11 @@ class Entity
 		bool compare_number(int number_to_compare);	// compare entity number with incoming number
 		void update_data(Entity & to_copy);			// update entity data
 
+		// setters	
+		void set_name(const std::string & new_name) { name = new_name; }
+		void set_number(int new_number) { number = new_number; }
+		address & get_address() { return addr; }  // returns reference
+
 	private:
 		string name;		// 25 char max
 		int number;			// identifier, max 9 digits
@@ -42,7 +47,8 @@ class Member : public Entity
 	public:
 		Member();							// constructor
 		void update_data(Member & to_copy);	// update member data
-
+	
+		void set_status(const std::string & new_status) { status = new_status; } // setter 
 	private:
 		std::string status;					// Validated, Invalid Number, Member Suspended
 };

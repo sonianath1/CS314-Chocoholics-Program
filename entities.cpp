@@ -6,12 +6,12 @@ Entity::Entity()
 
 int Entity::get_number()
 {
-	return 0;
+	return number;
 }
 
 string & Entity::get_name()
 {
-	// TODO: insert return statement here
+	return name;
 }
 
 bool Entity::compare_number(int number_to_compare)
@@ -23,9 +23,7 @@ void Entity::update_data(Entity& to_copy)
 {
 }
 
-Member::Member()
-{
-}
+Member::Member(): status("") {}
 
 void Member::update_data(Member & to_copy)
 {

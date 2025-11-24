@@ -8,6 +8,13 @@ Description of Program:
 #include "entities.h"
 #include "node.h"
 
+const int NAME {31};
+const int STREET_ADDR {51};
+const int CITY {21};
+const int STATE {3};
+const int STATUS {11};
+
+
 // Service Struct
 // Holds data from the Provider directory
 struct Service
@@ -43,24 +50,35 @@ class Database
 	public:
 		Database(int size_members = 10, int size_providers = 10, 
 				int size_prov_dir = 10);							// constructor
-		~Database()													// destructor
-		void load_data();											// load data from file
+		~Database();													// destructor
+		bool load_member_data();										// load data from file
 		void add_member(Member &);									// add member to the member table
 		void update_member(int member_number);						// update specific member based on number
 		void delete_member(int member_number);						// delete member based on number
+		
+		bool load_provider_data();	
 		void add_provider(Provider &);								// add provider to the provider table
 		void update_provider(int provider_number);					// update specific provider based on number
 		void delete_provider(int provider_number);					// delete provider based on number
+		
+		bool load_provided_service_date();	
 		void record_provided_service(ProvidedService &);			// insert provided service into table
-		void get_service_data(int service_number, service & copy);	// service to get from Providerdirectory
+		void get_service_data(int service_number, Service & copy);	// service to get from Providerdirectory
 		void generate_weekly_report();								// create the manager's weekly report
+		void remove_all();
+	
 
 	private:
 		void verify_member(int member_number);		// verify that a member exists
 		void verify_provider(int provider_number);	// verify that a provider exists
 		void verify_service(int service_number);	// verify that a service exists
+		int hash_function(int key_value);		// has function 
 
-		void hash_function(string & key_value);		// has function 
+		// for the destructor	
+		void remove_all(node<Member> **Members);		// remove all nodes
+		void remove_all(node<Provider> **Providers);
+		void remove_all(node<Service> **ProviderDirectory);
+
 		node<Member> **Members;						// member hash table
 		int members_size;							// size of member hash table
 
