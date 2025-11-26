@@ -55,6 +55,7 @@ class Database
 		void record_provided_service(ProvidedService &);			// insert provided service into table
 		void get_service_data(int service_number, Service & copy);	// service to get from Providerdirectory
 		void generate_weekly_report();								// create the manager's weekly report
+        friend class DatabaseTest;                                  // friend database testing class
 
 	private:
 		void verify_member(int member_number);		// verify that a member exists
@@ -75,3 +76,17 @@ class Database
 
 };
 
+class DatabaseTest
+{
+    public:
+        void constructor_test();
+        void load_data_test();
+        void add_member_test();
+        void update_member_test();
+        void delete_member_test();
+        void add_provider_test();
+        void update_provider_test();
+        void record_provided_service_test();
+        void get_service_data_test();
+        void generate_weekly_report_test();
+};
