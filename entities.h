@@ -33,6 +33,7 @@ class Entity
 		void set_name(const std::string & new_name) { name = new_name; }
 		void set_number(int new_number) { number = new_number; }
 		address & get_address() { return addr; }  // returns reference
+		void display_all();
 
 	private:
 		string name;		// 25 char max
@@ -49,6 +50,7 @@ class Member : public Entity
 		void update_data(Member & to_copy);	// update member data
 
 		void set_status(const std::string & new_status) { status = new_status; } // setter 
+		void display_all();
 	private:
 		std::string status;					// Validated, Invalid Number, Member Suspended
 };
@@ -63,6 +65,7 @@ class Provider : public Entity
 		// for vector 
 		void add_service(int to_add) { services_provided.push_back(to_add); }
 		void clear_services() { services_provided.clear(); }
+		void display_all();
 
 	private:
 		std::vector<int> services_provided;		// Services the provider provides

@@ -417,6 +417,25 @@ void Database::record_provided_service(ProvidedService &to_add)
 	ProvidedServices.push_back(to_add);
 }
 
+
+
+
+
+void Database::display_members()
+{
+	display(Members,members_size);
+}
+void Database::display_providers()
+{
+	display(Providers,providers_size);
+
+}
+void Database::display_prov_dir()
+{
+	display(ProviderDirectory,prov_dir_size);
+}
+
+
 /******************** SONIA SECTION ********************/
 
 

@@ -8,13 +8,15 @@ Description of Program:
 #include <fstream>
 #include "entities.h"
 #include "node.h"
+using namespace std;
 
+/*
 const int NAME {31};
 const int STREET_ADDR {51};
 const int CITY {21};
 const int STATE {3};
 const int STATUS {11};
-
+*/
 
 // Service Struct
 // Holds data from the Provider directory
@@ -28,6 +30,7 @@ class Service
 		void set_name(std::string to_add) { name = to_add; }
 		void set_fee(float to_add) { fee = to_add; }
 		void set_code(int code_to_add) { number = code_to_add; }
+		void display_all() { cout << "\nName: " << name << endl; cout << "Number: " << number << endl; cout << "Fee: " << fee; }
 
 	private:
 		std::string name;	// name of the service (max size 20)
@@ -62,7 +65,7 @@ class Database
 		Database(int size_members = 10, int size_providers = 10, 
 				int size_prov_dir = 10);							// constructor
 		~Database();					// destructor
-	
+
 		// read in everything from file. call in menu before starting program
 		void read_from_file();
 
@@ -92,7 +95,10 @@ class Database
 
 		void generate_weekly_report();								// create the manager's weekly report
 		void remove_all();
-
+		
+		void display_members();
+		void display_providers();
+		void display_prov_dir();
 
 	private:
 		void verify_member(int member_number);		// verify that a member exists
@@ -117,6 +123,12 @@ class Database
 		template <typename TYPE>
 			TYPE *find(node<TYPE> *& head, int number_to_find);
 
+
+		template <typename TYPE>
+			void display(node<TYPE> **table, int table_size);
+
+		template <typename TYPE>
+			void display(node<TYPE> *head);
 
 		node<Member> **Members;						// member hash table
 		int members_size;							// size of member hash table
@@ -200,4 +212,22 @@ TYPE *Database::find(node<TYPE> *& head, int number_to_find)
 		return &(head->data); // need to return a * type 
 
 	return find(head->next, number_to_find);
+}
+
+	template <typename TYPE>
+void Database::display(node<TYPE> **table, int table_size)
+{
+	for (int i = 0; i < table_size; i++)
+		display(table[i]);
+}
+
+	template <typename TYPE>
+void Database::display(node<TYPE> *head)
+{
+	if (!head)
+		return;
+
+	head->data.display_all();
+	display(head->next);
+	return;
 }
