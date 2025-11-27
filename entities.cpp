@@ -81,9 +81,19 @@ void Provider::display_all()
 {
 	Entity::display_all();
 	cout << "Services provided: ";
-	for (int value : services_provided) 
-		cout << value << ",";
-	cout << "\n";	
+
+	// making sure that txt file does not have a last comma, instad newline
+	const vector<int>& servs = get_services();
+	int len = servs.size();
+
+	for (int i = 0; i < len; ++i)
+	{
+		cout << servs[i];
+		if (i < len - 1)
+			cout << ",";
+	}
+
+	cout << "\n";
 }
 
 void Provider::update_data(Provider& to_copy)

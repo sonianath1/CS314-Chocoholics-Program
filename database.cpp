@@ -14,17 +14,8 @@ Description of Program:
 
 /******************** SONIA SECTION ********************/
 
-/*
- *  node<Member> **Members;                                         // member hash table
- int members_size;                                                       // size of member hash table
 
- node<Provider> **Providers;                                     // provider hash table
- int providers_size;                                                     // size of provider hash table
 
-//std::vector<Service> ProviderDirectory
-node<Service> **ProviderDirectory;                      // provider directory hash table
-int prov_dir_size;
-*/
 // Constructor with arguments
 Database::Database(int size_members, int size_providers, int size_prov_dir)
 {
@@ -48,6 +39,8 @@ Database::Database(int size_members, int size_providers, int size_prov_dir)
 	read_from_file();
 	// vector for provided services is automattically intialized 
 }
+
+
 
 // Destructor
 Database::~Database()
@@ -73,8 +66,6 @@ void Database::read_from_file()
 	dir = load_provider_directory_data();
 	record = load_provided_service_data();
 
-	void write_to_file();
-
 	if (!mem || !pro || !dir || !record)
 		cerr << "\nerror." << endl;	
 }
@@ -83,14 +74,25 @@ void Database::read_from_file()
 
 void Database::write_to_file()
 {
+	bool mem, pro, dir, record;
 
+	mem = write_member_data();
+	pro = write_provider_data();
+	dir = write_provider_directory_data();
+	record = write_provided_service_data();
+
+	if (!mem || !pro || !dir || !record)
+		cerr << "\nerror." << endl;	
 }
+
+
 
 /***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************
  *
  *		     MEMBER DATA
  *
  * **************☆*: .｡. o(≧▽≦)o .｡.:*☆*************/
+
 
 
 // Loading data from database into hash 
@@ -161,11 +163,48 @@ bool Database::load_member_data()
 	return true;
 }
 
+
+
+// maybe ill implement this recursive if i cared that much
+bool Database::write_member_data()
+{
+	ofstream file_out("members.txt");
+	if (!file_out) 
+	{
+		cerr << "\ncould not open file.\n" << endl;
+		return false;
+	}
+
+
+	for (int i = 0; i < members_size; ++i)
+	{
+		node<Member>* current = Members[i];
+		while (current)
+		{
+			Member& mem_out = current->data;
+			file_out << mem_out.get_number() << "|"
+				<< mem_out.get_name() << "|"
+				<< mem_out.get_address().street_addr << "|"
+				<< mem_out.get_address().city << "|"
+				<< mem_out.get_address().state << "|"
+				<< mem_out.get_address().zip_code << "|"
+				<< mem_out.get_status() << "\n";
+
+			current = current->next;
+		}
+	}
+	return true;
+}
+
+
+
+
 // adding member to hash table
 void Database::add_member(Member & to_add)
 {	
 	add_to_table(Members, members_size, to_add);
 }
+
 
 
 void Database::update_member(int member_number)
@@ -178,16 +217,22 @@ void Database::update_member(int member_number)
 	}
 
 	cout << "\nUpdating member " << found->get_number() << "...\n";
-	
+
 	// need to implement menu portion for finding out which part 
 	// of the member the user wants to update.	
 	// Options: name, number, address(street_addr, city, state, zip code), status
 }
 
 
+
 // deleting member from hash table & DB
 void Database::delete_member(int member_number)
 {
+	bool result = find_and_remove(Members, members_size, member_number);
+	if (result)
+		cout << "\nMember " << member_number << " removed successfully." << endl;
+	else
+		cerr << "\nCould not find member " << member_number << endl;
 }
 
 
@@ -198,6 +243,8 @@ void Database::delete_member(int member_number)
  *		     PROVIDER DATA
  *
  * **************☆*: .｡. o(≧▽≦)o .｡.:*☆*************/
+
+
 
 
 // loading in provider data from file
@@ -273,6 +320,56 @@ bool Database::load_provider_data()
 }
 
 
+
+bool Database::write_provider_data()
+{
+	ofstream file_out("providers.txt");
+	if (!file_out) 
+	{
+		cerr << "\ncould not open file.\n" << endl;
+		return false;
+	}
+
+
+	for (int i = 0; i < providers_size; ++i)
+	{
+		node<Provider>* current = Providers[i];
+		while (current)
+		{
+			Provider& pro_out = current->data;
+			file_out << pro_out.get_number() << "|"
+				<< pro_out.get_name() << "|"
+				<< pro_out.get_address().street_addr << "|"
+				<< pro_out.get_address().city << "|"
+				<< pro_out.get_address().state << "|"
+				<< pro_out.get_address().zip_code << "|";
+
+			// making sure that txt file does not have a last comma, instad newline
+			const vector<int>& servs = pro_out.get_services();	
+			int len = servs.size();
+
+			for (int i = 0; i < len; ++i)
+			{
+				file_out << servs[i];
+				if (i < len - 1)
+					file_out << ",";	
+			}	
+
+			file_out << "\n";
+
+			/*			
+						(int value : services_provided)
+						file_out << value << ","*/
+
+			current = current->next;
+		}
+	}
+	return true;
+}
+
+
+
+
 // adding provider data into hash table / DB
 void Database::add_provider(Provider &to_add)
 {
@@ -292,7 +389,7 @@ void Database::update_provider(int provider_number)
 	}
 
 	cout << "\nUpdating provider " << found->get_number() << "...\n";
-	
+
 	// need to implement menu portion for finding out which part 
 	// of the member the user wants to update.	
 	// Options: name, number, address(street_addr, city, state, zip code), vector of services
@@ -300,9 +397,16 @@ void Database::update_provider(int provider_number)
 
 }
 
+
+
 // delete certain provider
 void Database::delete_provider(int provider_number)
 {
+	bool result = find_and_remove(Providers, providers_size, provider_number);
+	if (result)
+		cout << "\nProvider " << provider_number << " removed successfully." << endl;
+	else
+		cerr << "\nCould not find provider " << provider_number << endl;
 }
 
 
@@ -312,6 +416,7 @@ void Database::delete_provider(int provider_number)
  *	        PROVIDER DIRECTORY DATA
  *
  * **************☆*: .｡. o(≧▽≦)o .｡.:*☆*************/
+
 
 
 // loading in provider directory data into HT from DB
@@ -355,11 +460,45 @@ bool Database::load_provider_directory_data()
 	return true;
 }
 
+
+
+bool Database::write_provider_directory_data()
+{
+	ofstream file_out("providerdirectory.txt");
+	if (!file_out)
+	{
+		cerr << "\ncould not open file.\n" << endl;
+		return false;
+	}
+
+
+	for (int i = 0; i < prov_dir_size; ++i)
+	{
+		node<Service>* current = ProviderDirectory[i];
+		while (current)
+		{
+			Service& dir_out = current->data;
+			file_out << dir_out.get_number() << "|"
+				<< dir_out.get_name() << "|"
+				<< dir_out.get_fee() << "\n";
+
+			current = current->next;
+		}
+	}
+
+	return true;
+
+}
+
+
+
+
 // adding service data into hash table 
 void Database::add_service(Service &to_add)
 {
 	add_to_table(ProviderDirectory, prov_dir_size, to_add);
 }
+
 
 
 // getting info about a service based on number 
@@ -375,6 +514,7 @@ void Database::get_service_data(int service_number, Service& copy)
 
 	copy = *(found); // deference found to copy contents
 }
+
 
 
 /***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************
@@ -435,6 +575,28 @@ bool Database::load_provided_service_data()
 }
 
 
+bool Database::write_provided_service_data()
+{
+	ofstream file_out("providedservices.txt");
+	if (!file_out)
+	{
+		cerr << "\ncould not open file.\n" << endl;
+		return false;
+	}
+
+	
+	for (const ProvidedService &value : ProvidedServices)
+	{
+		file_out << value.current_date_time << "|"
+			<< value.service_data_time << "|"
+			<< value.provider_number << "|"
+			<< value.member_number << "|"
+			<< value.service_code << "|"
+			<< value.comments << "\n";
+	}	
+
+	return true;
+}
 
 
 // Adding to the vector
@@ -464,6 +626,19 @@ void Database::display_prov_dir()
 	display(ProviderDirectory,prov_dir_size);
 }
 
+
+void Database::display_recorded_ser()
+{
+	for (const ProvidedService &value : ProvidedServices)
+	{
+		cout << "\nCurrent Date Time: " << value.current_date_time << endl;
+		cout << "Service Data Time: " << value.service_data_time << endl;
+		cout << "Provider Number: " << value.provider_number << endl;
+		cout << "Member Number: " << value.member_number << endl;
+		cout << "Service Code: " << value.service_code << endl;
+		cout << "Comments: " << value.comments << endl << endl;
+	}
+}
 
 /******************** SONIA SECTION ********************/
 

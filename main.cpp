@@ -33,7 +33,12 @@ int main(void)
 	cout << "***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************\n";
 
 	test.display_prov_dir();
+	
+	cout << "***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************\n";
+	cout << "               RECORDED SERVICES                    \n";
+	cout << "***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************\n";
 
+	test.display_recorded_ser();
 
 	return 0;
 }

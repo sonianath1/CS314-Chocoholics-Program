@@ -10,33 +10,6 @@ Description of Program:
 #include "node.h"
 using namespace std;
 
-/*
-const int NAME {31};
-const int STREET_ADDR {51};
-const int CITY {21};
-const int STATE {3};
-const int STATUS {11};
-*/
-
-// Service Struct
-// Holds data from the Provider directory
-class Service
-{	
-	public:
-		Service(): name(""), number(0), fee(0.0) {}
-		Service(std::string _name, int _code, float _fee) : name(_name), number(_code), fee(_fee) {}
-
-		int get_number() { return number; }
-		void set_name(std::string to_add) { name = to_add; }
-		void set_fee(float to_add) { fee = to_add; }
-		void set_code(int code_to_add) { number = code_to_add; }
-		void display_all() { cout << "\nName: " << name << endl; cout << "Number: " << number << endl; cout << "Fee: " << fee; }
-
-	private:
-		std::string name;	// name of the service (max size 20)
-		int number;			// 6 digit code
-		float fee;			// max of 999.99
-};
 
 // ProvidedService Struct
 struct ProvidedService
@@ -49,6 +22,8 @@ struct ProvidedService
 	std::string comments = "";		// optional comments
 };
 
+
+
 // EFTFile
 // stores data sent as an EFT in the weekly report
 struct EFTFile
@@ -57,6 +32,31 @@ struct EFTFile
 	int provider_number;		// provider number
 	int transfer_amount;		// fee to be transferred
 };
+
+
+// Service Class
+// Holds data from the Provider directory
+class Service
+{	
+	public:
+		Service(): name(""), number(0), fee(0.0) {}
+		Service(std::string _name, int _code, float _fee) : name(_name), number(_code), fee(_fee) {}
+
+		int get_number() { return number; }
+		void set_name(std::string to_add) { name = to_add; }
+		void set_fee(float to_add) { fee = to_add; }
+		void set_code(int code_to_add) { number = code_to_add; }
+		std::string get_name() { return name; }
+		float get_fee() { return fee; }
+		void display_all() { cout << "\nName: " << name << endl; cout << "Number: " << number << endl; cout << "Fee: " << fee; }
+
+	private:
+		std::string name;	// name of the service (max size 20)
+		int number;			// 6 digit code
+		float fee;			// max of 999.99
+};
+
+
 
 // Database Class
 class Database
@@ -72,24 +72,29 @@ class Database
 		// write to file with new / updated data. call after user requests to quit program 
 		void write_to_file();
 
+
 		//Member functions
 		bool load_member_data();										// load data from file
+		bool write_member_data();
 		void add_member(Member &);									// add member to the member table
 		void update_member(int member_number);						// update specific member based on number
 		void delete_member(int member_number);						// delete member based on number
 
 		// Provider functions
 		bool load_provider_data();	
+		bool write_provider_data();
 		void add_provider(Provider &);								// add provider to the provider table
 		void update_provider(int provider_number);					// update specific provider based on number
 		void delete_provider(int provider_number);					// delete provider based on number
 
 		// Provider directory fucntions	
 		bool load_provider_directory_data();
+		bool write_provider_directory_data();
 		void add_service(Service &);
 
 		// recorded services
 		bool load_provided_service_data();
+		bool write_provided_service_data();
 		void record_provided_service(ProvidedService &);			// insert provided service into table
 		void get_service_data(int service_number, Service & copy);	// service to get from Providerdirectory
 
@@ -99,6 +104,7 @@ class Database
 		void display_members();
 		void display_providers();
 		void display_prov_dir();
+		void display_recorded_ser();
 
 	private:
 		void verify_member(int member_number);		// verify that a member exists
@@ -129,6 +135,13 @@ class Database
 
 		template <typename TYPE>
 			void display(node<TYPE> *head);
+		
+		template <typename TYPE>	
+			bool find_and_remove(node<TYPE> **table, int table_size, int number_to_find);
+
+		template <typename TYPE>	
+			bool find_and_remove(node<TYPE> *&head, int number_to_find);
+
 
 		node<Member> **Members;						// member hash table
 		int members_size;							// size of member hash table
@@ -147,6 +160,9 @@ class Database
 //----------------------------------------------------------------
 //------------------ Templated functions -------------------------
 //----------------------------------------------------------------
+
+
+// adding to table
 	template <typename TYPE>
 void Database::add_to_table(node<TYPE> **table, int table_size, TYPE &to_add)
 {
@@ -161,6 +177,7 @@ void Database::add_to_table(node<TYPE> **table, int table_size, TYPE &to_add)
 }
 
 
+// removing a LLL for index wrapper
 
 	template <typename TYPE>
 void Database::remove_all(node<TYPE> **table, int table_size)
@@ -175,6 +192,8 @@ void Database::remove_all(node<TYPE> **table, int table_size)
 
 	return;
 }
+
+// removing a LLL for index recursive
 
 	template <typename TYPE>
 void Database::remove_LLL(node<TYPE> *&head)
@@ -214,7 +233,43 @@ TYPE *Database::find(node<TYPE> *& head, int number_to_find)
 	return find(head->next, number_to_find);
 }
 
-	template <typename TYPE>
+
+
+template <typename TYPE>	
+bool Database::find_and_remove(node<TYPE> **table, int table_size, int number_to_find)
+{
+	bool result = false;
+
+	for (int i = 0; i < table_size; ++i)
+	{
+		result = find_and_remove(table[i], number_to_find);
+		
+		// if it was found in i's LLL
+		if (result)
+			break;
+	}	
+	
+	return result;
+}
+
+template <typename TYPE>	
+bool Database::find_and_remove(node<TYPE> *&head, int number_to_find)
+{
+	if (!head)
+		return false;
+	if (head->data.get_number() == number_to_find)
+	{
+		node<TYPE> *hold = head;
+		head = head->next;
+		delete hold;
+		return true;
+	}
+	
+	return find_and_remove(head->next, number_to_find);
+}
+
+
+template <typename TYPE>
 void Database::display(node<TYPE> **table, int table_size)
 {
 	for (int i = 0; i < table_size; i++)
@@ -231,3 +286,4 @@ void Database::display(node<TYPE> *head)
 	display(head->next);
 	return;
 }
+
