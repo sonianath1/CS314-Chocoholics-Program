@@ -6,6 +6,7 @@ Description of Program:
 
 
 #include <iostream>
+#include "database.h"
 using namespace std;
 
 
@@ -13,8 +14,9 @@ using namespace std;
 
 int main(void)
 {
+	Database test;
 
-
+	
 
 
 

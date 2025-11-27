@@ -1,9 +1,9 @@
 /*******************************************************************************
-Chocoholics CS314 Program: Entities Interface
+  Chocoholics CS314 Program: Entities Interface
 Names: Yollaine Brooks,
 Description of Program:
-*********************************************************************************/
-
+ *********************************************************************************/
+#pragma once
 #include <string>
 #include <vector>
 #include <regex>
@@ -47,7 +47,7 @@ class Member : public Entity
 	public:
 		Member();							// constructor
 		void update_data(Member & to_copy);	// update member data
-	
+
 		void set_status(const std::string & new_status) { status = new_status; } // setter 
 	private:
 		std::string status;					// Validated, Invalid Number, Member Suspended
@@ -59,6 +59,10 @@ class Provider : public Entity
 	public:
 		Provider();								// constructor
 		void update_data(Provider & to_copy);	// update provider data
+		
+		// for vector 
+		void add_service(int to_add) { services_provided.push_back(to_add); }
+		void clear_services() { services_provided.clear(); }
 
 	private:
 		std::vector<int> services_provided;		// Services the provider provides

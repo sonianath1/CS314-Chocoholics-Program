@@ -4,6 +4,7 @@ Names: Yollaine Brooks,
 Description of Program:
  *********************************************************************************/
 
+#pragma once
 template <typename TYPE>
 struct node
 {
