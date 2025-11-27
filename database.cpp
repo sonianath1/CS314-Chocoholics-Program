@@ -168,12 +168,22 @@ void Database::add_member(Member & to_add)
 }
 
 
-// updating a member in the hash table & DB
 void Database::update_member(int member_number)
 {
+	Member* found = find(Members, members_size, member_number);
 
+	if (!found) {
+		cerr << "\nmember not found\n";
+		return;
+	}
 
+	cout << "\nUpdating member " << found->get_number() << "...\n";
+	
+	// need to implement menu portion for finding out which part 
+	// of the member the user wants to update.	
+	// Options: name, number, address(street_addr, city, state, zip code), status
 }
+
 
 // deleting member from hash table & DB
 void Database::delete_member(int member_number)
@@ -269,9 +279,25 @@ void Database::add_provider(Provider &to_add)
 	add_to_table(Providers, providers_size, to_add);
 }
 
+
+
 // updating certain provider in hash table / DB
 void Database::update_provider(int provider_number)
 {
+	Provider* found = find(Providers, providers_size, provider_number);
+
+	if (!found) {
+		cerr << "\nprovider not found\n";
+		return;
+	}
+
+	cout << "\nUpdating provider " << found->get_number() << "...\n";
+	
+	// need to implement menu portion for finding out which part 
+	// of the member the user wants to update.	
+	// Options: name, number, address(street_addr, city, state, zip code), vector of services
+
+
 }
 
 // delete certain provider
@@ -419,6 +445,9 @@ void Database::record_provided_service(ProvidedService &to_add)
 
 
 
+/******************** 
+ * testing hash functions, display is not really needed for this
+ * ********************/
 
 
 void Database::display_members()
