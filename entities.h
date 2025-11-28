@@ -1,9 +1,9 @@
 /*******************************************************************************
-Chocoholics CS314 Program: Entities Interface
+  Chocoholics CS314 Program: Entities Interface
 Names: Yollaine Brooks,
 Description of Program:
-*********************************************************************************/
-
+ *********************************************************************************/
+#pragma once
 #include <string>
 #include <vector>
 #include <regex>
@@ -29,6 +29,12 @@ class Entity
 		bool compare_number(int number_to_compare);	// compare entity number with incoming number
 		void update_data(Entity & to_copy);			// update entity data
 
+		// setters	
+		void set_name(const std::string & new_name) { name = new_name; }
+		void set_number(int new_number) { number = new_number; }
+		address & get_address() { return addr; }  // returns reference
+		void display_all();
+
 	private:
 		string name;		// 25 char max
 		int number;			// identifier, max 9 digits
@@ -43,6 +49,9 @@ class Member : public Entity
 		Member();							// constructor
 		void update_data(Member & to_copy);	// update member data
 
+		void set_status(const std::string & new_status) { status = new_status; } // setter 
+		std::string get_status() { return status; }
+		void display_all();
 	private:
 		std::string status;					// Validated, Invalid Number, Member Suspended
 };
@@ -53,6 +62,12 @@ class Provider : public Entity
 	public:
 		Provider();								// constructor
 		void update_data(Provider & to_copy);	// update provider data
+		
+		// for vector 
+		void add_service(int to_add) { services_provided.push_back(to_add); }
+		std::vector<int> get_services() { return services_provided; }
+		void clear_services() { services_provided.clear(); }
+		void display_all();
 
 	private:
 		std::vector<int> services_provided;		// Services the provider provides
