@@ -77,7 +77,7 @@ class Database
 
 
 		//Member functions
-		bool load_member_data();										// load data from file
+		bool load_member_data();									// load data from file
 		bool write_member_data();
 		void add_member(Member &);									// add member to the member table
 		void update_member(int member_number);						// update specific member based on number
@@ -301,6 +301,7 @@ class DatabaseTest
 {
     public:
         void constructor_test();
+		void destructor_test();
 
 		// read in everything from file. call in menu before starting program
 		void read_from_file_test();
