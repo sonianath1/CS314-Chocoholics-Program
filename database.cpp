@@ -668,7 +668,10 @@ void Database::verify_service(int service_number)
 }
 
 // Yasmine
-int Database::hash_function(int key_value)
+int Database::hash_function(int key_value, int table_size)     // have table_size be prime for better results
 {
-	return 0;
+	// https://www.uoitc.edu.iq/images/documents/informatics-institute/Competitive_exam/DataStructures.pdf
+	
+	// I can double-check this function, but despite it's simplicity this is actually a good hash function 
+	return key_value % table_size;
 }
