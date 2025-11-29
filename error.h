@@ -3,7 +3,7 @@ Chocoholics CS314 Program: Error Handling Interface
 Names: Sonia Nath, Yollaine Brooks,
 Description of Program:
 *********************************************************************************/
-
+#pragma once
 
 // No entity found in the database
 struct NoEntityFound
