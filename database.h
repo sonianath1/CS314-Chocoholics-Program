@@ -43,7 +43,7 @@ class Database
 	public:
 		Database(int size_members = 10, int size_providers = 10, 
 				int size_prov_dir = 10);							// constructor
-		~Database()													// destructor
+		~Database();													// destructor
 		void load_data();											// load data from file
 		void add_member(Member &);									// add member to the member table
 		void update_member(int member_number);						// update specific member based on number
