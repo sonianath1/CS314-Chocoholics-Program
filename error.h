@@ -14,12 +14,12 @@ struct NoEntityFound
 // No service found in the database
 struct NoServiceFound
 {
-	string msg;
+        string msg;
 };
 
 struct InvalidMenuOption
 {
-	string msg;
+        string msg;
 };
 
 // error while parsing files into database
