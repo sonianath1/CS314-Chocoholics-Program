@@ -11,6 +11,17 @@ struct NoEntityFound
 	string msg;
 };
 
+// No service found in the database
+struct NoServiceFound
+{
+	string msg;
+};
+
+struct InvalidMenuOption
+{
+	string msg;
+};
+
 // error while parsing files into database
 struct FileParseError
 {
