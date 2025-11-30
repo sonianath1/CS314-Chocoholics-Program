@@ -658,7 +658,7 @@ void Database::generate_weekly_report()
 {
     //will hold all service data from prodiver directory test fule
     vector<int> service_codes;
-    vector<string>service_name;
+    vector<string>service_names;
     vector<double>service_fees;
 
     //open the provder dictor
@@ -701,7 +701,7 @@ void Database::generate_weekly_report()
 
             //will store the parsed calues into the vectors
             service_codes.push_back(code);
-            service_name.push_back(name);
+            service_names.push_back(name);
             service_fees.push_back(fee);
 
         }
@@ -757,14 +757,15 @@ void Database::generate_weekly_report()
 
         //loopup service
         
-        string serv = "Unknown";
+
+        string service_name = "Unknown";
         double fee = 0.0;
         
         for(int s = 0; s < (int)service_codes.size(); ++s)
         {
             if(service_codes[s] == service_code)
             {
-                serv = service_name[s];
+                service_name = service_names[s];
                 fee = service_fees[s];
                 break;
             }
@@ -774,10 +775,10 @@ void Database::generate_weekly_report()
 
         //wrtinr into the report
         report <<"Service Date: "<<current_service.service_data_time<<endl;
-        report<<"Member: "<<member_number<<"-"<< member_name <<endl;
-        report<<"Provider: "<<provider_number <<"-"<<provider_name<<endl;
-        report<<"Service: "<<service_code<<"-"<<service_name<<endl;
-        report<<"Fee: "<<fee<<" $ "<<endl;
+        report <<"Member: "<<member_number<<"-"<< member_name <<endl;
+        report <<"Provider: "<<provider_number <<"-"<<provider_name<<endl;
+        report <<"Service: "<<service_code<< "-" <<service_name<<endl;
+        report <<"Fee: "<<fee<<" $ "<<endl;
 
         if(!current_service.comments.empty())
             report<<"Comments: "<< current_service.comments<<endl;
