@@ -210,6 +210,9 @@ void Database::add_member(Member & to_add)
 void Database::update_member(int member_number)
 {
 	Member* found = find(Members, members_size, member_number);
+	int inputNum{0};
+    string inputString{" "};
+	address newAddress;
 
 	if (!found) {
 		cerr << "\nmember not found\n";
@@ -221,6 +224,52 @@ void Database::update_member(int member_number)
 	// need to implement menu portion for finding out which part 
 	// of the member the user wants to update.	
 	// Options: name, number, address(street_addr, city, state, zip code), status
+
+	cout << "\nWhich section of this member's information would you like to update?: " << endl;
+        cout << "\t1. Name" << endl;
+        cout << "\t2. Member Number" << endl;
+        cout << "\t3. Address" << endl;
+        cout << "\t4. Member Status" << endl;
+        cout << "\nEnter the number corresponding to your choice: ";
+        cin >> inputNum; cin.ignore(100, '\n');
+
+	switch (inputNum)
+        {
+            case 1:
+        	    cout << "\nEnter the member's full name: ";
+                cin >> inputString; cin.ignore(100, '\n');
+                found->set_name(inputString);
+                cout << "Member name successfully updated." << endl;
+                break;
+
+			case 2:
+                cout << "\nEnter the 9-digit member number: ";
+                cin >> inputNum; cin.ignore(100, '\n');
+                found->set_number(inputNum);
+                cout << "Provider number successfully updated." << endl;
+                break;
+
+			case 3:
+				cout << "Enter the street address: ";
+				cin >> newAddress.street_addr; cin.ignore(100, '\n');
+				cout << "Enter the city: ";
+				cin >> newAddress.city; cin.ignore(100, '\n');
+				cout << "Enter the state: ";
+				cin >> newAddress.state; cin.ignore(100, '\n');
+				cout << "Enter the zip code: ";
+				cin >> newAddress.zip_code; cin.ignore(100, '\n');
+				found->set_address(newAddress);
+				cout << "Provider address successfully updated." << endl;
+                break;
+
+			case 4:
+        	    cout << "\nEnter the member status (Choose 'Validated', 'Invalid Number', or 'Member Suspended'): ";
+                cin >> inputString; cin.ignore(100, '\n');
+                found->set_status(inputString);
+                cout << "Member status successfully updated." << endl;
+                break;
+		}
+
 }
 
 
@@ -383,6 +432,7 @@ void Database::update_provider(int provider_number)
 {
 	int inputNum{0};
     string inputString{" "};
+	address newAddress;
 	
 	Provider* found = find(Providers, providers_size, provider_number);
 
@@ -420,8 +470,8 @@ void Database::update_provider(int provider_number)
                         found->set_number(inputNum);
                         cout << "Provider number successfully updated." << endl;
                         break;
-			case 3:
-                        cout << "\nWhich section of the provider's address would you like to update?:" << endl;
+				case 3:  // which way should i do it?
+                        /*cout << "\nWhich section of the provider's address would you like to update?:" << endl;
                         cout << "\t1. Street address" << endl;
                         cout << "\t2. City" << endl;
                         cout << "\t3. State" << endl;
@@ -429,6 +479,8 @@ void Database::update_provider(int provider_number)
                         cout << "\nEnter the number corresponding to your choice: ";
                         cin >> inputNum; cin.ignore(100, '\n');
                                 if (inputNum == 1) {
+									cout << "Enter the street address: ";
+									cin >> inputString; cin.ignore(100, '\n');
 
                                 }
                                 else if (inputNum == 2) {
@@ -439,17 +491,25 @@ void Database::update_provider(int provider_number)
                                 }
                                 else if (inputNum == 4) {
 
-                                }
+                                }*/
+						cout << "Enter the street address: ";
+						cin >> newAddress.street_addr; cin.ignore(100, '\n');
+						cout << "Enter the city: ";
+						cin >> newAddress.city; cin.ignore(100, '\n');
+						cout << "Enter the state: ";
+						cin >> newAddress.state; cin.ignore(100, '\n');
+						cout << "Enter the zip code: ";
+						cin >> newAddress.zip_code; cin.ignore(100, '\n');
+						found->set_address(newAddress);
+						cout << "Provider address successfully updated." << endl;
                         break;
 
-                case 4:
+                case 4:   // what kind of service goes here
                         cout << "Would you like to add or remove a service for this provider? (1 for add, 2 for remove): ";
                         cin >> inputNum; cin.ignore(100, '\n');
                         if (inputNum == 1) {
-							cout << "Enter the name of the new service: ";
-                                cin >> inputString; cin.ignore(100, '\n');
-
-                                // enter into vector...
+			
+                                // enter into vector (?)
                         }
                         else if (inputNum == 2) {
                                 /*  display all services
@@ -729,7 +789,7 @@ void Database::verify_member(int member_number)
 	NoEntityFound invalidMember;   // variable to throw
         Member* toVerify = find(Members, members_size, member_number);
 
-        try   // this needs to be caught somewhere
+        try   // this needs to be caught somewhere; can be caught in find(), ask Sonia
         {
                 if (!toVerify)
                         throw invalidMember;      // cout << "\nInvalid Number" << endl;
