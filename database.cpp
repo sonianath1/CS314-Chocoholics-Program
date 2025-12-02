@@ -15,7 +15,6 @@ Description of Program:
 /******************** SONIA SECTION ********************/
 
 
-
 // Constructor with arguments
 Database::Database(int size_members, int size_providers, int size_prov_dir)
 {
@@ -46,11 +45,22 @@ Database::Database(int size_members, int size_providers, int size_prov_dir)
 Database::~Database()
 {
 	write_to_file(); // adding new data / updated data into DB
-
+	
 	// templated remove all function in .h file
 	remove_all(Members, members_size);
 	remove_all(Providers, providers_size);
 	remove_all(ProviderDirectory, prov_dir_size);
+	
+	if (Members)
+		delete [] Members;
+	if (Providers)
+		delete [] Providers;
+	if (ProviderDirectory)
+		delete [] ProviderDirectory;
+	
+	Members = nullptr;
+	Providers = nullptr;
+	ProviderDirectory = nullptr;
 
 	ProvidedServices.clear();
 }
@@ -641,12 +651,6 @@ void Database::display_recorded_ser()
 }
 
 /******************** SONIA SECTION ********************/
-
-
-
-
-
-
 
 
 
