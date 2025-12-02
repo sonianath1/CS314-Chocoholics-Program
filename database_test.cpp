@@ -397,47 +397,79 @@ void DatabaseTest::provider_directory_LLL_find__remove_test()
 // ---------------- SERVICE TESTS --------------------
 // ---------------------------------------------------
 
-void ServiceTest::default_constructor_test()
+void ServiceTest::default_constructor_test()  
 {
-
+    Service test_service;
+    cout << "Service default constructor test " << endl;
+    assert(test_service.name == "");
+    assert(test_service.number == 0);
+    assert(test_service.fee == 0.0);
+    return;
 }
 
 void ServiceTest::constructor_test()
 {
-
+    Service test_service("Name", 700899, 45.99);
+    cout << "Service arg constructor test " << endl;
+    assert(test_service.name == "Name");
+    assert(test_service.number == 700899);
+    assert(test_service.fee == 45.99);
+    return;
 }
 
 void ServiceTest::get_number_test()
 {
-
+    Service test_service("Name", 700899, 45.99);
+    cout << "Get number test " << endl;
+    assert(test_service.get_number() == 700899);
+    return;
 }
 
 void ServiceTest::set_name_test()
 {
-
+    Service test_service;
+    cout << "Set service name test" << endl;
+    test_service.set_name("New-Name");
+    assert(test_service.name == "New-Name");
+    return;
 }
 
 void ServiceTest::set_fee_test()
 {
-
+    Service test_service;
+    cout << "Set service fee test" << endl;
+    test_service.set_fee(30.55);
+    assert(test_service.fee == 30.55);
+    return;
 }
 
 void ServiceTest::set_code_test()
 {
-
+    Service test_service;
+    cout << "Set service code test" << endl;
+    test_service.set_code(700233);
+    assert(test_service.number == 700233);
+    return;
 }
 
 void ServiceTest::get_name_test()
 {
-
+    Service test_service("Name", 700899, 45.99);
+    cout << "Get number test " << endl;
+    assert(test_service.get_name() == "Name");
 }
 
 void ServiceTest::get_fee_test()
 {
-
+    Service test_service("Name", 700899, 45.99);
+    cout << "Get fee test " << endl;
+    assert(test_service.get_fee() == 45.99);
 }
 
 void ServiceTest::display_all_test()
 {
-
+    Service test_service;
+    cout << "Display all information test:" << endl;
+    test_service.display_all();
+    return;
 }
