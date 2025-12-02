@@ -224,7 +224,7 @@ void Database::add_member(Member & to_add)
 
 void Database::update_member(int member_number)
 {
-	Member* found = find(Members, members_size, member_number);
+	Member* found = find(Members, member_number);
 	int inputNum{0};
     string inputString{" "};
 	address newAddress;
@@ -449,7 +449,7 @@ void Database::update_provider(int provider_number)
     string inputString{" "};
 	address newAddress;
 	
-	Provider* found = find(Providers, providers_size, provider_number);
+	Provider* found = find(Providers, provider_number);
 
 	if (!found) {
 		cerr << "\nprovider not found\n";
@@ -881,14 +881,14 @@ void Database::generate_weekly_report()
         int service_code = current_service.service_code;
 
         //lookup member suing fin()
-        Member* mem = Database::find(Members, members_size, member_number);
+        Member* mem = Database::find(Members, member_number);
         string member_name = "Unknown";
         if(mem != NULL)
             member_name = mem->get_name();
 
 
         //looup provider usinf same find()
-        Provider* prov = Database::find(Providers, providers_size, provider_number);
+        Provider* prov = Database::find(Providers, provider_number);
         string provider_name = "Unknown";
         if(prov != NULL)
             provider_name = prov->get_name();
@@ -983,7 +983,7 @@ void Database::generate_weekly_report()
         double total_amount = provider_totals[i];
 
 
-        Provider *provider_ptr = find(Providers, providers_size, provider_number);
+        Provider *provider_ptr = find(Providers, provider_number);
         string provider_name = "unknown";
         
         if(provider_ptr != NULL)
@@ -1007,7 +1007,7 @@ void Database::generate_weekly_report()
 void Database::verify_member(int member_number)
 {
 	NoEntityFound invalidMember;   // variable to throw
-        Member* toVerify = find(Members, members_size, member_number);
+        Member* toVerify = find(Members, member_number);
 
         try   // this needs to be caught somewhere; can be caught in find(), ask Sonia
         {
@@ -1029,7 +1029,7 @@ void Database::verify_member(int member_number)
 void Database::verify_provider(int provider_number)
 {
 	NoEntityFound invalidProvider;   // variable to throw
-        Provider* toVerify = find(Providers, providers_size, provider_number);
+        Provider* toVerify = find(Providers, provider_number);
 
         try   // this needs to be caught somewhere
         {
@@ -1049,7 +1049,7 @@ void Database::verify_provider(int provider_number)
 void Database::verify_service(int service_number)
 {
 	NoServiceFound invalidService;   // variable to throw
-        Service* toVerify = find(ProviderDirectory, prov_dir_size, service_number);
+        Service* toVerify = find(ProviderDirectory, service_number);
 
         try   // this needs to be caught somewhere
         {
