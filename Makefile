@@ -14,3 +14,5 @@ chocanprogram: $(OBJS)
 
 clean cls:
 	rm -f chocanprogram *.o *.~ \#*
+zip:
+	zip CS314-GROUP-9.zip *.cpp *.h [Mm]akefile

@@ -62,6 +62,7 @@ class Service
 class Database
 {
 	public:
+
 		Database(int size_members = 10, int size_providers = 10, 
 				int size_prov_dir = 10);							// constructor
 		~Database();					// destructor
@@ -203,7 +204,7 @@ void Database::remove_LLL(node<TYPE> *&head)
 
 	// get to end of list	
 	remove_LLL(head->next);
-
+	
 	delete head;
 	head = nullptr;	
 	return;
