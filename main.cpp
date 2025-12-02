@@ -3,8 +3,6 @@ Chocoholics CS314 Program
 Names: Sonia Nath, Yollaine Brooks, 
 Description of Program: 
 *********************************************************************************/
-
-
 #include <iostream>
 #include "database.h"
 using namespace std;
@@ -26,6 +24,7 @@ int main(void)
 	cout << "                       PROVIDERS                     \n";
 	cout << "***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************\n";
 
+
 	test.display_providers();
 	
 	cout << "***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************\n";
@@ -39,6 +38,9 @@ int main(void)
 	cout << "***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************\n";
 
 	test.display_recorded_ser();
+
+    test.generate_weekly_report();
+    cout<<"Weekly report generated."<<endl;
 
 	return 0;
 }
