@@ -20,7 +20,6 @@ Description of Program:
 /******************** SONIA SECTION ********************/
 
 
-
 // Constructor with arguments
 Database::Database(int size_members, int size_providers, int size_prov_dir)
 {
@@ -51,11 +50,22 @@ Database::Database(int size_members, int size_providers, int size_prov_dir)
 Database::~Database()
 {
 	write_to_file(); // adding new data / updated data into DB
-
+	
 	// templated remove all function in .h file
 	remove_all(Members, members_size);
 	remove_all(Providers, providers_size);
 	remove_all(ProviderDirectory, prov_dir_size);
+	
+	if (Members)
+		delete [] Members;
+	if (Providers)
+		delete [] Providers;
+	if (ProviderDirectory)
+		delete [] ProviderDirectory;
+	
+	Members = nullptr;
+	Providers = nullptr;
+	ProviderDirectory = nullptr;
 
 	ProvidedServices.clear();
 }
@@ -214,7 +224,7 @@ void Database::add_member(Member & to_add)
 
 void Database::update_member(int member_number)
 {
-	Member* found = find(Members, members_size, member_number);
+	Member* found = find(Members, member_number);
 
 	if (!found) {
 		cerr << "\nmember not found\n";
@@ -233,7 +243,7 @@ void Database::update_member(int member_number)
 // deleting member from hash table & DB
 void Database::delete_member(int member_number)
 {
-	bool result = find_and_remove(Members, members_size, member_number);
+	bool result = find_and_remove(Members, member_number);
 	if (result)
 		cout << "\nMember " << member_number << " removed successfully." << endl;
 	else
@@ -386,7 +396,7 @@ void Database::add_provider(Provider &to_add)
 // updating certain provider in hash table / DB
 void Database::update_provider(int provider_number)
 {
-	Provider* found = find(Providers, providers_size, provider_number);
+	Provider* found = find(Providers, provider_number);
 
 	if (!found) {
 		cerr << "\nprovider not found\n";
@@ -407,7 +417,7 @@ void Database::update_provider(int provider_number)
 // delete certain provider
 void Database::delete_provider(int provider_number)
 {
-	bool result = find_and_remove(Providers, providers_size, provider_number);
+	bool result = find_and_remove(Providers, provider_number);
 	if (result)
 		cout << "\nProvider " << provider_number << " removed successfully." << endl;
 	else
@@ -509,7 +519,7 @@ void Database::add_service(Service &to_add)
 // getting info about a service based on number 
 void Database::get_service_data(int service_number, Service& copy)
 {
-	Service *found = find(ProviderDirectory, prov_dir_size, service_number);
+	Service *found = find(ProviderDirectory, service_number);
 
 	if (!found)
 	{
