@@ -32,6 +32,7 @@ class Entity
 		// setters	
 		void set_name(const std::string & new_name) { name = new_name; }
 		void set_number(int new_number) { number = new_number; }
+		void set_address(address & new_address) { addr = new_address; }
 		address & get_address() { return addr; }  // returns reference
 		void display_all();
 		friend class EntityTest;

@@ -123,7 +123,7 @@ class Database
 		void verify_member(int member_number);		// verify that a member exists
 		void verify_provider(int provider_number);	// verify that a provider exists
 		void verify_service(int service_number);	// verify that a service exists
-		int hash_function(int key_value);		// has function 
+		int hash_function(int key_value, int table_size);		// hash function 
 
 		// for the destructor	
 		template <typename TYPE>
@@ -179,7 +179,7 @@ class Database
 	template <typename TYPE>
 void Database::add_to_table(node<TYPE> **table, int table_size, TYPE &to_add)
 {
-	int index = hash_function(to_add.get_number());
+	int index = hash_function(to_add.get_number(), table_size);
 
 	// allocate node
 	node<TYPE>* new_node = new node<TYPE>(to_add);
