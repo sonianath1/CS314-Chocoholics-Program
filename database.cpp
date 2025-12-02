@@ -116,7 +116,7 @@ bool Database::load_member_data()
 		return false;
 	}
 
-	cout << "☆*: .｡. o(≧▽≦)o .｡.:*☆ LOADING FROM MEMBER DATABASE ☆*: .｡. o(≧▽≦)o .｡.:*☆\n";
+	// cout << "☆*: .｡. o(≧▽≦)o .｡.:*☆ LOADING FROM MEMBER DATABASE ☆*: .｡. o(≧▽≦)o .｡.:*☆\n";
 
 	Member to_add;
 	string line;
@@ -267,7 +267,7 @@ bool Database::load_provider_data()
 		return false;
 	}
 
-	cout << "☆*: .｡. o(≧▽≦)o .｡.:*☆ LOADING FROM PROVIDER DATABASE ☆*: .｡. o(≧▽≦)o .｡.:*☆\n";
+	// cout << "☆*: .｡. o(≧▽≦)o .｡.:*☆ LOADING FROM PROVIDER DATABASE ☆*: .｡. o(≧▽≦)o .｡.:*☆\n";
 
 	string line;
 	while (getline(file_in, line))
@@ -439,7 +439,7 @@ bool Database::load_provider_directory_data()
 		return false;
 	}
 
-	cout << "☆*: .｡. o(≧▽≦)o .｡.:*☆ LOADING PROVIDER DIRECTORY DATABASE ☆*: .｡. o(≧▽≦)o .｡.:*☆\n";
+	// cout << "☆*: .｡. o(≧▽≦)o .｡.:*☆ LOADING PROVIDER DIRECTORY DATABASE ☆*: .｡. o(≧▽≦)o .｡.:*☆\n";
 
 	string line;
 	while (getline(file_in, line))
@@ -545,7 +545,7 @@ bool Database::load_provided_service_data()
 		return false;
 	}
 
-	cout << "☆*: .｡. o(≧▽≦)o .｡.:*☆ LOADING PROVIDED SERVICES ☆*: .｡. o(≧▽≦)o .｡.:*☆\n";
+	// cout << "☆*: .｡. o(≧▽≦)o .｡.:*☆ LOADING PROVIDED SERVICES ☆*: .｡. o(≧▽≦)o .｡.:*☆\n";
 
 	string line;
 	while (getline(file_in, line))
