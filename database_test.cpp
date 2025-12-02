@@ -24,8 +24,7 @@ void DatabaseTest::destructor_test()
 {
     Database test_db;
     cout << "Destructor Test\n";
-    Database local_db;
-    local_db.~Database();
+    test_db.~Database();
     assert(test_db.members_size == 0 && "Size should be reset to 0");
     assert(test_db.providers_size == 0 && "Size should be reset to 0");
     assert(test_db.prov_dir_size == 0 && "Size should be reset to 0");
@@ -43,9 +42,10 @@ void DatabaseTest::read_from_file_test()
     load_provider_directory_test();
 }
 
+
 void DatabaseTest::write_to_file_test()
 {
-
+    // need to test adding members, providers, provided services before writing to file
 }
 
 void DatabaseTest::load_member_test()
@@ -108,12 +108,68 @@ void DatabaseTest::write_member_test()
 
 void DatabaseTest::add_member_test()
 {
+    cout << "Add Member Test" << endl;
 
+    // info was already verified by the terminal
+    Database test_db;
+    Member test_member;
+    address test_addr;
+    string name = "TEST";
+    test_addr.city = "Likely";
+    test_addr.state = "CA";
+    test_addr.street_addr = "123 Apple Dr.";
+    test_addr.zip_code = 80459;
+    int number = 900000002;
+    string status = "Active";
+    
+    test_member.set_name(name);
+    test_member.set_address(test_addr);
+    test_member.set_number(number);
+    test_member.set_status(status);
+
+    // delete the database
+    test_db.remove_all(test_db.Members, test_db.members_size);
+
+    // remake the size
+    test_db.members_size = 10;
+    test_db.add_member(test_member);
+
+    // ensure it was put into the correct place
+    assert(test_db.Members[2] != nullptr && "Member isn't being put in the correct place");
+
+    // ensure that duplicates aren't added 
+    test_db.add_member(test_member);
+    assert(test_db.Members[2]->next == nullptr && "Duplicates aren't allowed in the database");
 }
 
 void DatabaseTest::update_member_test()
 {
+    // info was already verified by the terminal
+    Database test_db;
+    Member test_member;
+    address test_addr;
+    string name = "TEST";
+    test_addr.city = "Likely";
+    test_addr.state = "CA";
+    test_addr.street_addr = "123 Apple Dr.";
+    test_addr.zip_code = 80459;
+    int number = 900000002;
+    string status = "Active";
+    
+    test_member.set_name(name);
+    test_member.set_address(test_addr);
+    test_member.set_number(number);
+    test_member.set_status(status);
 
+    // delete the database
+    test_db.remove_all(test_db.Members, test_db.members_size);
+
+    // remake the size
+    test_db.members_size = 10;
+    test_db.add_member(test_member);
+
+    // update the member
+    test_db.update_member(number);
 }
 
 void DatabaseTest::delete_member_test()
@@ -225,6 +281,7 @@ void DatabaseTest::load_provider_directory_test()
 
 void DatabaseTest::write_provider_directory_test()
 {
+    
 }
 
 void DatabaseTest::add_service_test()
@@ -285,6 +342,7 @@ void DatabaseTest::load_provided_service_test()
 
 void DatabaseTest::write_provided_service_test()
 {
+
 }
 
 void DatabaseTest::record_provided_service_test()
@@ -294,76 +352,94 @@ void DatabaseTest::record_provided_service_test()
 
 void DatabaseTest::verify_member_test()
 {
+
 }
 
 void DatabaseTest::verify_provider_test()
 {
+
 }
 
 void DatabaseTest::verify_service_test()
 {
+
 }
 
 void DatabaseTest::hash_function_test()
 {
+
 }
 
 void DatabaseTest::member_remove_all_test()
 {
     
 }
+
 void DatabaseTest::member_add_to_table_test()
 {
     
 }
+
 void DatabaseTest::member_remove_LLL_test()
 {
     
 }
+
 void DatabaseTest::member_table_find_test()
 {
     
 }
+
 void DatabaseTest::member_LLL_find_test()
 {
     
 }
+
 void DatabaseTest::member_table_find_remove_test()
 {
     
 }
+
 void DatabaseTest::member_LLL_find__remove_test()
 {
     
 }
+
 void DatabaseTest::provider_remove_all_test()
 {
     
 }
+
 void DatabaseTest::provider_add_to_table_test()
 {
     
 }
+
 void DatabaseTest::provider_remove_LLL_test()
 {
     
 }
+
 void DatabaseTest::provider_table_find_test()
 {
     
 }
+
 void DatabaseTest::provider_LLL_find_test()
 {
     
 }
+
 void DatabaseTest::provider_table_find_remove_test()
 {
     
 }
+
 void DatabaseTest::provider_LLL_find__remove_test()
 {
     
 }
+
 void DatabaseTest::provider_directory_remove_all_test()
 {
     

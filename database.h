@@ -356,9 +356,6 @@ class DatabaseTest
 		void provider_directory_LLL_find_test();
 		void provider_directory_table_find_remove_test();
 		void provider_directory_LLL_find__remove_test();
-        
-		// POTENTIALLY REMOVE
-		void remove_all();
 };
 
 class ServiceTest
