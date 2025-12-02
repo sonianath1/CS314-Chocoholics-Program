@@ -1,0 +1,100 @@
+********** ChpcAn Weekly Report **********
+Service Date: 11-10-2025
+Member: 900123456-Alice Johnson
+Provider: 700123456-Dr. Helen Moore
+Service: 100400-Dietitian Consult
+Fee: 50 $ 
+Comments: Follow-up nutrition consult
+---------------------------------------------------------
+Service Date: 11-10-2025
+Member: 900332445-Liam Brown
+Provider: 700234567-Dr. Samuel Lin
+Service: 100800-Physical Therapy
+Fee: 180 $ 
+Comments: PT session lower back pain
+---------------------------------------------------------
+Service Date: 11-11-2025
+Member: 900776889-Parker Scott
+Provider: 700345678-Dr. Priya Singh
+Service: 100500-Fitness Coaching
+Fee: 75 $ 
+Comments: Initial fitness assessment
+---------------------------------------------------------
+Service Date: 11-11-2025
+Member: 900998001-Riley Chavez
+Provider: 700456789-Dr. David Wilson
+Service: 100300-Chiropractic Adj
+Fee: 85 $ 
+Comments: Spinal adjustment performed
+---------------------------------------------------------
+Service Date: 11-12-2025
+Member: 900345678-Chloe Kim
+Provider: 700567890-Dr. Ana Rodriguez
+Service: 100900-Stress Management
+Fee: 95 $ 
+Comments: Stress reduction breathing
+---------------------------------------------------------
+Service Date: 11-12-2025
+Member: 900221334-Karen Patel
+Provider: 700789012-Dr. Olivia Chen
+Service: 100200-Annual Checkup
+Fee: 150 $ 
+Comments: Annual checkup complete
+---------------------------------------------------------
+Service Date: 11-13-2025
+Member: 900665778-Olivia Martinez
+Provider: 700678901-Dr. Marcus Lee
+Service: 100700-Nutrition Counseling
+Fee: 120 $ 
+Comments: Nutrition planning session
+---------------------------------------------------------
+Service Date: 11-13-2025
+Member: 900112233-Jacob Thompson
+Provider: 700890123-Dr. Kevin Patel
+Service: 100600-Mental Health Eval
+Fee: 200 $ 
+Comments: 45-minute MH evaluation
+---------------------------------------------------------
+Service Date: 11-14-2025
+Member: 900220223-Tyler Johnson
+Provider: 700901234-Dr. Sarah Kim
+Service: 101000-Wellness Session
+Fee: 110 $ 
+Comments: Wellness mindfulness session
+---------------------------------------------------------
+Service Date: 11-14-2025
+Member: 900789012-Grace Lee
+Provider: 700112233-Dr. Jason Park
+Service: 100100-Aerobic Exercise
+Fee: 60 $ 
+Comments: Aerobic routine instruction
+---------------------------------------------------------
+
+Total Number of services : 10
+Unique Members served    : 10
+Total Fees for the week  : 1125$
+
+  EFT Summary per provider
+--------------------------------------------------------------------------------
+Provider: 700123456, Dr. Helen Moore
+Total Amount: 50$
+Provider: 700234567, Dr. Samuel Lin
+Total Amount: 180$
+Provider: 700345678, Dr. Priya Singh
+Total Amount: 75$
+Provider: 700456789, Dr. David Wilson
+Total Amount: 85$
+Provider: 700567890, Dr. Ana Rodriguez
+Total Amount: 95$
+Provider: 700789012, Dr. Olivia Chen
+Total Amount: 150$
+Provider: 700678901, Dr. Marcus Lee
+Total Amount: 120$
+Provider: 700890123, Dr. Kevin Patel
+Total Amount: 200$
+Provider: 700901234, Dr. Sarah Kim
+Total Amount: 110$
+Provider: 700112233, Dr. Jason Park
+Total Amount: 60$
+End of the weekly report
+

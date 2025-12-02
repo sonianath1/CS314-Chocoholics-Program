@@ -6,9 +6,9 @@ Description of Program:
 
 #pragma once
 #include <fstream>
+#include <iostream>
 #include "entities.h"
 #include "node.h"
-#include "error.h"
 #include "error.h"
 using namespace std;
 
@@ -51,6 +51,7 @@ class Service
 		std::string get_name() { return name; }
 		float get_fee() { return fee; }
 		void display_all() { cout << "\nName: " << name << endl; cout << "Number: " << number << endl; cout << "Fee: " << fee; }
+		friend class ServiceTest;	// friend test class for Service
 
 	private:
 		std::string name;	// name of the service (max size 20)
@@ -64,8 +65,13 @@ class Service
 class Database
 {
 	public:
+
 		Database(int size_members = 10, int size_providers = 10, 
 				int size_prov_dir = 10);							// constructor
+
+		//~Database();													// destructor
+		//void load_data();											// load data from file
+
 		~Database();					// destructor
 
 		// read in everything from file. call in menu before starting program
@@ -76,7 +82,7 @@ class Database
 
 
 		//Member functions
-		bool load_member_data();										// load data from file
+		bool load_member_data();									// load data from file
 		bool write_member_data();
 		void add_member(Member &);									// add member to the member table
 		void update_member(int member_number);						// update specific member based on number
@@ -100,13 +106,18 @@ class Database
 		void record_provided_service(ProvidedService &);			// insert provided service into table
 		void get_service_data(int service_number, Service & copy);	// service to get from Providerdirectory
 
+
+
+
 		void generate_weekly_report();								// create the manager's weekly report
+        
 		void remove_all();
 		
 		void display_members();
 		void display_providers();
 		void display_prov_dir();
 		void display_recorded_ser();
+		friend class DatabaseTest;                                  // friend database testing class
 
 	private:
 		void verify_member(int member_number);		// verify that a member exists
@@ -125,7 +136,7 @@ class Database
 			void remove_LLL(node<TYPE> *&head);
 
 		template <typename TYPE>
-			TYPE *find(node<TYPE> **table, int table_size, int number_to_find);
+			TYPE *find(node<TYPE> **table, int number_to_find);
 
 
 		template <typename TYPE>
@@ -139,7 +150,7 @@ class Database
 			void display(node<TYPE> *head);
 		
 		template <typename TYPE>	
-			bool find_and_remove(node<TYPE> **table, int table_size, int number_to_find);
+			bool find_and_remove(node<TYPE> **table, int number_to_find);
 
 		template <typename TYPE>	
 			bool find_and_remove(node<TYPE> *&head, int number_to_find);
@@ -161,7 +172,7 @@ class Database
 
 //----------------------------------------------------------------
 //------------------ Templated functions -------------------------
-//----------------------------------------------------------------
+//---------------------------------------------------------------- 
 
 
 // adding to table
@@ -205,22 +216,17 @@ void Database::remove_LLL(node<TYPE> *&head)
 
 	// get to end of list	
 	remove_LLL(head->next);
-
+	
 	delete head;
 	head = nullptr;	
 	return;
 }
 
 	template <typename TYPE>
-TYPE *Database::find(node<TYPE> **table, int table_size, int number_to_find)
+TYPE *Database::find(node<TYPE> **table, int number_to_find)
 {
-	for (int i = 0; i < table_size; ++i)
-	{
-		if (table[i])
-			return find(table[i], number_to_find);
-	}
-
-	return nullptr; // if enitiy not found	
+	int index = hash_function(number_to_find);
+	return find(table[index], number_to_find);
 }
 
 	template <typename TYPE>
@@ -238,20 +244,10 @@ TYPE *Database::find(node<TYPE> *& head, int number_to_find)
 
 
 template <typename TYPE>	
-bool Database::find_and_remove(node<TYPE> **table, int table_size, int number_to_find)
+bool Database::find_and_remove(node<TYPE> **table, int number_to_find)
 {
-	bool result = false;
-
-	for (int i = 0; i < table_size; ++i)
-	{
-		result = find_and_remove(table[i], number_to_find);
-		
-		// if it was found in i's LLL
-		if (result)
-			break;
-	}	
-	
-	return result;
+	int index = hash_function(number_to_find);
+	return find_and_remove(table[index], number_to_find);
 }
 
 template <typename TYPE>	
@@ -289,3 +285,92 @@ void Database::display(node<TYPE> *head)
 	return;
 }
 
+//-------------------------------------------------------------
+//---------------------- Test Classes -------------------------
+//-------------------------------------------------------------
+
+
+class DatabaseTest
+{
+    public:
+        void constructor_test();
+		void destructor_test();
+
+		// read in everything from file. call in menu before starting program
+		void read_from_file_test();
+
+		// write to file with new / updated data. call after user requests to quit program 
+		void write_to_file_test();
+
+        void load_member_test();
+		void write_member_test();
+        void add_member_test();
+        void update_member_test();
+        void delete_member_test();
+		void load_provider_test();
+		void write_provider_test();
+        void add_provider_test();
+        void update_provider_test();
+		void delete_provider_test();
+		// Provider directory functions	
+		void load_provider_directory_test();
+		void write_provider_directory_test();
+		void add_service_test();
+        void get_service_data_test();
+        void generate_weekly_report_test();
+
+
+		// recorded services
+		void load_provided_service_test();
+		void write_provided_service_test();
+		void record_provided_service_test();
+
+		void verify_member_test();		// verify that a member exists
+		void verify_provider_test();	// verify that a provider exists
+		void verify_service_test();		// verify that a service exists
+		void hash_function_test();		// has function 
+
+		// member
+		void member_remove_all_test();
+		void member_add_to_table_test();
+		void member_remove_LLL_test();
+		void member_table_find_test();
+		void member_LLL_find_test();
+		void member_table_find_remove_test();
+		void member_LLL_find__remove_test();
+		
+		// provider
+		void provider_remove_all_test();
+		void provider_add_to_table_test();
+		void provider_remove_LLL_test();
+		void provider_table_find_test();
+		void provider_LLL_find_test();
+		void provider_table_find_remove_test();
+		void provider_LLL_find__remove_test();
+
+		// provider directory
+		void provider_directory_remove_all_test();
+		void provider_directory_add_to_table_test();
+		void provider_directory_remove_LLL_test();
+		void provider_directory_table_find_test();
+		void provider_directory_LLL_find_test();
+		void provider_directory_table_find_remove_test();
+		void provider_directory_LLL_find__remove_test();
+        
+		// POTENTIALLY REMOVE
+		void remove_all();
+};
+
+class ServiceTest
+{
+	public:
+		void default_constructor_test();
+		void constructor_test();
+		void get_number_test();
+		void set_name_test();
+		void set_fee_test();
+		void set_code_test();
+		void get_name_test();
+		void get_fee_test();
+		void display_all_test();
+};
