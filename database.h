@@ -136,7 +136,7 @@ class Database
 			void remove_LLL(node<TYPE> *&head);
 
 		template <typename TYPE>
-			TYPE *find(node<TYPE> **table, int number_to_find);
+			TYPE *find(node<TYPE> **table, int number_to_find, int index);
 
 
 		template <typename TYPE>
@@ -150,7 +150,7 @@ class Database
 			void display(node<TYPE> *head);
 		
 		template <typename TYPE>	
-			bool find_and_remove(node<TYPE> **table, int number_to_find);
+			bool find_and_remove(node<TYPE> **table, int number_to_find, int index);
 
 		template <typename TYPE>	
 			bool find_and_remove(node<TYPE> *&head, int number_to_find);
@@ -223,9 +223,9 @@ void Database::remove_LLL(node<TYPE> *&head)
 }
 
 	template <typename TYPE>
-TYPE *Database::find(node<TYPE> **table, int number_to_find)
+TYPE *Database::find(node<TYPE> **table, int number_to_find, int index)
 {
-	int index = hash_function(number_to_find);
+//	int index = hash_function(number_to_find);
 	return find(table[index], number_to_find);
 }
 
@@ -244,9 +244,9 @@ TYPE *Database::find(node<TYPE> *& head, int number_to_find)
 
 
 template <typename TYPE>	
-bool Database::find_and_remove(node<TYPE> **table, int number_to_find)
+bool Database::find_and_remove(node<TYPE> **table, int number_to_find, int index)
 {
-	int index = hash_function(number_to_find);
+	//int index = hash_function(number_to_find);
 	return find_and_remove(table[index], number_to_find);
 }
 
