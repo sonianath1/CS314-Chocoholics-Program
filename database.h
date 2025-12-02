@@ -68,6 +68,10 @@ class Database
 
 		Database(int size_members = 10, int size_providers = 10, 
 				int size_prov_dir = 10);							// constructor
+
+		//~Database();													// destructor
+		//void load_data();											// load data from file
+
 		~Database();					// destructor
 
 		// read in everything from file. call in menu before starting program
@@ -101,6 +105,9 @@ class Database
 		bool write_provided_service_data();
 		void record_provided_service(ProvidedService &);			// insert provided service into table
 		void get_service_data(int service_number, Service & copy);	// service to get from Providerdirectory
+
+
+
 
 		void generate_weekly_report();								// create the manager's weekly report
         
