@@ -202,6 +202,7 @@ void op_menu(Database & database)
 void op_sub_member(Database & database)
 {
     int menu_choice = 0;
+    int member_num = 0;
 
     do
     {
@@ -212,20 +213,28 @@ void op_sub_member(Database & database)
         switch(menu_choice)
         {
             case(operator_menu_options::add):
+                //TODO
                 system("clear");
                 cout << "\nadd";
                 continue_confirm();
                 break;
 
             case(operator_menu_options::remove):
+                //TODO
                 system("clear");
-                cout << "\nremove";
+                member_num = get_member();
+
+                database.delete_member(member_num);
+
                 continue_confirm();
                 break;
 
             case(operator_menu_options::update):
                 system("clear");
-                cout << "\nupdate";
+                member_num = get_member();
+
+                database.update_member(member_num);
+
                 continue_confirm();
                 break;
         }
@@ -238,6 +247,7 @@ void op_sub_member(Database & database)
 void op_sub_provider(Database & database)
 {
     int menu_choice = 0;
+    int provider_num = 0;
 
     do
     {
@@ -248,20 +258,29 @@ void op_sub_provider(Database & database)
         switch(menu_choice)
         {
             case(operator_menu_options::add):
-                
+                //TODO
                 system("\nclear");
                 cout << "add";
                 continue_confirm();
                 break;
 
             case(operator_menu_options::remove):
-                cout << "\nremove";
+                //TODO
+                system("\nclear");
+                provider_num = get_provider();
+
+                database.delete_provider(provider_num);
+
                 continue_confirm();
                 break;
 
             case(operator_menu_options::update):
                 system("clear");
-                cout << "\nupdate";
+
+                provider_num = get_provider();
+
+                database.update_provider(provider_num);
+
                 continue_confirm();
                 break;
         }
@@ -277,10 +296,11 @@ void continue_confirm()
     int confirm = 0;
     do
     {
-        confirm = get_integer("\nEnter 1 to continue: ");
+        cout << "\nEnter 1 to continue";
+        confirm = get_integer("\n> ");
         if (confirm != CONTINUE)
         {
-            cout << "Invalid number" << endl;
+            cout << "\nInvalid number" << endl;
         }
     }while(confirm != CONTINUE);
 

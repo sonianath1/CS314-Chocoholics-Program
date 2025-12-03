@@ -92,30 +92,26 @@ Welcome to the Provider Portal!
     3. Request Provider Directory
     4. Log out)";
 
-    const string manager_sub = R"(
-Welcome to the Manager Portal!
+    const string manager_sub = R"(Welcome to the Manager Portal!
     1. Request weekly summary of services
     2. Log out)";
 
-    const string operator_sub = R"(
-Welcome to the Operator Portal!
+    const string operator_sub = R"(Welcome to the Operator Portal!
     1. Manage Members
     2. Manage Providers
     3. Log out)";
 
-    const string operator_member = R"(
-Manage Member Options:
+    const string operator_member = R"(Manage Member Options:
     1. Add new member
     2. Delete member
     3. Update member
     4. Go back)";
 
-    const string operator_provider = R"(
-Manage Provider Options:
+    const string operator_provider = R"(Manage Provider Options:
     1. Add new provider
     2. Delete provider
     3. Update provider
     4. Go back)";
 
-    const string goodbye = "Thank you!";
+    const string goodbye = "Thank you!\n";
 }

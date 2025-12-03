@@ -30,13 +30,13 @@ int main(void)
 
     */
 
-    cout << "ChocoAn";
 
     int menu_choice = 0;
 
     do
     {
         system("clear");
+        cout << "ChocoAn" << endl;
         cout << menu_text::main;
         menu_choice = get_integer("\n> ");
         switch (menu_choice)
