@@ -239,10 +239,6 @@ void Database::update_member(int member_number)
 
 	cout << "\nUpdating member " << found->get_number() << "...\n";
 
-	// need to implement menu portion for finding out which part 
-	// of the member the user wants to update.	
-	// Options: name, number, address(street_addr, city, state, zip code), status
-
 	cout << "\nWhich section of this member's information would you like to update?: " << endl;
 	cout << "\t1. Name" << endl;
 	cout << "\t2. Member Number" << endl;
@@ -286,8 +282,13 @@ void Database::update_member(int member_number)
 			found->set_status(inputString);
 			cout << "Member status successfully updated." << endl;
 			break;
+
+		default:
+			// throw exception for bad input or ask to try inputting again?
+			break;
 	}
 
+	return;
 }
 
 
@@ -463,10 +464,6 @@ void Database::update_provider(int provider_number)
 
 	cout << "\nUpdating provider " << found->get_number() << "...\n";
 
-	// need to implement menu portion for finding out which part 
-	// of the member the user wants to update.	
-	// Options: name, number, address(street_addr, city, state, zip code), vector of services
-
 	cout << "\nWhich section of this provider's information would you like to update?: " << endl;
 	cout << "\t1. Name" << endl;
 	cout << "\t2. Provider Number" << endl;
@@ -490,29 +487,9 @@ void Database::update_provider(int provider_number)
 			found->set_number(inputNum);
 			cout << "Provider number successfully updated." << endl;
 			break;
-		case 3:  // which way should i do it?
-			/*cout << "\nWhich section of the provider's address would you like to update?:" << endl;
-			  cout << "\t1. Street address" << endl;
-			  cout << "\t2. City" << endl;
-			  cout << "\t3. State" << endl;
-			  cout << "\t4. Zip code" << endl;
-			  cout << "\nEnter the number corresponding to your choice: ";
-			  cin >> inputNum; cin.ignore(100, '\n');
-			  if (inputNum == 1) {
-			  cout << "Enter the street address: ";
-			  cin >> inputString; cin.ignore(100, '\n');
 
-			  }
-			  else if (inputNum == 2) {
-
-			  }
-			  else if (inputNum == 3) {
-
-			  }
-			  else if (inputNum == 4) {
-
-			  }*/
-			cout << "Enter the street address: ";
+		case 3: 
+			cout << "\nEnter the street address: ";
 			cin >> newAddress.street_addr; cin.ignore(100, '\n');
 			cout << "Enter the city: ";
 			cin >> newAddress.city; cin.ignore(100, '\n');
@@ -525,17 +502,10 @@ void Database::update_provider(int provider_number)
 			break;
 
 		case 4:   // what kind of service goes here
-			cout << "Would you like to add or remove a service for this provider? (1 for add, 2 for remove): ";
+			cout << "\nEnter the code for the service you'd like to add for this provider: ";
 			cin >> inputNum; cin.ignore(100, '\n');
-			if (inputNum == 1) {
-
-				// enter into vector (?)
-			}
-			else if (inputNum == 2) {
-				/*  display all services
-				 *  ask which one to delete
-				 *  delete it  */
-			}
+			(found->get_services()).push_back(inputNum);
+			cout << "Provider services successfully updated." << endl;
 			break;
 
 		default:
@@ -1019,7 +989,7 @@ void Database::verify_member(int member_number)
 	int index = hash_function(member_number, members_size);
 	Member* toVerify = find(Members, member_number, index);
 
-	try   // this needs to be caught somewhere; can be caught in find(), ask Sonia
+	try   
 	{
 		if (!toVerify)
 			throw invalidMember;      // cout << "\nInvalid Number" << endl;
@@ -1068,7 +1038,7 @@ void Database::verify_service(int service_number)
 		if (!toVerify)
 			throw invalidService;     // cout << "\nInvalid Number" << endl;
 		else if (toVerify->get_number() == service_number)    // ?
-			cout << "\nVerified" << endl;                 // ?
+			cout << "\nService: " << toVerify->get_name() << endl;                 // ?
 	}
 	catch(NoServiceFound invalidServiceNumber)
 	{
