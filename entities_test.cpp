@@ -8,7 +8,7 @@ using namespace std;
 
 void EntityTest::constructor_test()
 {
-
+    
 }
 
 void EntityTest::get_number_test()
