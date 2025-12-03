@@ -16,7 +16,8 @@ using namespace std;
 int main(void)
 {
 	Database test;
-	
+
+    /*
 	cout << "***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************\n";
 	cout << "                       MEMBERS                     \n";
 	cout << "***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************\n";
@@ -27,9 +28,12 @@ int main(void)
 	cout << "                       PROVIDERS                     \n";
 	cout << "***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************\n";
 
+    */
+
     cout << "ChocoAn";
 
     int menu_choice = 0;
+    int sub_menu_choice = 0;
 
     do
     {
@@ -51,6 +55,7 @@ int main(void)
     }while(menu_choice != main_menu::quit);
 
 
+    /*
 	test.display_providers();
 	
 	cout << "***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************\n";
@@ -67,6 +72,7 @@ int main(void)
 
     test.generate_weekly_report();
     cout<<"Weekly report generated."<<endl;
+    */
 
 	return 0;
 }

@@ -19,6 +19,15 @@ int get_member();
 //calls get_number for provider
 int get_provider();
 
+//contains sub menus for the provider
+int provider(Database & database);
+
+//contains sub menus for the manager
+int manager(Database & database);
+
+//contains sub menus for the operator
+int op(Database & database);
+
 
 namespace provider_menu
 {
@@ -59,4 +68,6 @@ namespace main_menu
 namespace menu_text
 {
     const string main = "\nChoose your login\n1. Provider\n2. Manager\n3. Operator";
+    const string provider_sub = "\nWelcome to the Provider Portal!\n\t1. Check In User\n\t2. Check Out User \
+        \n\t3. Request Provider Directory"
 }

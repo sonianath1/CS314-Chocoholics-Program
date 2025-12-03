@@ -71,3 +71,39 @@ int get_provider()
     
     return get_number(prompt);
 }
+
+//contains sub menus for the provider
+int provider(Database & database)
+{
+    int menu_choice = 0;
+
+    int provider_num;
+
+    //loop until valid number is entered
+    do
+    {
+        //TODO add a loop to continuously get the provider number or fix exception handling
+        provider_num = get_provider();        
+        
+    }while(provider_num);
+
+    //sub-menu loop
+    do
+    {
+    
+    }while(
+
+    return 0;
+}
+
+//contains sub menus for the manager
+int manager(Database & database)
+{
+    return 0;
+}
+
+//contains sub menus for the operator
+int op(Database & database)
+{
+    return 0;
+}
