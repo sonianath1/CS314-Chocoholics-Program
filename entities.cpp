@@ -1,4 +1,14 @@
+#include <iostream>
 #include "entities.h"
+using namespace std;
+
+
+/***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************
+ *
+ *		     ENTITY
+ *
+ * **************☆*: .｡. o(≧▽≦)o .｡.:*☆*************/
+
 
 Entity::Entity()
 {
@@ -6,12 +16,12 @@ Entity::Entity()
 
 int Entity::get_number()
 {
-	return 0;
+	return number;
 }
 
 string & Entity::get_name()
 {
-	// TODO: insert return statement here
+	return name;
 }
 
 bool Entity::compare_number(int number_to_compare)
@@ -23,16 +33,67 @@ void Entity::update_data(Entity& to_copy)
 {
 }
 
-Member::Member()
+
+void Entity::display_all()
 {
+	cout << "\nName: " << name << endl;
+	cout << "Number: " << number << endl;
+	cout << "Street Address: " << addr.street_addr << endl;
+	cout << "City: " << addr.city << endl;
+	cout << "State: " << addr.state << endl;
+	cout << "Zip code: " << addr.zip_code << endl;
+}
+
+
+/***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************
+ *
+ *		     MEMBER
+ *
+ * **************☆*: .｡. o(≧▽≦)o .｡.:*☆*************/
+
+
+Member::Member(): status("") {}
+
+void Member::display_all()
+{
+	Entity::display_all();
+	cout << "Status: " << status << endl;
 }
 
 void Member::update_data(Member & to_copy)
 {
 }
 
+
+
+/***************☆*: .｡. o(≧▽≦)o .｡.:*☆**************
+ *
+ *		     PROVIDER
+ *
+ * **************☆*: .｡. o(≧▽≦)o .｡.:*☆*************/
+
+
 Provider::Provider()
 {
+}
+
+void Provider::display_all()
+{
+	Entity::display_all();
+	cout << "Services provided: ";
+
+	// making sure that txt file does not have a last comma, instad newline
+	const vector<int>& servs = get_services();
+	int len = servs.size();
+
+	for (int i = 0; i < len; ++i)
+	{
+		cout << servs[i];
+		if (i < len - 1)
+			cout << ",";
+	}
+
+	cout << "\n";
 }
 
 void Provider::update_data(Provider& to_copy)

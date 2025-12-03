@@ -1,20 +1,10 @@
-100100|Aerobic Exercise|60.00
-
-100200|Annual Checkup|150.00
-
-100300|Chiropractic Adj|85.00
-
-100400|Dietitian Consult|50.00
-
-100500|Fitness Coaching|75.00
-
-100600|Mental Health Eval|200.00
-
-100700|Nutrition Counseling|120.00
-
-100800|Physical Therapy|180.00
-
-100900|Stress Management|95.00
-
-101000|Wellness Session|110.00
-
+101000|Wellness Session|110
+100900|Stress Management|95
+100800|Physical Therapy|180
+100700|Nutrition Counseling|120
+100600|Mental Health Eval|200
+100500|Fitness Coaching|75
+100400|Dietitian Consult|50
+100300|Chiropractic Adj|85
+100200|Annual Checkup|150
+100100|Aerobic Exercise|60
