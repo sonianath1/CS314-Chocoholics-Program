@@ -864,6 +864,18 @@ void Database::generate_weekly_report()
 		return;
 	}
 
+    //eft summary file that will go to each provider
+    ofstream eft("EFT_report.txt");
+    if(!eft)
+    {
+        cout<<"Error, couldn't create the EFT_report.txt"<<endl;
+
+    }
+    else
+    {
+        eft<<"*********ChocAn EFT Report ***************"<<endl<<endl;
+    }
+
 	report<<"********** ChpcAn Weekly Report **********"<<endl;
 	cout<<"             --------------------                "<<endl<<endl;
 
@@ -978,9 +990,9 @@ void Database::generate_weekly_report()
 	report <<"\n";
 	report <<"Total Number of services : "<< total_services<<endl;
 	report <<"Unique Members served    : "<< unique_member_numbers.size()<<endl;
-	report <<"Total Fees for the week  : "<< total_fees<< "$"<<endl<<endl;
+	report <<"Total Fees for the week  : "<< total_fees<< " $"<<endl<<endl;
 	report <<"  EFT Summary per provider"<<endl;
-	report <<"--------------------------------------------------------------------------------"<<endl;
+	report <<"-----------------------------------------------"<<endl;
 
 
 	//goes thorufh each provider who provided the service
@@ -1001,11 +1013,21 @@ void Database::generate_weekly_report()
 		report <<"Provider: "<< provider_number<<", "<<provider_name<<endl;
 		report <<"Total Amount: "<<total_amount<<"$"<<endl;
 
+        if(eft)
+        {
+            eft<<"Provider name: "<<provider_name<<endl;
+            eft<<"Provider number: "<<provider_number<<endl;
+            eft<<"Amount to transfer: "<<total_amount<<" $"<<endl;
+            eft<<"------------------------------------"<<endl;
+        }
+
 	}
 	report <<"End of the weekly report"<<endl<<endl;
 
 	report.close();
-
+    
+    if(eft)
+        eft.close();
 }
 
 
