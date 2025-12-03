@@ -36,6 +36,9 @@ void op_sub_member(Database & database);
 //contains sub-sub menu for the operator manage providers
 void op_sub_provider(Database & database);
 
+//confirm function that allows viewer to still see screen before it is cleared
+void continue_confirm();
+
 namespace provider_menu_options
 {
     const int check_in = 1;
@@ -47,8 +50,7 @@ namespace provider_menu_options
 namespace manager_menu_options
 {
     const int request_summary = 1;
-    const int request_provider = 2;
-    const int quit = 3;
+    const int quit = 2;
 }
 
 namespace operator_menu_options
@@ -71,6 +73,8 @@ namespace main_menu
     const int quit = 4;
 }
 
+const int CONTINUE = 1;
+
 
 namespace menu_text
 {
@@ -91,8 +95,7 @@ Welcome to the Provider Portal!
     const string manager_sub = R"(
 Welcome to the Manager Portal!
     1. Request weekly summary of services
-    2. Request summary of one provider
-    3. Log out)";
+    2. Log out)";
 
     const string operator_sub = R"(
 Welcome to the Operator Portal!

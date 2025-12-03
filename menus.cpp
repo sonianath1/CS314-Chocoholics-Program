@@ -89,15 +89,19 @@ void provider_menu(Database & database)
         
     }while(!provider_num);
 
+    
+    continue_confirm();
+
     //sub-menu loop
     do
     {
+        system("clear");
         cout << menu_text::provider_sub;
         menu_choice = get_integer("\n> ");
         switch (menu_choice)
         {
             case(provider_menu_options::check_in):
-                //update loop once expection handling for member lookup is confirmed
+                //TODO update loop once expection handling for member lookup is confirmed
 
                 system("clear");
                 do
@@ -105,17 +109,30 @@ void provider_menu(Database & database)
                     member_num = get_member();
                     //database.verify_member(member_num);
                 }while(!member_num);
+
+
+                continue_confirm();
                 break;
 
             case(provider_menu_options::check_out):
+                //TODO update loop once expection handling for member lookup is confirmed
                 system("clear");
                 member_num = get_member();
                     //database.verify_member(member_num);
+                continue_confirm();
                 break;
 
             case(provider_menu_options::request_dir):
                 system("clear");
                 cout << "request directory" << endl;
+                bool result = database.write_provider_directory_data();
+
+                if (!result)
+                {
+                    cerr << "Unable to load directory. Please try again." << endl;
+                }
+
+                continue_confirm();
                 break;
         }
     }while(menu_choice != provider_menu_options::quit);
@@ -138,11 +155,14 @@ void manager_menu(Database & database)
         {
             case(manager_menu_options::request_summary):
                 system("clear");
-                cout << "requesting summary";
-                break;
-            case(manager_menu_options::request_provider):
-                system("clear");
-                cout << "requesting providers";
+                cout << "Requesting weekly summary...\n";
+                database.generate_weekly_report();
+
+
+                cout << "File outputed, view weekly_report.txt file" << endl;
+
+                continue_confirm();
+
                 break;
         }
     }while(menu_choice != manager_menu_options::quit);
@@ -185,6 +205,7 @@ void op_sub_member(Database & database)
 
     do
     {
+        system("clear");
         cout << menu_text::operator_member;
         menu_choice = get_integer("\n> ");
 
@@ -192,17 +213,20 @@ void op_sub_member(Database & database)
         {
             case(operator_menu_options::add):
                 system("clear");
-                cout << "add";
+                cout << "\nadd";
+                continue_confirm();
                 break;
 
             case(operator_menu_options::remove):
                 system("clear");
-                cout << "remove";
+                cout << "\nremove";
+                continue_confirm();
                 break;
 
             case(operator_menu_options::update):
                 system("clear");
-                cout << "update";
+                cout << "\nupdate";
+                continue_confirm();
                 break;
         }
     }while(menu_choice != operator_menu_options::sub_quit);
@@ -217,6 +241,7 @@ void op_sub_provider(Database & database)
 
     do
     {
+        system("clear");
         cout << menu_text::operator_provider;
         menu_choice = get_integer("\n> ");
 
@@ -224,20 +249,40 @@ void op_sub_provider(Database & database)
         {
             case(operator_menu_options::add):
                 
-                system("clear");
+                system("\nclear");
                 cout << "add";
+                continue_confirm();
                 break;
 
             case(operator_menu_options::remove):
-                cout << "remove";
+                cout << "\nremove";
+                continue_confirm();
                 break;
 
             case(operator_menu_options::update):
                 system("clear");
-                cout << "update";
+                cout << "\nupdate";
+                continue_confirm();
                 break;
         }
     }while(menu_choice != operator_menu_options::sub_quit);
+
+    return;
+}
+
+
+//confirm function that allows viewer to still see screen before it is cleared
+void continue_confirm()
+{
+    int confirm = 0;
+    do
+    {
+        confirm = get_integer("\nEnter 1 to continue: ");
+        if (confirm != CONTINUE)
+        {
+            cout << "Invalid number" << endl;
+        }
+    }while(confirm != CONTINUE);
 
     return;
 }
