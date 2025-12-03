@@ -3,6 +3,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <stdlib.h>
+#include <bits/stdc++.h>
+
 using namespace std;
 
 
@@ -403,17 +406,21 @@ void ServiceTest::default_constructor_test()
     cout << "Service default constructor test " << endl;
     assert(test_service.name == "");
     assert(test_service.number == 0);
-    assert(test_service.fee == 0.0);
+    // assert(test_service.fee == 0.0);
+    assert(abs(test_service.fee - 0.0) < 1e-9);   
+
     return;
 }
 
 void ServiceTest::constructor_test()
 {
+    float comparison = 45.99;
     Service test_service("Name", 700899, 45.99);
     cout << "Service arg constructor test " << endl;
     assert(test_service.name == "Name");
     assert(test_service.number == 700899);
-    assert(test_service.fee == 45.99);
+    // Source for below: https://www.geeksforgeeks.org/dsa/problem-in-comparing-floating-point-numbers-and-how-to-compare-them-correctly/
+    assert(abs(test_service.fee - comparison) < 0.0000000001);    // same idea as assert(test_service.fee == 45.99) but for floats
     return;
 }
 
@@ -436,10 +443,11 @@ void ServiceTest::set_name_test()
 
 void ServiceTest::set_fee_test()
 {
+    float comparison = 30.55;
     Service test_service;
     cout << "Set service fee test" << endl;
     test_service.set_fee(30.55);
-    assert(test_service.fee == 30.55);
+    assert(abs(test_service.fee - comparison) < 1e-9);    
     return;
 }
 
@@ -457,19 +465,22 @@ void ServiceTest::get_name_test()
     Service test_service("Name", 700899, 45.99);
     cout << "Get number test " << endl;
     assert(test_service.get_name() == "Name");
+    return;
 }
 
 void ServiceTest::get_fee_test()
 {
+    float comparison = 45.99;
     Service test_service("Name", 700899, 45.99);
     cout << "Get fee test " << endl;
-    assert(test_service.get_fee() == 45.99);
+    assert(abs(test_service.fee - comparison) < 0.0000000001);    
+    return;
 }
 
 void ServiceTest::display_all_test()
 {
-    Service test_service;
-    cout << "Display all information test:" << endl;
+    Service test_service("Name", 700862, 99.89);
+    cout << "Display all information test (Should display name 'Name', number 700862, and fee 99.89):" << endl;
     test_service.display_all();
     return;
 }

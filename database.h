@@ -50,7 +50,7 @@ class Service
 		void set_code(int code_to_add) { number = code_to_add; }
 		std::string get_name() { return name; }
 		float get_fee() { return fee; }
-		void display_all() { cout << "\nName: " << name << endl; cout << "Number: " << number << endl; cout << "Fee: " << fee; }
+		void display_all() { cout << "\nName: " << name << endl; cout << "Number: " << number << endl; cout << "Fee: " << fee << endl; }
 		friend class ServiceTest;	// friend test class for Service
 
 	private:
