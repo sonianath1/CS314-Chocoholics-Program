@@ -36,6 +36,7 @@ int main(void)
 
     do
     {
+        system("clear");
         cout << menu_text::main;
         menu_choice = get_integer("\n> ");
         switch (menu_choice)
@@ -53,7 +54,7 @@ int main(void)
 
     }while(menu_choice != main_menu::quit);
 
-
+    cout << menu_text::goodbye;
     /*
 	test.display_providers();
 	

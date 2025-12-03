@@ -76,12 +76,13 @@ int get_provider()
 void provider_menu(Database & database)
 {
     int menu_choice = 0;
-    int provider_num;
-    int member_num;
+    int provider_num = 0;
+    int member_num = 0;
 
     //loop until valid number is entered
     do
     {
+        system("clear");
         //TODO add a loop to continuously get the provider number or fix exception handling
         provider_num = get_provider();        
         //database.verify_provider(provider_num);
@@ -97,19 +98,23 @@ void provider_menu(Database & database)
         {
             case(provider_menu_options::check_in):
                 //update loop once expection handling for member lookup is confirmed
+
+                system("clear");
                 do
                 {
                     member_num = get_member();
                     //database.verify_member(member_num);
-                }while(!menu_choice);
+                }while(!member_num);
                 break;
 
             case(provider_menu_options::check_out):
-                    member_num = get_member();
+                system("clear");
+                member_num = get_member();
                     //database.verify_member(member_num);
                 break;
 
             case(provider_menu_options::request_dir):
+                system("clear");
                 cout << "request directory" << endl;
                 break;
         }
@@ -125,15 +130,18 @@ void manager_menu(Database & database)
 
     do
     {
+        system("clear");
         cout << menu_text::manager_sub;
         menu_choice = get_integer("\n> ");
 
         switch (menu_choice)
         {
             case(manager_menu_options::request_summary):
+                system("clear");
                 cout << "requesting summary";
                 break;
             case(manager_menu_options::request_provider):
+                system("clear");
                 cout << "requesting providers";
                 break;
         }
@@ -149,16 +157,19 @@ void op_menu(Database & database)
 
     do
     {
+        system("clear");
         cout << menu_text::operator_sub;
         menu_choice = get_integer("\n> ");
 
         switch(menu_choice)
         {
             case(operator_menu_options::manage_members):
+                system("clear");
                 op_sub_member(database);
                 break;
 
             case(operator_menu_options::manage_providers):
+                system("clear");
                 op_sub_provider(database);
                 break;
         }
@@ -180,14 +191,17 @@ void op_sub_member(Database & database)
         switch(menu_choice)
         {
             case(operator_menu_options::add):
+                system("clear");
                 cout << "add";
                 break;
 
             case(operator_menu_options::remove):
+                system("clear");
                 cout << "remove";
                 break;
 
             case(operator_menu_options::update):
+                system("clear");
                 cout << "update";
                 break;
         }
@@ -210,6 +224,8 @@ void op_sub_provider(Database & database)
         {
             case(operator_menu_options::add):
                 
+                system("clear");
+                cout << "add";
                 break;
 
             case(operator_menu_options::remove):
@@ -217,6 +233,7 @@ void op_sub_provider(Database & database)
                 break;
 
             case(operator_menu_options::update):
+                system("clear");
                 cout << "update";
                 break;
         }

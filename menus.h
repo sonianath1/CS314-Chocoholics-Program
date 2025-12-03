@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <cstdlib>
 #include "database.h"
 
 using namespace std;
@@ -73,14 +74,39 @@ namespace main_menu
 
 namespace menu_text
 {
-    const string main = "\nChoose your login\n\t1. Provider\n\t2. Manager\n\t3. Operator\n\t4. Quit";
-    const string provider_sub = "\nWelcome to the Provider Portal!\n\t1. Check-in User\n\t2. Check-out user\
-        \n\t3. Request Provider Directory\n\t4. Log out";
-    const string manager_sub = "\nWelcome to the Manager Portal!\n\t1.Request weekly summary of services\
-        \n\t2. Request summary of one provider\n\t3. Log out";
-    const string operator_sub = "\nWelcome to the Operator Portal!\n\t1.Manage Members\n\t2. Manage Providers\n\t3. Log out";
-    const string operator_member = "\nManage Member Options:\n\t1. Add new member\n\t2. Delete member\n\t3. Update member\
-        \n\t4. Go back";
+    const string main = R"(
+Choose your login
+    1. Provider
+    2. Manager
+    3. Operator
+    4. Exit)";
+
+    const string provider_sub = R"(
+Welcome to the Provider Portal!
+    1. Check-in user
+    2. Check-out user
+    3. Request Provider Directory
+    4. Log out)";
+
+    const string manager_sub = R"(
+Welcome to the Manager Portal!
+    1. Request weekly summary of services
+    2. Request summary of one provider
+    3. Log out)";
+
+    const string operator_sub = R"(
+Welcome to the Operator Portal!
+    1. Manage Members
+    2. Manage Providers
+    3. Log out)";
+
+    const string operator_member = R"(
+Manage Member Options:
+    1. Add new member
+    2. Delete member
+    3. Update member
+    4. Go back)";
+
     const string operator_provider = R"(
 Manage Provider Options:
     1. Add new provider
