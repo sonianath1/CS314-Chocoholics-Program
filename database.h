@@ -1,6 +1,6 @@
 /*******************************************************************************
   Chocoholics CS314 Program: Database Interface
-Names: Yollaine Brooks, 
+Names: Yollaine Brooks, Sonia Nath, 
 Description of Program: 
  *********************************************************************************/
 
@@ -110,9 +110,9 @@ class Database
 
 
 		void generate_weekly_report();								// create the manager's weekly report
-        
+
 		void remove_all();
-		
+
 		void display_members();
 		void display_providers();
 		void display_prov_dir();
@@ -128,30 +128,37 @@ class Database
 		// for the destructor	
 		template <typename TYPE>
 			void remove_all(node<TYPE> **table, int table_size);
-
-		template <typename TYPE>
-			void add_to_table(node<TYPE> **table, int table_size, TYPE &to_add);
-
+		
+		// removing the LLL in each index 
 		template <typename TYPE>	
 			void remove_LLL(node<TYPE> *&head);
 
+		// adding an entity to its hash table
+		template <typename TYPE>
+			void add_to_table(node<TYPE> **table, int table_size, TYPE &to_add);
+		
+		// checking if there is a duplicate in hash table before adding
+		template <typename TYPE>
+			bool find_dup(node<TYPE>* head, int num_to_compare);
+		
+		// finding an enetity in hash table (wrapper)
 		template <typename TYPE>
 			TYPE *find(node<TYPE> **table, int number_to_find, int index);
-
-
+		// recursive 
 		template <typename TYPE>
 			TYPE *find(node<TYPE> *& head, int number_to_find);
 
-
+		// display (wrapper)
 		template <typename TYPE>
 			void display(node<TYPE> **table, int table_size);
-
+		// recursive
 		template <typename TYPE>
 			void display(node<TYPE> *head);
-		
+
+		// finding and removing an entity (wrapper)
 		template <typename TYPE>	
 			bool find_and_remove(node<TYPE> **table, int number_to_find, int index);
-
+		// recursive 
 		template <typename TYPE>	
 			bool find_and_remove(node<TYPE> *&head, int number_to_find);
 
@@ -181,6 +188,9 @@ void Database::add_to_table(node<TYPE> **table, int table_size, TYPE &to_add)
 {
 	int index = hash_function(to_add.get_number(), table_size);
 
+	if (table[index] && find_dup(table[index], to_add.get_number()))
+		throw DuplicateEntity();
+
 	// allocate node
 	node<TYPE>* new_node = new node<TYPE>(to_add);
 
@@ -188,6 +198,20 @@ void Database::add_to_table(node<TYPE> **table, int table_size, TYPE &to_add)
 	new_node->next = table[index];
 	table[index] = new_node;
 }
+
+	template <typename TYPE>
+bool Database::find_dup(node<TYPE>* head, int num_to_compare)
+{
+	if (!head)
+		return false;
+
+	if (head->data.get_number() == num_to_compare)
+		return true;
+
+	return find_dup(head->next, num_to_compare);
+}
+
+
 
 
 // removing a LLL for index wrapper
@@ -216,7 +240,7 @@ void Database::remove_LLL(node<TYPE> *&head)
 
 	// get to end of list	
 	remove_LLL(head->next);
-	
+
 	delete head;
 	head = nullptr;	
 	return;
@@ -225,8 +249,14 @@ void Database::remove_LLL(node<TYPE> *&head)
 	template <typename TYPE>
 TYPE *Database::find(node<TYPE> **table, int number_to_find, int index)
 {
-//	int index = hash_function(number_to_find);
-	return find(table[index], number_to_find);
+	//	int index = hash_function(number_to_find);
+	TYPE* result = find(table[index], number_to_find);
+
+	if (!result) 
+		throw NoEntityFound();
+
+	return result;
+
 }
 
 	template <typename TYPE>
@@ -243,14 +273,18 @@ TYPE *Database::find(node<TYPE> *& head, int number_to_find)
 
 
 
-template <typename TYPE>	
+	template <typename TYPE>	
 bool Database::find_and_remove(node<TYPE> **table, int number_to_find, int index)
 {
 	//int index = hash_function(number_to_find);
-	return find_and_remove(table[index], number_to_find);
+	bool result = find_and_remove(table[index], number_to_find);
+
+	if (!result) 
+		throw NoEntityFound();
+	return result;	
 }
 
-template <typename TYPE>	
+	template <typename TYPE>	
 bool Database::find_and_remove(node<TYPE> *&head, int number_to_find)
 {
 	if (!head)
@@ -262,12 +296,12 @@ bool Database::find_and_remove(node<TYPE> *&head, int number_to_find)
 		delete hold;
 		return true;
 	}
-	
+
 	return find_and_remove(head->next, number_to_find);
 }
 
 
-template <typename TYPE>
+	template <typename TYPE>
 void Database::display(node<TYPE> **table, int table_size)
 {
 	for (int i = 0; i < table_size; i++)
@@ -292,8 +326,8 @@ void Database::display(node<TYPE> *head)
 
 class DatabaseTest
 {
-    public:
-        void constructor_test();
+	public:
+		void constructor_test();
 		void destructor_test();
 
 		// read in everything from file. call in menu before starting program
@@ -302,22 +336,22 @@ class DatabaseTest
 		// write to file with new / updated data. call after user requests to quit program 
 		void write_to_file_test();
 
-        void load_member_test();
+		void load_member_test();
 		void write_member_test();
-        void add_member_test();
-        void update_member_test();
-        void delete_member_test();
+		void add_member_test();
+		void update_member_test();
+		void delete_member_test();
 		void load_provider_test();
 		void write_provider_test();
-        void add_provider_test();
-        void update_provider_test();
+		void add_provider_test();
+		void update_provider_test();
 		void delete_provider_test();
 		// Provider directory functions	
 		void load_provider_directory_test();
 		void write_provider_directory_test();
 		void add_service_test();
-        void get_service_data_test();
-        void generate_weekly_report_test();
+		void get_service_data_test();
+		void generate_weekly_report_test();
 
 
 		// recorded services
@@ -338,7 +372,7 @@ class DatabaseTest
 		void member_LLL_find_test();
 		void member_table_find_remove_test();
 		void member_LLL_find__remove_test();
-		
+
 		// provider
 		void provider_remove_all_test();
 		void provider_add_to_table_test();
@@ -356,7 +390,7 @@ class DatabaseTest
 		void provider_directory_LLL_find_test();
 		void provider_directory_table_find_remove_test();
 		void provider_directory_LLL_find__remove_test();
-        
+
 		// POTENTIALLY REMOVE
 		void remove_all();
 };
