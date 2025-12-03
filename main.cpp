@@ -33,22 +33,21 @@ int main(void)
     cout << "ChocoAn";
 
     int menu_choice = 0;
-    int sub_menu_choice = 0;
 
     do
     {
         cout << menu_text::main;
-        menu_choice = get_integer("> ");
+        menu_choice = get_integer("\n> ");
         switch (menu_choice)
         {
             case(main_menu::provider):
-                cout << "will add provider"; 
+                provider_menu(test);
                 break;
             case(main_menu::manager):
-                cout << "will add manager"; 
+                manager_menu(test);
                 break;
             case(main_menu::op):
-                cout << "will add operator"; 
+                op_menu(test);
                 break;
         }
 
