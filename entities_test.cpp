@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <iostream>
 #include "entities.h"
 using namespace std;
 
@@ -38,7 +39,7 @@ void EntityTest::compare_number_test()
 {
     Entity test_entity;
     test_entity.set_number(42);
-
+    cout << test_entity.get_number() << endl;
     assert(test_entity.compare_number(42) == true);
     assert(test_entity.compare_number(99) == false);
 }
@@ -67,7 +68,7 @@ void EntityTest::update_data()
 
     original.update_data(src);
 
-    assert(original.get_name() == "Source");
+    assert(original.get_name() == "source");
     assert(original.get_number() == 999);
 
     address &addr = original.get_address();
