@@ -76,8 +76,9 @@ int get_provider()
 void provider_menu(Database & database)
 {
     int menu_choice = 0;
-    int provider_num = 0;
-    int member_num = 0;
+    //int provider_num = 0;
+    //int member_num = 0;
+    bool result = true;
 
     //loop until valid number is entered
     do
@@ -85,9 +86,11 @@ void provider_menu(Database & database)
         system("clear");
         //TODO add a loop to continuously get the provider number or fix exception handling
         provider_num = get_provider();        
-        //database.verify_provider(provider_num);
+        /*
+        result = database.verify_provider(provider_num);
+        */
         
-    }while(!provider_num);
+    }while(!result);
 
     
     continue_confirm();
@@ -104,22 +107,29 @@ void provider_menu(Database & database)
                 //TODO update loop once expection handling for member lookup is confirmed
 
                 system("clear");
+                /*
                 do
                 {
                     member_num = get_member();
-                    //database.verify_member(member_num);
+                    result = database.verify_member(member_num);
                 }while(!member_num);
 
-
                 continue_confirm();
+                */
                 break;
 
             case(provider_menu_options::check_out):
                 //TODO update loop once expection handling for member lookup is confirmed
                 system("clear");
                 member_num = get_member();
-                    //database.verify_member(member_num);
+                /*
+                do
+                {
+                    result = database.verify_member(member_num);
+                }while(!result);
+
                 continue_confirm();
+                */
                 break;
 
             case(provider_menu_options::request_dir):
@@ -216,6 +226,11 @@ void op_sub_member(Database & database)
                 //TODO
                 system("clear");
                 cout << "\nadd";
+
+                Member temp_member();
+
+                database.add_member(temp_member); 
+
                 continue_confirm();
                 break;
 
@@ -258,14 +273,14 @@ void op_sub_provider(Database & database)
         {
             case(operator_menu_options::add):
                 //TODO
-                system("\nclear");
-                cout << "add";
+                system("clear");
+                cout << "\nadd";
+
                 continue_confirm();
                 break;
 
             case(operator_menu_options::remove):
-                //TODO
-                system("\nclear");
+                system("clear");
                 provider_num = get_provider();
 
                 database.delete_provider(provider_num);
@@ -305,3 +320,4 @@ void continue_confirm()
 
     return;
 }
+

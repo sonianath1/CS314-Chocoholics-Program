@@ -39,6 +39,12 @@ void op_sub_provider(Database & database);
 //confirm function that allows viewer to still see screen before it is cleared
 void continue_confirm();
 
+//get input for provider object
+void provider_input();
+
+//get input for member object
+void member_input();
+
 namespace provider_menu_options
 {
     const int check_in = 1;
@@ -112,6 +118,13 @@ Welcome to the Provider Portal!
     2. Delete provider
     3. Update provider
     4. Go back)";
+
+    const string welcome = R"(Welcome to the Chocoholid Anonymous Data Processor!
+
+Chocoholics Anonymous (ChocAn) is an organization dedicated to helping 
+people addicted to chocolate in all its glorious forms. This software
+manages all data given by members and providers, and allows for managers
+and operators to view and edit the data.)";
 
     const string goodbye = "Thank you!\n";
 }

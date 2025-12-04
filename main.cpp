@@ -36,7 +36,7 @@ int main(void)
     do
     {
         system("clear");
-        cout << "ChocoAn" << endl;
+        cout << menu_text::welcome << endl;
         cout << menu_text::main;
         menu_choice = get_integer("\n> ");
         switch (menu_choice)
