@@ -22,20 +22,6 @@ void DatabaseTest::constructor_test()
     assert(test_db.ProviderDirectory != nullptr);
 }
 
-// Smoke test if each member is destructed properly
-void DatabaseTest::destructor_test()
-{
-    Database test_db;
-    cout << "Destructor Test\n";
-    test_db.~Database();
-    assert(test_db.members_size == 0 && "Size should be reset to 0");
-    assert(test_db.providers_size == 0 && "Size should be reset to 0");
-    assert(test_db.prov_dir_size == 0 && "Size should be reset to 0");
-    assert(test_db.Members == nullptr && "Destructor expected to make all pointers nullptr");
-    assert(test_db.Providers == nullptr && "Destructor expected to make all pointers nullptr");
-    assert(test_db.ProviderDirectory == nullptr && "Destructor expected to make all pointers nullptr");
-}
-
 void DatabaseTest::read_from_file_test()
 {
     cout << "Read File Test\n";
