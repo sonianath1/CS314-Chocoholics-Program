@@ -120,9 +120,9 @@ class Database
 		friend class DatabaseTest;                                  // friend database testing class
 
 	private:
-		void verify_member(int member_number);		// verify that a member exists
-		void verify_provider(int provider_number);	// verify that a provider exists
-		void verify_service(int service_number);	// verify that a service exists
+		bool verify_member(int member_number);		// verify that a member exists
+		bool verify_provider(int provider_number);	// verify that a provider exists
+		bool verify_service(int service_number);	// verify that a service exists
 		int hash_function(int key_value, int table_size);		// hash function 
 
 		// for the destructor	
@@ -362,7 +362,7 @@ class DatabaseTest
 		void verify_member_test();		// verify that a member exists
 		void verify_provider_test();	// verify that a provider exists
 		void verify_service_test();		// verify that a service exists
-		void hash_function_test();		// hasH function 
+		void hash_function_test();		// hash function 
 };
 
 class ServiceTest

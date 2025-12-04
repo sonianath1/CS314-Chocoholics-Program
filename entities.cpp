@@ -27,7 +27,7 @@ string & Entity::get_name()
 
 bool Entity::compare_number(int number_to_compare)
 {
-	return false;
+	return number_to_compare == number ? true : false;
 }
 
 void Entity::update_data(const Entity& to_copy)

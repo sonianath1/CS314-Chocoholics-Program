@@ -13,7 +13,7 @@ using namespace std;
 void DatabaseTest::constructor_test()
 {
 	Database test_db;
-	cout << "Constructor Test\n";
+	cout << "\n---Constructor Test---\n";
 	assert(test_db.members_size == 10);
 	assert(test_db.providers_size == 10);
 	assert(test_db.prov_dir_size == 10);
@@ -24,7 +24,7 @@ void DatabaseTest::constructor_test()
 
 void DatabaseTest::read_from_file_test()
 {
-    cout << "Read File Test\n";
+    cout << "\n---Read File Test---\n";
     load_member_test();
     load_provider_test();
     load_provider_directory_test();
@@ -34,7 +34,7 @@ void DatabaseTest::read_from_file_test()
 
 void DatabaseTest::write_to_file_test()
 {
-    cout << "Write File Test\n";
+    cout << "\n---Write File Test---\n";
     write_member_test();
     write_provider_test();
     write_provider_directory_test();
@@ -48,9 +48,10 @@ void DatabaseTest::write_to_file_test()
 
 void DatabaseTest::load_member_test()
 {
-	cout << "\tLoad Members Test" << endl;
+	cout << "\n---Load Members Test---" << endl;
 	cout << "\t\tCorrect File\n";
 	Database first_db;
+    first_db.remove_all(first_db.Members, first_db.members_size);
 
 	assert(first_db.load_member_data() && "Unable to load members.txt!");
 
@@ -90,7 +91,7 @@ void DatabaseTest::load_member_test()
 
 void DatabaseTest::write_member_test()
 {
-    cout << "\tWrite Member Test\n";
+    cout << "\n---Write Member Test---\n";
     Database test_db; 
     int status;
 
@@ -104,7 +105,7 @@ void DatabaseTest::write_member_test()
     if (0 == pid)
     {
         status = execlp("rm", "rm", "members.txt");
-        perror("error deleting members_1.txt");
+        perror("error deleting members.txt");
         _exit(EXIT_FAILURE);
     }
     else
@@ -117,7 +118,7 @@ void DatabaseTest::write_member_test()
     pid = fork();
     if (0 == pid)       /* Child Process */
     {
-        status = execlp("cp", "cp", "-vf", "test_txt/members_1.txt", "members.txt", (char *) NULL);
+        status = execlp("cp", "cp", "-f", "test_txt/members_1.txt", "members.txt", (char *) NULL);
         perror("error resetting members.txt");
         _exit(EXIT_FAILURE);
     }
@@ -166,7 +167,7 @@ void DatabaseTest::write_member_test()
     pid = fork();
     if (0 == pid)       /* Child Process */
     {
-        status = execlp("cp", "cp", "-vf", "original_txt/members.txt", "members.txt", (char *) NULL);
+        status = execlp("cp", "cp", "-f", "original_txt/members.txt", "members.txt", (char *) NULL);
         perror("error resetting members.txt");
         _exit(EXIT_FAILURE);
     }
@@ -179,7 +180,7 @@ void DatabaseTest::write_member_test()
 
 void DatabaseTest::add_member_test()
 {
-    cout << "Add Member Test" << endl;
+    cout << "\n---Add Member Test---" << endl;
 
     // info was already verified by the terminal
     Database test_db;
@@ -209,13 +210,22 @@ void DatabaseTest::add_member_test()
     assert(test_db.Members[2] != nullptr && "Member isn't being put in the correct place");
 
     // ensure that duplicates aren't added 
-    test_db.add_member(test_member);
+    try
+    {
+        test_db.add_member(test_member);
+    }
+    catch(DuplicateEntity err)
+    {
+        cerr << err.msg;
+    }
+    
+    
     assert(test_db.Members[2]->next == nullptr && "Duplicates aren't allowed in the database");
 }
 
 void DatabaseTest::update_member_test()
 {
-    cout << "Update Member Test\n";
+    cout << "\n---Update Member Test---\n";
     // info was already verified by the terminal
     Database test_db;
     Member test_member;
@@ -243,7 +253,7 @@ void DatabaseTest::update_member_test()
     // populate the stream with premade inputs
     istringstream iss_name("1\nOTTER");
     istringstream iss_number("2\n900000003");
-    istringstream iss_addr("3\n203 NE Corner Blvd\nColden\nWA\n53984");
+    istringstream iss_addr("3\n203 NE Corner Blvd\n\nColden\n\nWA\n\n53984");
     istringstream iss_stat("4\nInvalid Number");
     
 
@@ -256,21 +266,18 @@ void DatabaseTest::update_member_test()
     cin.rdbuf(iss_addr.rdbuf());
     test_db.update_member(number);
 
-    // update the member's number
-    cin.rdbuf(iss_number.rdbuf());
-    test_db.update_member(number);
-
     // update the status of the member
     cin.rdbuf(iss_stat.rdbuf());
+    test_db.update_member(number);
+    
+    // update the member's number
+    cin.rdbuf(iss_number.rdbuf());
     test_db.update_member(number);
 
 
     assert(test_db.Members[2]->data.get_name() == "OTTER" && "Member wasn't updated properly");
     assert(test_db.Members[2]->data.get_address().city == "Colden" && "Member wasn't updated properly");
     assert(test_db.Members[2]->data.get_address().state == "WA" && "Member wasn't updated properly");
-
-    // delimited by spaces which is not good
-    cerr << test_db.Members[2]->data.get_address().street_addr << endl;
     assert(test_db.Members[2]->data.get_address().street_addr == "203 NE Corner Blvd" && "Member wasn't updated properly");
     assert(test_db.Members[2]->data.get_address().zip_code == 53984 && "Member wasn't updated properly");
     assert(test_db.Members[2]->data.get_number() == 900000003 && "Member wasn't updated properly");
@@ -279,6 +286,7 @@ void DatabaseTest::update_member_test()
 
 void DatabaseTest::delete_member_test()
 {
+    cout << "\n---Delete Member Test---\n";
     // info was already verified by the terminal
     Database test_db;
     Member test_member;
@@ -333,9 +341,10 @@ void DatabaseTest::delete_member_test()
 
 void DatabaseTest::load_provider_test()
 {
-	cout << "\tLoad Providers Test" << endl;
+	cout << "\n---Load Providers Test---" << endl;
 	cout << "\t\tCorrect File\n";
 	Database first_db;
+    first_db.remove_all(first_db.Providers, first_db.providers_size);
 
 	assert(first_db.load_provider_data() && "Unable to load providers.txt!");
 
@@ -375,7 +384,7 @@ void DatabaseTest::load_provider_test()
 
 void DatabaseTest::write_provider_test()
 {
-    cout << "\tWrite Provider Test\n";
+    cout << "\n---Write Provider Test---\n";
     Database test_db; 
     int status;
 
@@ -402,7 +411,7 @@ void DatabaseTest::write_provider_test()
     pid = fork();
     if (0 == pid)       /* Child Process */
     {
-        status = execlp("cp", "cp", "-vf", "test_txt/providers_1.txt", "providers.txt", (char *) NULL);
+        status = execlp("cp", "cp", "-f", "test_txt/providers_1.txt", "providers.txt", (char *) NULL);
         perror("error resetting providers.txt");
         _exit(EXIT_FAILURE);
     }
@@ -414,9 +423,9 @@ void DatabaseTest::write_provider_test()
 
     // loading information from providers
     cout << "Loading data from providers.txt\n";
-    test_db.load_member_data();
+    test_db.load_provider_data();
 
-    test_db.write_member_data();
+    test_db.write_provider_data();
 
     cout << "Comparing files...\n";
     // test if the baseline is correct
@@ -451,7 +460,7 @@ void DatabaseTest::write_provider_test()
     pid = fork();
     if (0 == pid)       /* Child Process */
     {
-        status = execlp("cp", "cp", "-vf", "original_txt/providers.txt", "providers.txt", (char *) NULL);
+        status = execlp("cp", "cp", "-f", "original_txt/providers.txt", "providers.txt", (char *) NULL);
         perror("error resetting providers.txt");
         _exit(EXIT_FAILURE);
     }
@@ -464,7 +473,52 @@ void DatabaseTest::write_provider_test()
 
 void DatabaseTest::add_provider_test()
 {
-    cout << "Add Provider Test" << endl;
+    cout << "\n---Add Provider Test---" << endl;
+
+    // info was already verified by the terminal
+    Database test_db;
+    Provider test_provider;
+    address test_addr;
+    string name = "TEST";
+    test_addr.city = "Likely";
+    test_addr.state = "CA";
+    test_addr.street_addr = "123 Apple Dr.";
+    test_addr.zip_code = 80459;
+    int number = 700000002;
+    int service = 100500;
+    
+    test_provider.set_name(name);
+    test_provider.set_address(test_addr);
+    test_provider.set_number(number);
+    test_provider.add_service(service);
+
+    // delete the database
+    test_db.remove_all(test_db.Providers, test_db.providers_size);
+
+    // remake the size
+    test_db.providers_size = 10;
+    test_db.add_provider(test_provider);
+
+    // ensure it was put into the correct place
+    assert(test_db.Providers[2] != nullptr && "Provider isn't being put in the correct place");
+
+    // ensure that duplicates aren't added 
+    try
+    {
+        test_db.add_provider(test_provider);
+    }
+    catch(DuplicateEntity err)
+    {
+        cerr << "Duplicate was found in Providers!\n";
+    }
+    
+    assert(test_db.Providers[2]->next == nullptr && "Duplicates aren't allowed in the database");
+
+}
+
+void DatabaseTest::update_provider_test()
+{
+    cout << "\n---Update Provider Test---" << endl;
 
     // info was already verified by the terminal
     Database test_db;
@@ -493,10 +547,10 @@ void DatabaseTest::add_provider_test()
     // populate the stream with premade inputs
     istringstream iss_name("1\nOTTER");
     istringstream iss_number("2\n700000003");
-    istringstream iss_addr("3\n203 NE Corner Blvd\nColden\nWA\n53984");
+    istringstream iss_addr("3\n203 NE Corner Blvd\n\nColden\n\nWA\n\n53984");
     istringstream iss_service("4\n100400");
     
-    // update the member's name
+    // update the provider's name
     cin.rdbuf(iss_name.rdbuf());
     test_db.update_provider(number);
 
@@ -504,12 +558,12 @@ void DatabaseTest::add_provider_test()
     cin.rdbuf(iss_addr.rdbuf());
     test_db.update_provider(number);
 
-    // update the provider's number
-    cin.rdbuf(iss_number.rdbuf());
+    // update the services of the provider
+    cin.rdbuf(iss_service.rdbuf());
     test_db.update_provider(number);
 
-    // update the status of the provider
-    cin.rdbuf(iss_service.rdbuf());
+    // update the provider's number
+    cin.rdbuf(iss_number.rdbuf());
     test_db.update_provider(number);
 
 
@@ -517,47 +571,16 @@ void DatabaseTest::add_provider_test()
     assert(test_db.Providers[2]->data.get_address().city == "Colden" && "Provider wasn't updated properly");
     assert(test_db.Providers[2]->data.get_address().state == "WA" && "Provider wasn't updated properly");
 
-    // delimited by spaces which is not good
-    cerr << test_db.Providers[2]->data.get_address().street_addr << endl;
     assert(test_db.Providers[2]->data.get_address().street_addr == "203 NE Corner Blvd" && "Provider wasn't updated properly");
     assert(test_db.Providers[2]->data.get_address().zip_code == 53984 && "Provider wasn't updated properly");
-    assert(test_db.Providers[2]->data.get_number() == 900000003 && "Provider wasn't updated properly");
-    assert(test_db.Providers[2]->data.get_services()[0] == 100400 && "Provider wasn't updated properly");
-
-}
-
-void DatabaseTest::update_provider_test()
-{
-    cout << "Update Provider Test" << endl;
-
-    // info was already verified by the terminal
-    Database test_db;
-    Provider test_provider;
-    address test_addr;
-    string name = "TEST";
-    test_addr.city = "Likely";
-    test_addr.state = "CA";
-    test_addr.street_addr = "123 Apple Dr.";
-    test_addr.zip_code = 80459;
-    int number = 700000002;
-    int service = 100500;
-    
-    test_provider.set_name(name);
-    test_provider.set_address(test_addr);
-    test_provider.set_number(number);
-    test_provider.add_service(service);
-
-    // delete the database
-    test_db.remove_all(test_db.Members, test_db.members_size);
-
-    // remake the size
-    test_db.providers_size = 10;
-    test_db.add_provider(test_provider);
+    assert(test_db.Providers[2]->data.get_number() == 700000003 && "Provider wasn't updated properly");
+    assert(test_db.Providers[2]->data.get_services()[1] == 100400 && "Provider wasn't updated properly");
 
 }
 
 void DatabaseTest::delete_provider_test()
 {
+    cout << "\n---Delete Provider Test---\n";
     // info was already verified by the terminal
     Database test_db;
     Member test_member;
@@ -612,9 +635,10 @@ void DatabaseTest::delete_provider_test()
 
 void DatabaseTest::load_provider_directory_test()
 {
-	cout << "\tLoad Provider Directory Test" << endl;
+	cout << "\n---Load Provider Directory Test---\n" << endl;
 	cout << "\t\tCorrect File\n";
 	Database first_db;
+    first_db.remove_all(first_db.ProviderDirectory, first_db.prov_dir_size);
 
 	assert(first_db.load_provider_directory_data() && "Unable to load providerdirectory.txt!");
 
@@ -654,17 +678,159 @@ void DatabaseTest::load_provider_directory_test()
 
 void DatabaseTest::write_provider_directory_test()
 {
-    
+    cout << "\n---Write Provider Directory Test---\n";
+    Database test_db; 
+    int status;
+
+    cout << "Making clean database...\n";
+    // delete the database
+    test_db.remove_all(test_db.ProviderDirectory, test_db.prov_dir_size);
+
+    cout << "Ensuring clean providerdirectory.txt\n";
+    // delete providerdirectory.txt
+    int pid = fork();
+    if (0 == pid)
+    {
+        status = execlp("rm", "rm", "providerdirectory.txt");
+        perror("error deleting providerdirectory_1.txt");
+        _exit(EXIT_FAILURE);
+    }
+    else
+    {
+        wait(&status);
+        // it just needs to delete it if it exists
+    }
+
+    // replace providerdirectory.txt with the original providerdirectory.txt
+    pid = fork();
+    if (0 == pid)       /* Child Process */
+    {
+        status = execlp("cp", "cp", "-f", "test_txt/providerdirectory_1.txt", "providerdirectory.txt", (char *) NULL);
+        perror("error resetting providerdirectory.txt");
+        _exit(EXIT_FAILURE);
+    }
+    else                /* Parent Process */
+    {
+        wait(&status);
+        assert(status == 0 && "Ensure test_txt/providerdirectory_1.txt exists");
+    }
+
+    // loading information from providerdirectory
+    cout << "Loading data from providerdirectory.txt\n";
+    test_db.load_provider_directory_data();
+
+    test_db.write_provider_directory_data();
+
+    cout << "Comparing files...\n";
+    // test if the baseline is correct
+    pid = fork();
+    if (0 == pid)       /* Child Process */
+    {
+        status = execlp("./test_scripts/write_entities.bash", "./test_scripts/write_entities.bash", "test_txt/providerdirectory_1.txt", "providerdirectory.txt", (char *) NULL);
+        perror("error diffing providerdirectory.txt");
+        _exit(EXIT_FAILURE);
+    }
+    else                /* Parent Process */
+    {
+        wait(&status);
+        assert(status == 0 && "Expected output providerdirectory.txt not matching expected providerdirectory.txt");
+    }
+
+    // delete providerdirectory_1.txt
+    pid = fork();
+    if (0 == pid)
+    {
+        status = execlp("rm", "rm", "-f", "providerdirectory.txt", (char *) NULL);
+        perror("error deleting providerdirectory.txt");
+        _exit(EXIT_FAILURE);
+    }
+    else
+    {
+        wait(&status);
+        assert(status == 0 && "Unable to restore providerdirectory.txt");
+    }
+
+    // replace with the original providerdirectory.txt
+    pid = fork();
+    if (0 == pid)       /* Child Process */
+    {
+        status = execlp("cp", "cp", "-f", "original_txt/providerdirectory.txt", "providerdirectory.txt", (char *) NULL);
+        perror("error resetting providerdirectory.txt");
+        _exit(EXIT_FAILURE);
+    }
+    else                /* Parent Process */
+    {
+        wait(&status);
+        assert(status == 0 && "Ensure original_txt/providerdirectory.txt exists");
+    }
 }
 
 void DatabaseTest::add_service_test()
 {
+    cout << "\n---Add Service Test---\n" << endl;
 
+    // info was already verified by the terminal
+    Database test_db;
+    Service test_service;
+    string name = "TEST";
+    int service = 100502;
+    float fee = 25.35;
+    
+    test_service.set_code(service);
+    test_service.set_fee(fee);
+    test_service.set_name(name);
+
+    // delete the database
+    test_db.remove_all(test_db.ProviderDirectory, test_db.prov_dir_size);
+
+    // remake the size
+    test_db.prov_dir_size = 10;
+    test_db.add_service(test_service);
+
+    // ensure it was put into the correct place
+    assert(test_db.ProviderDirectory[2] != nullptr && "Service isn't being put in the correct place");
+
+    // ensure that duplicates aren't added 
+    try
+    {
+        test_db.add_service(test_service);
+    }
+    catch(DuplicateEntity err)
+    {
+        cerr << err.msg;
+    }
+    
+    assert(test_db.ProviderDirectory[2]->next == nullptr && "Duplicates aren't allowed in the database");
 }
 
 void DatabaseTest::get_service_data_test()
 {
+    cout << "\n---Get Service Data Test---\n" << endl;
+    Database test_db;
 
+    // get service that exists
+    Service the_service;
+    Service empty_service;
+
+    cout << "Getting Service from Database";
+    test_db.get_service_data(100900, the_service);
+
+    assert(the_service.get_name() == "Stress Management" && "Did not retrieve the correct service");
+
+    // get service that doesnt exist
+    try
+    {
+        test_db.get_service_data(494837, empty_service);
+    }
+    catch(NoEntityFound err)
+    {
+        cerr << err.msg << endl;
+    }
+    
+    // try to overwrite a service
+    test_db.get_service_data(100400, the_service);
+
+    assert(the_service.get_name() == "Dietitian Consult" && "Did not correctly overwrite the_service");
 }
 
 // --------------------------------------------------------
@@ -673,7 +839,52 @@ void DatabaseTest::get_service_data_test()
 
 void DatabaseTest::generate_weekly_report_test()
 {
+    cout << "\n---Generate Weekly Report Test---\n";
+    Database test_db; 
+    int status;
 
+    // delete weekly_report.txt and EFT_report.txt
+    int pid = fork();
+    if (0 == pid)
+    {
+        status = execlp("rm", "rm", "weekly_report.txt");
+        perror("error deleting weekly_report.txt");
+        _exit(EXIT_FAILURE);
+    }
+    else
+    {
+        wait(&status);
+        // it just needs to delete it if it exists
+    }
+
+    pid = fork();
+    if (0 == pid)
+    {
+        status = execlp("rm", "rm", "EFT_report.txt");
+        perror("error deleting EFT_report.txt");
+        _exit(EXIT_FAILURE);
+    }
+    else
+    {
+        wait(&status);
+        // it just needs to delete it if it exists
+    }
+    
+    test_db.generate_weekly_report();
+    // ensure eft report and weekly report get created
+
+    pid = fork();
+    if (0 == pid)       /* Child Process */
+    {
+        status = execlp("./test_scripts/check_weekly_report.bash", "./test_scripts/check_weekly_report.bash", (char *) NULL);
+        perror("error checking if report files exist");
+        _exit(EXIT_FAILURE);
+    }
+    else                /* Parent Process */
+    {
+        wait(&status);
+        assert(status == 0 && "Weekly Report or EFT report was not created");
+    }
 }
 
 // -----------------------------------------------------------
@@ -725,12 +936,108 @@ void DatabaseTest::load_provided_service_test()
 
 void DatabaseTest::write_provided_service_test()
 {
+    cout << "\n---Write Provided Service Test---\n";
+    Database test_db; 
+    int status;
 
+    cout << "Making clean database...\n";
+
+    // delete the database
+    test_db.ProvidedServices.clear();
+
+    cout << "Ensuring clean providedservices.txt\n";
+    // delete providedservices.txt
+    int pid = fork();
+    if (0 == pid)
+    {
+        status = execlp("rm", "rm", "providedservices.txt");
+        perror("error deleting providedservices_1.txt");
+        _exit(EXIT_FAILURE);
+    }
+    else
+    {
+        wait(&status);
+        // it just needs to delete it if it exists
+    }
+
+    // replace providedservices.txt with the original providedservices.txt
+    pid = fork();
+    if (0 == pid)       /* Child Process */
+    {
+        status = execlp("cp", "cp", "-f", "test_txt/providedservices_1.txt", "providedservices.txt", (char *) NULL);
+        perror("error resetting providedservices.txt");
+        _exit(EXIT_FAILURE);
+    }
+    else                /* Parent Process */
+    {
+        wait(&status);
+        assert(status == 0 && "Ensure test_txt/providedservices_1.txt exists");
+    }
+
+    // loading information from providedservices
+    cout << "Loading data from providedservices.txt\n";
+    test_db.load_provided_service_data();
+
+    test_db.write_provided_service_data();
+
+    cout << "Comparing files...\n";
+    // test if the baseline is correct
+    pid = fork();
+    if (0 == pid)       /* Child Process */
+    {
+        status = execlp("./test_scripts/write_entities.bash", "./test_scripts/write_entities.bash", "test_txt/providedservices_1.txt", "providedservices.txt", (char *) NULL);
+        perror("error diffing providedservices.txt");
+        _exit(EXIT_FAILURE);
+    }
+    else                /* Parent Process */
+    {
+        wait(&status);
+        assert(status == 0 && "Expected output providedservices.txt not matching expected providedservices.txt");
+    }
+
+    // delete providedservices_1.txt
+    pid = fork();
+    if (0 == pid)
+    {
+        status = execlp("rm", "rm", "-f", "providedservices.txt", (char *) NULL);
+        perror("error deleting providedservices.txt");
+        _exit(EXIT_FAILURE);
+    }
+    else
+    {
+        wait(&status);
+        assert(status == 0 && "Unable to restore providedservices.txt");
+    }
+
+    // replace with the original providedservices.txt
+    pid = fork();
+    if (0 == pid)       /* Child Process */
+    {
+        status = execlp("cp", "cp", "-f", "original_txt/providedservices.txt", "providedservices.txt", (char *) NULL);
+        perror("error resetting providedservices.txt");
+        _exit(EXIT_FAILURE);
+    }
+    else                /* Parent Process */
+    {
+        wait(&status);
+        assert(status == 0 && "Ensure original_txt/providedservices.txt exists");
+    }
 }
 
 void DatabaseTest::record_provided_service_test()
 {
+    cout << "\n---Record Provided Service Test---\n";
+    Database test_db;
+    ProvidedService ps;
 
+    ps.current_date_time = "11-14-2025 09:14:22";
+    ps.service_data_time = "11-10-2025";
+    ps.provider_number = 900123456;
+    ps.member_number = 100400;
+
+    test_db.record_provided_service(ps);
+
+    assert(test_db.ProvidedServices.back().current_date_time == "11-14-2025 09:14:22" && "Did not properly record the provided service");
 }
 
 // ---------------------------------------------------
@@ -739,22 +1046,78 @@ void DatabaseTest::record_provided_service_test()
 
 void DatabaseTest::verify_member_test()
 {
+    Database test_db;
+    int validMember = 900887990;
+    int invalidMember = 323;
+    int suspendedMember = 900901234;
 
+    cout << "\n---Verify member test---" << endl;
+    
+    cout << "The following tests should print 'Verified', 'Invalid Member', and 'Member Suspended', respectively." << endl; 
+    assert(test_db.verify_member(validMember) == true);  // should return true
+    assert(test_db.verify_member(invalidMember) == false);   // should return false
+    assert(test_db.verify_member(suspendedMember) == false);   // should return false
+
+    return;
 }
 
 void DatabaseTest::verify_provider_test()
 {
+    Database test_db;
+    int validProvider = 700567890;
+    int invalidProvider = 323;
 
+    cout << "\n0---Verify provider test---" << endl;
+    
+    cout << "The following tests should print 'Verified' and 'Invalid Number', respectively." << endl; 
+    assert(test_db.verify_provider(validProvider) == true);  // should return true
+    assert(test_db.verify_provider(invalidProvider) == false);   // should return false
+
+    return;
 }
 
 void DatabaseTest::verify_service_test()
 {
+    Database test_db;
+    int validService = 100900;
+    int invalidService = 323;
 
+    cout << "\n---Verify service test---" << endl;
+    
+    cout << "The following tests should print 'Service: Stress Management' and 'Invalid Number', respectively." << endl; 
+    assert(test_db.verify_service(validService) == true);  // should return true
+    assert(test_db.verify_service(invalidService) == false);   // should return false
+
+    return;
 }
 
 void DatabaseTest::hash_function_test()
 {
+	// tests that the hash function returns a hash between 0 and table_size (inclusive)
+	// for normal and big numbers with each of the 3 tables
+    	Database test_db;
+	int normalNum = 12;
+	int bigNum = 999999999;
+	int hash = 0;
 
+	cout << "\n---Hash function test---" << endl;
+
+	hash = test_db.hash_function(normalNum, test_db.members_size); 
+	assert(hash >= 0 && hash < test_db.members_size);
+	hash = test_db.hash_function(bigNum, test_db.members_size); 
+	assert(hash >= 0 && hash < test_db.members_size);
+
+	hash = test_db.hash_function(normalNum, test_db.providers_size); 
+	assert(hash >= 0 && hash < test_db.providers_size);
+	hash = test_db.hash_function(bigNum, test_db.providers_size); 
+	assert(hash >= 0 && hash < test_db.providers_size);
+
+	hash = test_db.hash_function(normalNum, test_db.prov_dir_size); 
+	assert(hash >= 0 && hash < test_db.prov_dir_size);
+	hash = test_db.hash_function(bigNum, test_db.prov_dir_size); 
+	assert(hash >= 0 && hash < test_db.prov_dir_size);
+
+	return;
 }
 
 // ---------------------------------------------------
@@ -764,7 +1127,7 @@ void DatabaseTest::hash_function_test()
 void ServiceTest::default_constructor_test()  
 {
     Service test_service;
-    cout << "Service default constructor test " << endl;
+    cout << "\n---Service default constructor test---" << endl;
     assert(test_service.name == "");
     assert(test_service.number == 0);
     // assert(test_service.fee == 0.0);
@@ -777,7 +1140,7 @@ void ServiceTest::constructor_test()
 {
     float comparison = 45.99;
     Service test_service("Name", 700899, 45.99);
-    cout << "Service arg constructor test " << endl;
+    cout << "\n---Service arg constructor test---" << endl;
     assert(test_service.name == "Name");
     assert(test_service.number == 700899);
     // Source for below: https://www.geeksforgeeks.org/dsa/problem-in-comparing-floating-point-numbers-and-how-to-compare-them-correctly/
@@ -788,7 +1151,7 @@ void ServiceTest::constructor_test()
 void ServiceTest::get_number_test()
 {
     Service test_service("Name", 700899, 45.99);
-    cout << "Get number test " << endl;
+    cout << "\n---Get number test---" << endl;
     assert(test_service.get_number() == 700899);
     return;
 }
@@ -796,7 +1159,7 @@ void ServiceTest::get_number_test()
 void ServiceTest::set_name_test()
 {
     Service test_service;
-    cout << "Set service name test" << endl;
+    cout << "\n---Set service name test---" << endl;
     test_service.set_name("New-Name");
     assert(test_service.name == "New-Name");
     return;
@@ -806,7 +1169,7 @@ void ServiceTest::set_fee_test()
 {
     float comparison = 30.55;
     Service test_service;
-    cout << "Set service fee test" << endl;
+    cout << "\n---Set service fee test---" << endl;
     test_service.set_fee(30.55);
     assert(abs(test_service.fee - comparison) < 1e-9);    
     return;
@@ -815,7 +1178,7 @@ void ServiceTest::set_fee_test()
 void ServiceTest::set_code_test()
 {
     Service test_service;
-    cout << "Set service code test" << endl;
+    cout << "\n---Set service code test---" << endl;
     test_service.set_code(700233);
     assert(test_service.number == 700233);
     return;
@@ -824,7 +1187,7 @@ void ServiceTest::set_code_test()
 void ServiceTest::get_name_test()
 {
     Service test_service("Name", 700899, 45.99);
-    cout << "Get number test " << endl;
+    cout << "\n---Get number test---" << endl;
     assert(test_service.get_name() == "Name");
     return;
 }
@@ -833,7 +1196,7 @@ void ServiceTest::get_fee_test()
 {
     float comparison = 45.99;
     Service test_service("Name", 700899, 45.99);
-    cout << "Get fee test " << endl;
+    cout << "\n---Get fee test---" << endl;
     assert(abs(test_service.fee - comparison) < 0.0000000001);    
     return;
 }
@@ -841,7 +1204,7 @@ void ServiceTest::get_fee_test()
 void ServiceTest::display_all_test()
 {
     Service test_service("Name", 700862, 99.89);
-    cout << "Display all information test (Should display name 'Name', number 700862, and fee 99.89):" << endl;
+    cout << "\n---Display all information test (Should display name 'Name', number 700862, and fee 99.89)---" << endl;
     test_service.display_all();
     return;
 }
