@@ -504,7 +504,7 @@ void Database::update_provider(int provider_number)
 		case 4:   // what kind of service goes here
 			cout << "\nEnter the code for the service you'd like to add for this provider: ";
 			cin >> inputNum; cin.ignore(100, '\n');
-			(found->get_services()).push_back(inputNum);
+			found.add_service(inputNum);
 			cout << "Provider services successfully updated." << endl;
 			break;
 
