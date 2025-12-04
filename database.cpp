@@ -1005,9 +1005,16 @@ void Database::generate_weekly_report()
 
 bool Database::verify_member(int member_number)
 {
-	//NoEntityFound invalidMember;   // variable to throw
+	NoEntityFound invalidMember;   // variable to throw
 	int index = hash_function(member_number, members_size);
-	Member* toVerify = find(Members, member_number, index);
+	Member* toVerify = nullptr;
+	try {
+		toVerify = find(Members, member_number, index); 
+	}
+	catch (NoEntityFound invalidMember) {
+		cout << "\nInvalid Number" << endl;
+		return false;
+	}
 
 	if (toVerify->get_number() == member_number && toVerify->get_status() == "Active") {
 		cout << "\nVerified" << endl;
@@ -1017,24 +1024,25 @@ bool Database::verify_member(int member_number)
 		cout << "\nMember Suspended" << endl;
 		return false;
 	}
-	else if (!toVerify) {
-		cout << "\nInvalid Number" << endl;
-		return false; 
-	}
 
 	return false;
 }
 
 bool Database::verify_provider(int provider_number)
 {
+	NoEntityFound invalidProvider;   // variable to throw
 	int index = hash_function(provider_number, providers_size);
-	Provider* toVerify = find(Providers, provider_number, index);
-
-	if (!toVerify) {
+	Provider* toVerify = nullptr;
+	try {
+		toVerify = find(Providers, provider_number, index);
+	}
+	catch (NoEntityFound invalidProvider)
+	{
 		cout << "\nInvalid Number" << endl;
 		return false;
 	}
-	else if (toVerify->get_number() == provider_number) {
+
+	if (toVerify->get_number() == provider_number) {
 		cout << "\nVerified" << endl;
 		return true;
 	}
