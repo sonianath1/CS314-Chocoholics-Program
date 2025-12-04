@@ -50,7 +50,7 @@ class Service
 		void set_code(int code_to_add) { number = code_to_add; }
 		std::string get_name() { return name; }
 		float get_fee() { return fee; }
-		void display_all() { cout << "\nName: " << name << endl; cout << "Number: " << number << endl; cout << "Fee: " << fee; }
+		void display_all() { cout << "\nName: " << name << endl; cout << "Number: " << number << endl; cout << "Fee: " << fee << endl; }
 		friend class ServiceTest;	// friend test class for Service
 
 	private:
@@ -362,37 +362,7 @@ class DatabaseTest
 		void verify_member_test();		// verify that a member exists
 		void verify_provider_test();	// verify that a provider exists
 		void verify_service_test();		// verify that a service exists
-		void hash_function_test();		// has function 
-
-		// member
-		void member_remove_all_test();
-		void member_add_to_table_test();
-		void member_remove_LLL_test();
-		void member_table_find_test();
-		void member_LLL_find_test();
-		void member_table_find_remove_test();
-		void member_LLL_find__remove_test();
-
-		// provider
-		void provider_remove_all_test();
-		void provider_add_to_table_test();
-		void provider_remove_LLL_test();
-		void provider_table_find_test();
-		void provider_LLL_find_test();
-		void provider_table_find_remove_test();
-		void provider_LLL_find__remove_test();
-
-		// provider directory
-		void provider_directory_remove_all_test();
-		void provider_directory_add_to_table_test();
-		void provider_directory_remove_LLL_test();
-		void provider_directory_table_find_test();
-		void provider_directory_LLL_find_test();
-		void provider_directory_table_find_remove_test();
-		void provider_directory_LLL_find__remove_test();
-
-		// POTENTIALLY REMOVE
-		void remove_all();
+		void hash_function_test();		// hasH function 
 };
 
 class ServiceTest
