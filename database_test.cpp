@@ -1085,8 +1085,8 @@ void DatabaseTest::verify_service_test()
     cout << "\n---Verify service test---" << endl;
     
     cout << "The following tests should print 'Service: Stress Management' and 'Invalid Number', respectively." << endl; 
-    assert(test_db.verify_provider(validService) == true);  // should return true
-    assert(test_db.verify_provider(invalidService) == false);   // should return false
+    assert(test_db.verify_service(validService) == true);  // should return true
+    assert(test_db.verify_service(invalidService) == false);   // should return false
 
     return;
 }

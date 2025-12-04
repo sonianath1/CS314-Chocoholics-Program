@@ -62,9 +62,9 @@ int main()
      test_db.verify_service_test();	// verify that a service exists
      test_db.hash_function_test();		// hash function 
 
-     cout << "***************☆*: .｡. (ദ്ദി˙ᗜ˙) .｡.:*☆**************\n";
+     cout << "***************☆*: .｡. d(￣◇￣)b.｡.:*☆**************\n";
 	cout << "          DATABASE TESTING COMPLETED SUCCESSFULLY    \n";
-	cout << "***************☆*: .｡. (ദ്ദി˙ᗜ˙) .｡.:*☆**************\n";
+	cout << "***************☆*: .｡. d(￣◇￣)b .｡.:*☆**************\n";
      
      return 0;
 }
