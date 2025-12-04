@@ -251,7 +251,7 @@ void Database::update_member(int member_number)
 	{
 		case 1:
 			cout << "\nEnter the member's full name: ";
-			cin >> inputString; cin.ignore(100, '\n');
+			getline(cin, inputString); cin.ignore(100, '\n');
 			found->set_name(inputString);
 			cout << "Member name successfully updated." << endl;
 			break;
@@ -265,11 +265,11 @@ void Database::update_member(int member_number)
 
 		case 3:
 			cout << "Enter the street address: ";
-			cin >> newAddress.street_addr; cin.ignore(100, '\n');
+			getline(cin, newAddress.street_addr); cin.ignore(100, '\n');
 			cout << "Enter the city: ";
-			cin >> newAddress.city; cin.ignore(100, '\n');
+			getline(cin, newAddress.city); cin.ignore(100, '\n');
 			cout << "Enter the state: ";
-			cin >> newAddress.state; cin.ignore(100, '\n');
+			getline(cin, newAddress.state); cin.ignore(100, '\n');
 			cout << "Enter the zip code: ";
 			cin >> newAddress.zip_code; cin.ignore(100, '\n');
 			found->set_address(newAddress);
@@ -278,7 +278,7 @@ void Database::update_member(int member_number)
 
 		case 4:
 			cout << "\nEnter the member status (Choose 'Validated', 'Invalid Number', or 'Member Suspended'): ";
-			cin >> inputString; cin.ignore(100, '\n');
+			getline(cin, inputString); cin.ignore(100, '\n');
 			found->set_status(inputString);
 			cout << "Member status successfully updated." << endl;
 			break;
@@ -476,7 +476,7 @@ void Database::update_provider(int provider_number)
 	{
 		case 1:
 			cout << "\nEnter the provider's full name: ";
-			cin >> inputString; cin.ignore(100, '\n');
+			getline(cin, inputString); cin.ignore(100, '\n');
 			found->set_name(inputString);
 			cout << "Provider name successfully updated." << endl;
 			break;
@@ -490,11 +490,11 @@ void Database::update_provider(int provider_number)
 
 		case 3: 
 			cout << "\nEnter the street address: ";
-			cin >> newAddress.street_addr; cin.ignore(100, '\n');
+			getline(cin, newAddress.street_addr); cin.ignore(100, '\n');
 			cout << "Enter the city: ";
-			cin >> newAddress.city; cin.ignore(100, '\n');
+			getline(cin, newAddress.city); cin.ignore(100, '\n');
 			cout << "Enter the state: ";
-			cin >> newAddress.state; cin.ignore(100, '\n');
+			getline(cin, newAddress.state); cin.ignore(100, '\n');
 			cout << "Enter the zip code: ";
 			cin >> newAddress.zip_code; cin.ignore(100, '\n');
 			found->set_address(newAddress);
