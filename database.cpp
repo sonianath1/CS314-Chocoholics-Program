@@ -66,6 +66,10 @@ Database::~Database()
 	Members = nullptr;
 	Providers = nullptr;
 	ProviderDirectory = nullptr;
+	
+	members_size = 0;
+	providers_size = 0;
+	prov_dir_size = 0;
 
 	ProvidedServices.clear();
 }

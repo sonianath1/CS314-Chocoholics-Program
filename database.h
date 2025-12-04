@@ -182,6 +182,7 @@ class Database
 //---------------------------------------------------------------- 
 
 
+
 // adding to table
 	template <typename TYPE>
 void Database::add_to_table(node<TYPE> **table, int table_size, TYPE &to_add)
@@ -215,7 +216,6 @@ bool Database::find_dup(node<TYPE>* head, int num_to_compare)
 
 
 // removing a LLL for index wrapper
-
 	template <typename TYPE>
 void Database::remove_all(node<TYPE> **table, int table_size)
 {	
@@ -231,7 +231,6 @@ void Database::remove_all(node<TYPE> **table, int table_size)
 }
 
 // removing a LLL for index recursive
-
 	template <typename TYPE>
 void Database::remove_LLL(node<TYPE> *&head)
 {
@@ -245,6 +244,7 @@ void Database::remove_LLL(node<TYPE> *&head)
 	head = nullptr;	
 	return;
 }
+
 
 	template <typename TYPE>
 TYPE *Database::find(node<TYPE> **table, int number_to_find, int index)

@@ -23,9 +23,11 @@ void DatabaseTest::constructor_test()
 void DatabaseTest::destructor_test()
 {
 	Database test_db;
+	test_db.~Database();
 	cout << "Destructor Test\n";
-	Database local_db;
-	local_db.~Database();
+
+//	Database local_db;
+//	local_db.~Database();
 	assert(test_db.members_size == 0 && "Size should be reset to 0");
 	assert(test_db.providers_size == 0 && "Size should be reset to 0");
 	assert(test_db.prov_dir_size == 0 && "Size should be reset to 0");
