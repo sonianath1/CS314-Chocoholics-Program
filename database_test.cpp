@@ -51,6 +51,7 @@ void DatabaseTest::load_member_test()
 	cout << "\tLoad Members Test" << endl;
 	cout << "\t\tCorrect File\n";
 	Database first_db;
+    first_db.remove_all(first_db.Members, first_db.members_size);
 
 	assert(first_db.load_member_data() && "Unable to load members.txt!");
 
@@ -117,7 +118,7 @@ void DatabaseTest::write_member_test()
     pid = fork();
     if (0 == pid)       /* Child Process */
     {
-        status = execlp("cp", "cp", "-vf", "test_txt/members_1.txt", "members.txt", (char *) NULL);
+        status = execlp("cp", "cp", "-f", "test_txt/members_1.txt", "members.txt", (char *) NULL);
         perror("error resetting members.txt");
         _exit(EXIT_FAILURE);
     }
@@ -166,7 +167,7 @@ void DatabaseTest::write_member_test()
     pid = fork();
     if (0 == pid)       /* Child Process */
     {
-        status = execlp("cp", "cp", "-vf", "original_txt/members.txt", "members.txt", (char *) NULL);
+        status = execlp("cp", "cp", "-f", "original_txt/members.txt", "members.txt", (char *) NULL);
         perror("error resetting members.txt");
         _exit(EXIT_FAILURE);
     }
@@ -209,7 +210,16 @@ void DatabaseTest::add_member_test()
     assert(test_db.Members[2] != nullptr && "Member isn't being put in the correct place");
 
     // ensure that duplicates aren't added 
-    test_db.add_member(test_member);
+    try
+    {
+        test_db.add_member(test_member);
+    }
+    catch(DuplicateEntity err)
+    {
+        cerr << err.msg;
+    }
+    
+    
     assert(test_db.Members[2]->next == nullptr && "Duplicates aren't allowed in the database");
 }
 
@@ -256,12 +266,12 @@ void DatabaseTest::update_member_test()
     cin.rdbuf(iss_addr.rdbuf());
     test_db.update_member(number);
 
-    // update the member's number
-    cin.rdbuf(iss_number.rdbuf());
-    test_db.update_member(number);
-
     // update the status of the member
     cin.rdbuf(iss_stat.rdbuf());
+    test_db.update_member(number);
+    
+    // update the member's number
+    cin.rdbuf(iss_number.rdbuf());
     test_db.update_member(number);
 
 
@@ -336,6 +346,7 @@ void DatabaseTest::load_provider_test()
 	cout << "\tLoad Providers Test" << endl;
 	cout << "\t\tCorrect File\n";
 	Database first_db;
+    first_db.remove_all(first_db.Providers, first_db.providers_size);
 
 	assert(first_db.load_provider_data() && "Unable to load providers.txt!");
 
@@ -402,7 +413,7 @@ void DatabaseTest::write_provider_test()
     pid = fork();
     if (0 == pid)       /* Child Process */
     {
-        status = execlp("cp", "cp", "-vf", "test_txt/providers_1.txt", "providers.txt", (char *) NULL);
+        status = execlp("cp", "cp", "-f", "test_txt/providers_1.txt", "providers.txt", (char *) NULL);
         perror("error resetting providers.txt");
         _exit(EXIT_FAILURE);
     }
@@ -414,9 +425,9 @@ void DatabaseTest::write_provider_test()
 
     // loading information from providers
     cout << "Loading data from providers.txt\n";
-    test_db.load_member_data();
+    test_db.load_provider_data();
 
-    test_db.write_member_data();
+    test_db.write_provider_data();
 
     cout << "Comparing files...\n";
     // test if the baseline is correct
@@ -451,7 +462,7 @@ void DatabaseTest::write_provider_test()
     pid = fork();
     if (0 == pid)       /* Child Process */
     {
-        status = execlp("cp", "cp", "-vf", "original_txt/providers.txt", "providers.txt", (char *) NULL);
+        status = execlp("cp", "cp", "-f", "original_txt/providers.txt", "providers.txt", (char *) NULL);
         perror("error resetting providers.txt");
         _exit(EXIT_FAILURE);
     }
@@ -615,6 +626,7 @@ void DatabaseTest::load_provider_directory_test()
 	cout << "\tLoad Provider Directory Test" << endl;
 	cout << "\t\tCorrect File\n";
 	Database first_db;
+    first_db.remove_all(first_db.ProviderDirectory, first_db.prov_dir_size);
 
 	assert(first_db.load_provider_directory_data() && "Unable to load providerdirectory.txt!");
 
