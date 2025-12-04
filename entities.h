@@ -24,10 +24,12 @@ class Entity
 {
 	public:
 		Entity();									// constructor
+		Entity(const string, const int, const address);
+		
 		int get_number();							// get identification number
 		string & get_name();						// get name of entity
 		bool compare_number(int number_to_compare);	// compare entity number with incoming number
-		void update_data(Entity & to_copy);			// update entity data
+		void update_data(const Entity & to_copy);			// update entity data
 
 		// setters	
 		void set_name(const std::string & new_name) { name = new_name; }
@@ -49,7 +51,9 @@ class Member : public Entity
 {
 	public:
 		Member();							// constructor
-		void update_data(Member & to_copy);	// update member data
+		Member(const string, const int, const address, const string);
+		
+		void update_data(const Member & to_copy);	// update member data
 
 		void set_status(const std::string & new_status) { status = new_status; } // setter 
 		std::string get_status() { return status; }
@@ -64,7 +68,9 @@ class Provider : public Entity
 {
 	public:
 		Provider();								// constructor
-		void update_data(Provider & to_copy);	// update provider data
+		Provider(const string, const int, const address, const std::vector<int>&);
+		
+		void update_data(const Provider & to_copy);	// update provider data
 		
 		// for vector 
 		void add_service(int to_add) { services_provided.push_back(to_add); }

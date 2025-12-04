@@ -1,5 +1,5 @@
-#include "entities.h"
 #include <assert.h>
+#include "entities.h"
 using namespace std;
 
 //-------------------------------------------------------- 
@@ -8,7 +8,7 @@ using namespace std;
 
 void EntityTest::constructor_test()
 {
-
+    
 }
 
 void EntityTest::get_number_test()

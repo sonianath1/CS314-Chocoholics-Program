@@ -1,4 +1,3 @@
-#include "database.h"
 #include <assert.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -6,20 +5,21 @@
 #include <stdlib.h>
 #include <bits/stdc++.h>
 
+#include "database.h"
 using namespace std;
 
 
 // Smoke test if each data member initialized properly
 void DatabaseTest::constructor_test()
 {
-    Database test_db;
-    cout << "Constructor Test\n";
-    assert(test_db.members_size == 10);
-    assert(test_db.providers_size == 10);
-    assert(test_db.prov_dir_size == 10);
-    assert(test_db.Members != nullptr);
-    assert(test_db.Providers != nullptr);
-    assert(test_db.ProviderDirectory != nullptr);
+	Database test_db;
+	cout << "Constructor Test\n";
+	assert(test_db.members_size == 10);
+	assert(test_db.providers_size == 10);
+	assert(test_db.prov_dir_size == 10);
+	assert(test_db.Members != nullptr);
+	assert(test_db.Providers != nullptr);
+	assert(test_db.ProviderDirectory != nullptr);
 }
 
 void DatabaseTest::read_from_file_test()
@@ -48,44 +48,44 @@ void DatabaseTest::write_to_file_test()
 
 void DatabaseTest::load_member_test()
 {
-    cout << "\tLoad Members Test" << endl;
-    cout << "\t\tCorrect File\n";
-    Database first_db;
+	cout << "\tLoad Members Test" << endl;
+	cout << "\t\tCorrect File\n";
+	Database first_db;
 
-    assert(first_db.load_member_data() && "Unable to load members.txt!");
+	assert(first_db.load_member_data() && "Unable to load members.txt!");
 
-    // create a child process that changes the name of members.txt to another name
-    int status;
-    pid_t pid;
-    pid = fork();
-    if (0 == pid)   /* Child process */
-    {
-        status = execlp("mv", "mv", "members.txt", "gobbly.txt", (char *) NULL);
-        perror("Unable to rename members.txt to gobbly.txt");
-        _exit(EXIT_FAILURE);
-    }
-    else            /* Parent process */
-    {
-        pid_t cpid = wait(&status);
-        cerr << "pid: " << cpid << " status: " << status << endl;
-    }
-    cout << "\t\tIncorrect File\n";
-    assert(first_db.load_member_data() == false && "Incorrect file read-in not returning false");
+	// create a child process that changes the name of members.txt to another name
+	int status;
+	pid_t pid;
+	pid = fork();
+	if (0 == pid)   /* Child process */
+	{
+		status = execlp("mv", "mv", "members.txt", "gobbly.txt", (char *) NULL);
+		perror("Unable to rename members.txt to gobbly.txt");
+		_exit(EXIT_FAILURE);
+	}
+	else            /* Parent process */
+	{
+		pid_t cpid = wait(&status);
+		cerr << "pid: " << cpid << " status: " << status << endl;
+	}
+	cout << "\t\tIncorrect File\n";
+	assert(first_db.load_member_data() == false && "Incorrect file read-in not returning false");
 
-    // change back the name of members.txt
-    pid = fork();
-    if (0 == pid)   /* Child process */
-    {
-        status = execlp("mv", "mv", "gobbly.txt", "members.txt", (char *) NULL);
-        perror("Unable to rename members.txt to gobbly.txt");
-        _exit(EXIT_FAILURE);
-    }
-    else            /* Parent process */
-    {
-        int status = 0;
-        pid_t cpid = wait(&status);
-        cerr << "pid: " << cpid << " status: " << status << endl;
-    }
+	// change back the name of members.txt
+	pid = fork();
+	if (0 == pid)   /* Child process */
+	{
+		status = execlp("mv", "mv", "gobbly.txt", "members.txt", (char *) NULL);
+		perror("Unable to rename members.txt to gobbly.txt");
+		_exit(EXIT_FAILURE);
+	}
+	else            /* Parent process */
+	{
+		int status = 0;
+		pid_t cpid = wait(&status);
+		cerr << "pid: " << cpid << " status: " << status << endl;
+	}
 }
 
 void DatabaseTest::write_member_test()
@@ -333,44 +333,44 @@ void DatabaseTest::delete_member_test()
 
 void DatabaseTest::load_provider_test()
 {
-    cout << "\tLoad Providers Test" << endl;
-    cout << "\t\tCorrect File\n";
-    Database first_db;
+	cout << "\tLoad Providers Test" << endl;
+	cout << "\t\tCorrect File\n";
+	Database first_db;
 
-    assert(first_db.load_provider_data() && "Unable to load providers.txt!");
+	assert(first_db.load_provider_data() && "Unable to load providers.txt!");
 
-    // create a child process that changes the name of providers.txt to another name
-    int status;
-    pid_t pid;
-    pid = fork();
-    if (0 == pid)   /* Child process */
-    {
-        status = execlp("mv", "mv", "providers.txt", "gobbly.txt", (char *) NULL);
-        perror("Unable to rename providers.txt to gobbly.txt");
-        _exit(EXIT_FAILURE);
-    }
-    else            /* Parent process */
-    {
-        pid_t cpid = wait(&status);
-        cerr << "pid: " << cpid << " status: " << status << endl;
-    }
-    cout << "\t\tIncorrect File\n";
-    assert(first_db.load_provider_data() == false && "Incorrect file read-in not returning false");
+	// create a child process that changes the name of providers.txt to another name
+	int status;
+	pid_t pid;
+	pid = fork();
+	if (0 == pid)   /* Child process */
+	{
+		status = execlp("mv", "mv", "providers.txt", "gobbly.txt", (char *) NULL);
+		perror("Unable to rename providers.txt to gobbly.txt");
+		_exit(EXIT_FAILURE);
+	}
+	else            /* Parent process */
+	{
+		pid_t cpid = wait(&status);
+		cerr << "pid: " << cpid << " status: " << status << endl;
+	}
+	cout << "\t\tIncorrect File\n";
+	assert(first_db.load_provider_data() == false && "Incorrect file read-in not returning false");
 
-    // change back the name of providers.txt
-    pid = fork();
-    if (0 == pid)   /* Child process */
-    {
-        status = execlp("mv", "mv", "gobbly.txt", "providers.txt", (char *) NULL);
-        perror("Unable to rename providers.txt to gobbly.txt");
-        _exit(EXIT_FAILURE);
-    }
-    else            /* Parent process */
-    {
-        int status = 0;
-        pid_t cpid = wait(&status);
-        cerr << "pid: " << cpid << " status: " << status << endl;
-    }
+	// change back the name of providers.txt
+	pid = fork();
+	if (0 == pid)   /* Child process */
+	{
+		status = execlp("mv", "mv", "gobbly.txt", "providers.txt", (char *) NULL);
+		perror("Unable to rename providers.txt to gobbly.txt");
+		_exit(EXIT_FAILURE);
+	}
+	else            /* Parent process */
+	{
+		int status = 0;
+		pid_t cpid = wait(&status);
+		cerr << "pid: " << cpid << " status: " << status << endl;
+	}
 }
 
 void DatabaseTest::write_provider_test()
@@ -612,44 +612,44 @@ void DatabaseTest::delete_provider_test()
 
 void DatabaseTest::load_provider_directory_test()
 {
-    cout << "\tLoad Provider Directory Test" << endl;
-    cout << "\t\tCorrect File\n";
-    Database first_db;
+	cout << "\tLoad Provider Directory Test" << endl;
+	cout << "\t\tCorrect File\n";
+	Database first_db;
 
-    assert(first_db.load_provider_directory_data() && "Unable to load providerdirectory.txt!");
+	assert(first_db.load_provider_directory_data() && "Unable to load providerdirectory.txt!");
 
-    // create a child process that changes the name of providerdirectory.txt to another name
-    int status;
-    pid_t pid;
-    pid = fork();
-    if (0 == pid)   /* Child process */
-    {
-        status = execlp("mv", "mv", "providerdirectory.txt", "gobbly.txt", (char *) NULL);
-        perror("Unable to rename providerdirectory.txt to gobbly.txt");
-        _exit(EXIT_FAILURE);
-    }
-    else            /* Parent process */
-    {
-        pid_t cpid = wait(&status);
-        cerr << "pid: " << cpid << " status: " << status << endl;
-    }
-    cout << "\t\tIncorrect File\n";
-    assert(first_db.load_provider_directory_data() == false && "Incorrect file read-in not returning false");
+	// create a child process that changes the name of providerdirectory.txt to another name
+	int status;
+	pid_t pid;
+	pid = fork();
+	if (0 == pid)   /* Child process */
+	{
+		status = execlp("mv", "mv", "providerdirectory.txt", "gobbly.txt", (char *) NULL);
+		perror("Unable to rename providerdirectory.txt to gobbly.txt");
+		_exit(EXIT_FAILURE);
+	}
+	else            /* Parent process */
+	{
+		pid_t cpid = wait(&status);
+		cerr << "pid: " << cpid << " status: " << status << endl;
+	}
+	cout << "\t\tIncorrect File\n";
+	assert(first_db.load_provider_directory_data() == false && "Incorrect file read-in not returning false");
 
-    // change back the name of providerdirectory.txt
-    pid = fork();
-    if (0 == pid)   /* Child process */
-    {
-        status = execlp("mv", "mv", "gobbly.txt", "providerdirectory.txt", (char *) NULL);
-        perror("Unable to rename providerdirectory.txt to gobbly.txt");
-        _exit(EXIT_FAILURE);
-    }
-    else            /* Parent process */
-    {
-        int status = 0;
-        pid_t cpid = wait(&status);
-        cerr << "pid: " << cpid << " status: " << status << endl;
-    }
+	// change back the name of providerdirectory.txt
+	pid = fork();
+	if (0 == pid)   /* Child process */
+	{
+		status = execlp("mv", "mv", "gobbly.txt", "providerdirectory.txt", (char *) NULL);
+		perror("Unable to rename providerdirectory.txt to gobbly.txt");
+		_exit(EXIT_FAILURE);
+	}
+	else            /* Parent process */
+	{
+		int status = 0;
+		pid_t cpid = wait(&status);
+		cerr << "pid: " << cpid << " status: " << status << endl;
+	}
 }
 
 void DatabaseTest::write_provider_directory_test()
@@ -683,44 +683,44 @@ void DatabaseTest::generate_weekly_report_test()
 
 void DatabaseTest::load_provided_service_test()
 {
-    cout << "\tLoad Provided Services Test" << endl;
-    cout << "\t\tCorrect File\n";
-    Database first_db;
+	cout << "\tLoad Provided Services Test" << endl;
+	cout << "\t\tCorrect File\n";
+	Database first_db;
 
-    assert(first_db.load_provided_service_data() && "Unable to load providedservices.txt!");
+	assert(first_db.load_provided_service_data() && "Unable to load providedservices.txt!");
 
-    // create a child process that changes the name of providedservices.txt to another name
-    int status;
-    pid_t pid;
-    pid = fork();
-    if (0 == pid)   /* Child process */
-    {
-        status = execlp("mv", "mv", "providedservices.txt", "gobbly.txt", (char *) NULL);
-        perror("Unable to rename providedservices.txt to gobbly.txt");
-        _exit(EXIT_FAILURE);
-    }
-    else            /* Parent process */
-    {
-        pid_t cpid = wait(&status);
-        cerr << "pid: " << cpid << " status: " << status << endl;
-    }
-    cout << "\t\tIncorrect File\n";
-    assert(first_db.load_provided_service_data() == false && "Incorrect file read-in not returning false");
+	// create a child process that changes the name of providedservices.txt to another name
+	int status;
+	pid_t pid;
+	pid = fork();
+	if (0 == pid)   /* Child process */
+	{
+		status = execlp("mv", "mv", "providedservices.txt", "gobbly.txt", (char *) NULL);
+		perror("Unable to rename providedservices.txt to gobbly.txt");
+		_exit(EXIT_FAILURE);
+	}
+	else            /* Parent process */
+	{
+		pid_t cpid = wait(&status);
+		cerr << "pid: " << cpid << " status: " << status << endl;
+	}
+	cout << "\t\tIncorrect File\n";
+	assert(first_db.load_provided_service_data() == false && "Incorrect file read-in not returning false");
 
-    // change back the name of providedservices.txt
-    pid = fork();
-    if (0 == pid)   /* Child process */
-    {
-        status = execlp("mv", "mv", "gobbly.txt", "providedservices.txt", (char *) NULL);
-        perror("Unable to rename providedservices.txt to gobbly.txt");
-        _exit(EXIT_FAILURE);
-    }
-    else            /* Parent process */
-    {
-        int status = 0;
-        pid_t cpid = wait(&status);
-        cerr << "pid: " << cpid << " status: " << status << endl;
-    }
+	// change back the name of providedservices.txt
+	pid = fork();
+	if (0 == pid)   /* Child process */
+	{
+		status = execlp("mv", "mv", "gobbly.txt", "providedservices.txt", (char *) NULL);
+		perror("Unable to rename providedservices.txt to gobbly.txt");
+		_exit(EXIT_FAILURE);
+	}
+	else            /* Parent process */
+	{
+		int status = 0;
+		pid_t cpid = wait(&status);
+		cerr << "pid: " << cpid << " status: " << status << endl;
+	}
 }
 
 void DatabaseTest::write_provided_service_test()
