@@ -739,7 +739,7 @@ void DatabaseTest::record_provided_service_test()
 
 void DatabaseTest::verify_member_test()
 {
-    /*Database test_db;
+    Database test_db;
     int validMember = 900887990;
     int invalidMember = 323;
     int suspendedMember = 900901234;
@@ -751,12 +751,12 @@ void DatabaseTest::verify_member_test()
     assert(test_db.verify_member(invalidMember) == false);   // should return false
     assert(test_db.verify_member(suspendedMember) == false);   // should return false
 
-    return;*/
+    return;
 }
 
 void DatabaseTest::verify_provider_test()
 {
-    /*Database test_db;
+    Database test_db;
     int validProvider = 700567890;
     int invalidProvider = 323;
 
@@ -766,12 +766,12 @@ void DatabaseTest::verify_provider_test()
     assert(test_db.verify_provider(validProvider) == true);  // should return true
     assert(test_db.verify_provider(invalidProvider) == false);   // should return false
 
-    return;*/
+    return;
 }
 
 void DatabaseTest::verify_service_test()
 {
-    /*Database test_db;
+    Database test_db;
     int validService = 100900;
     int invalidService = 323;
 
@@ -781,7 +781,7 @@ void DatabaseTest::verify_service_test()
     assert(test_db.verify_provider(validService) == true);  // should return true
     assert(test_db.verify_provider(invalidService) == false);   // should return false
 
-    return;*/
+    return;
 }
 
 void DatabaseTest::hash_function_test()
