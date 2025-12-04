@@ -798,7 +798,31 @@ void DatabaseTest::verify_service_test()
 
 void DatabaseTest::hash_function_test()
 {
+	// tests that the hash function returns a hash between 0 and table_size (inclusive)
+	// for normal and big numbers with each of the 3 tables
+    	Database test_db;
+	int normalNum = 12;
+	int bigNum = 999999999;
+	int hash = 0;
 
+	cout << "Hash function test." << endl;
+
+	hash = test_db.hash_function(normalNum, test_db.members_size); 
+	assert(hash >= 0 && hash < test_db.members_size);
+	hash = test_db.hash_function(bigNum, test_db.members_size); 
+	assert(hash >= 0 && hash < test_db.members_size);
+
+	hash = test_db.hash_function(normalNum, test_db.providers_size); 
+	assert(hash >= 0 && hash < test_db.providers_size);
+	hash = test_db.hash_function(bigNum, test_db.providers_size); 
+	assert(hash >= 0 && hash < test_db.providers_size);
+
+	hash = test_db.hash_function(normalNum, test_db.prov_dir_size); 
+	assert(hash >= 0 && hash < test_db.prov_dir_size);
+	hash = test_db.hash_function(bigNum, test_db.prov_dir_size); 
+	assert(hash >= 0 && hash < test_db.prov_dir_size);
+
+	return;
 }
 
 // ---------------------------------------------------
