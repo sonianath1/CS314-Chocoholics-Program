@@ -1054,15 +1054,18 @@ bool Database::verify_provider(int provider_number)
 
 bool Database::verify_service(int service_number)
 {
+	NoEntityFound invalidService;
 	int index = hash_function(service_number, prov_dir_size);
-	Service* toVerify = find(ProviderDirectory, service_number, index);
-
-	if (!toVerify) {
-		//throw invalidService;     // cout << "\nInvalid Number" << endl;
+	Service* toVerify = nullptr;
+	try {
+		toVerify = find(ProviderDirectory, service_number, index);
+	}
+	catch (NoEntityFound invalidService) {
 		cout << "\nInvalid Number" << endl;
 		return false;
 	}
-	else if (toVerify->get_number() == service_number) {   // ?
+
+	if (toVerify->get_number() == service_number) {   // ?
 		cout << "\nService: " << toVerify->get_name() << endl;    
 		return true;
 	}             
