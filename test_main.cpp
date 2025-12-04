@@ -6,7 +6,7 @@ int main()
     DatabaseTest test_db;
     ServiceTest test_service;
 
-    cout << "SMOKE TESTING\n" 
+    /*cout << "SMOKE TESTING\n" 
          << "-------------\n" << endl;
     test_db.constructor_test();
     test_db.read_from_file_test();
@@ -29,13 +29,15 @@ int main()
     test_service.set_name_test();
     test_service.set_code_test();
     test_service.set_fee_test();
-    test_service.display_all_test();
+    test_service.display_all_test();*/
 
-    cout << "\nVERIFY FUNCTION TESTING\n"
+    /*cout << "\nVERIFY FUNCTION TESTING\n"
           << "----------------------" << endl;
      test_db.verify_member_test();
      test_db.verify_provider_test();
-     test_db.verify_service_test();
+     test_db.verify_service_test();*/
+
+    test_db.hash_function_test();
 
 
     

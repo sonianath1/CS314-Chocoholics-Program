@@ -1011,11 +1011,11 @@ bool Database::verify_member(int member_number)
 	int index = hash_function(member_number, members_size);
 	Member* toVerify = find(Members, member_number, index);
 
-	if (toVerify->get_number() == member_number && toVerify->get_status() == "Validated") {
+	if (toVerify->get_number() == member_number && toVerify->get_status() == "Active") {
 		cout << "\nVerified" << endl;
 		return true;
 	}
-	else if (toVerify->get_number() == member_number && toVerify->get_status() == "Member Suspended") {
+	else if (toVerify->get_number() == member_number && toVerify->get_status() == "Suspended") {
 		cout << "\nMember Suspended" << endl;
 		return false;
 	}
