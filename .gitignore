@@ -6,3 +6,8 @@
 
 # Vim Ingores
 *.swp
+
+# Object Ignores and Executable Ignores
+chocanprogram
+chocanprogramtest
+*.o

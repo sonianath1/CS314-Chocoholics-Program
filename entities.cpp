@@ -10,9 +10,10 @@ using namespace std;
  * **************☆*: .｡. o(≧▽≦)o .｡.:*☆*************/
 
 
-Entity::Entity()
-{
-}
+Entity::Entity(): name(""), number(0), addr({"", "", "", 0}) {}
+
+
+Entity::Entity(const string _name, const int _number, const address _addr): name(_name), number(_number), addr(_addr) {}
 
 int Entity::get_number()
 {
@@ -29,8 +30,11 @@ bool Entity::compare_number(int number_to_compare)
 	return false;
 }
 
-void Entity::update_data(Entity& to_copy)
+void Entity::update_data(const Entity& to_copy)
 {
+	name = to_copy.name;
+	number = to_copy.number;
+	addr = to_copy.addr;
 }
 
 
@@ -52,7 +56,10 @@ void Entity::display_all()
  * **************☆*: .｡. o(≧▽≦)o .｡.:*☆*************/
 
 
-Member::Member(): status("") {}
+Member::Member(): Entity(), status("") {}
+
+Member::Member(const string _name, const int _number, const address _addr, const string _status): 
+	Entity(_name, _number, _addr), status(_status) {}
 
 void Member::display_all()
 {
@@ -60,8 +67,11 @@ void Member::display_all()
 	cout << "Status: " << status << endl;
 }
 
-void Member::update_data(Member & to_copy)
+void Member::update_data(const Member & to_copy)
 {
+	Entity::update_data(to_copy);
+
+	status = to_copy.status;
 }
 
 
@@ -73,9 +83,10 @@ void Member::update_data(Member & to_copy)
  * **************☆*: .｡. o(≧▽≦)o .｡.:*☆*************/
 
 
-Provider::Provider()
-{
-}
+Provider::Provider(): Entity(), services_provided() {}
+
+Provider::Provider(const string _name, const int _number, const address _addr, const std::vector<int> &_services):
+			Entity(_name, _number, _addr), services_provided(_services){}
 
 void Provider::display_all()
 {
@@ -96,6 +107,9 @@ void Provider::display_all()
 	cout << "\n";
 }
 
-void Provider::update_data(Provider& to_copy)
+void Provider::update_data(const Provider& to_copy)
 {
+	Entity::update_data(to_copy);
+
+	services_provided = to_copy.services_provided;
 }

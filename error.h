@@ -27,3 +27,8 @@ struct FileParseError
 {
 	string msg;
 };
+
+struct DuplicateEntity
+{
+	string msg;
+};
