@@ -220,7 +220,6 @@ void op_sub_member(Database & database)
                 break;
 
             case(operator_menu_options::remove):
-                //TODO
                 system("clear");
                 member_num = get_member();
 
