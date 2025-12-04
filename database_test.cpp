@@ -253,7 +253,7 @@ void DatabaseTest::update_member_test()
     // populate the stream with premade inputs
     istringstream iss_name("1\nOTTER");
     istringstream iss_number("2\n900000003");
-    istringstream iss_addr("3\n203 NE Corner Blvd\nColden\nWA\n53984");
+    istringstream iss_addr("3\n203 NE Corner Blvd\n\nColden\n\nWA\n\n53984");
     istringstream iss_stat("4\nInvalid Number");
     
 
@@ -493,7 +493,7 @@ void DatabaseTest::add_provider_test()
     test_provider.add_service(service);
 
     // delete the database
-    test_db.remove_all(test_db.Members, test_db.members_size);
+    test_db.remove_all(test_db.Providers, test_db.providers_size);
 
     // remake the size
     test_db.providers_size = 10;
@@ -509,7 +509,7 @@ void DatabaseTest::add_provider_test()
     }
     catch(DuplicateEntity err)
     {
-        cerr << "Duplicate was found in Providers!";
+        cerr << "Duplicate was found in Providers!\n";
     }
     
     assert(test_db.Providers[2]->next == nullptr && "Duplicates aren't allowed in the database");
@@ -547,7 +547,7 @@ void DatabaseTest::update_provider_test()
     // populate the stream with premade inputs
     istringstream iss_name("1\nOTTER");
     istringstream iss_number("2\n700000003");
-    istringstream iss_addr("3\n203 NE Corner Blvd\nColden\nWA\n53984");
+    istringstream iss_addr("3\n203 NE Corner Blvd\n\nColden\n\nWA\n\n53984");
     istringstream iss_service("4\n100400");
     
     // update the provider's name
@@ -558,7 +558,7 @@ void DatabaseTest::update_provider_test()
     cin.rdbuf(iss_addr.rdbuf());
     test_db.update_provider(number);
 
-    // update the status of the provider
+    // update the services of the provider
     cin.rdbuf(iss_service.rdbuf());
     test_db.update_provider(number);
 
@@ -573,8 +573,8 @@ void DatabaseTest::update_provider_test()
 
     assert(test_db.Providers[2]->data.get_address().street_addr == "203 NE Corner Blvd" && "Provider wasn't updated properly");
     assert(test_db.Providers[2]->data.get_address().zip_code == 53984 && "Provider wasn't updated properly");
-    assert(test_db.Providers[2]->data.get_number() == 900000003 && "Provider wasn't updated properly");
-    assert(test_db.Providers[2]->data.get_services()[0] == 100400 && "Provider wasn't updated properly");
+    assert(test_db.Providers[2]->data.get_number() == 700000003 && "Provider wasn't updated properly");
+    assert(test_db.Providers[2]->data.get_services()[1] == 100400 && "Provider wasn't updated properly");
 
 }
 
