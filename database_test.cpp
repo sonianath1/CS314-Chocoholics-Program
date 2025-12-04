@@ -297,14 +297,49 @@ void DatabaseTest::record_provided_service_test()
 
 void DatabaseTest::verify_member_test()
 {
+    /*Database test_db;
+    int validMember = 900887990;
+    int invalidMember = 323;
+    int suspendedMember = 900901234;
+
+    cout << "\nVerify member test." << endl;
+    
+    cout << "The following tests should print 'Verified', 'Invalid Member', and 'Member Suspended', respectively." << endl; 
+    assert(test_db.verify_member(validMember) == true);  // should return true
+    assert(test_db.verify_member(invalidMember) == false);   // should return false
+    assert(test_db.verify_member(suspendedMember) == false);   // should return false
+
+    return;*/
 }
 
 void DatabaseTest::verify_provider_test()
 {
+    /*Database test_db;
+    int validProvider = 700567890;
+    int invalidProvider = 323;
+
+    cout << "\nVerify provider test." << endl;
+    
+    cout << "The following tests should print 'Verified' and 'Invalid Number', respectively." << endl; 
+    assert(test_db.verify_provider(validProvider) == true);  // should return true
+    assert(test_db.verify_provider(invalidProvider) == false);   // should return false
+
+    return;*/
 }
 
 void DatabaseTest::verify_service_test()
 {
+    /*Database test_db;
+    int validService = 100900;
+    int invalidService = 323;
+
+    cout << "\nVerify service test." << endl;
+    
+    cout << "The following tests should print 'Service: Stress Management' and 'Invalid Number', respectively." << endl; 
+    assert(test_db.verify_provider(validService) == true);  // should return true
+    assert(test_db.verify_provider(invalidService) == false);   // should return false
+
+    return;*/
 }
 
 void DatabaseTest::hash_function_test()

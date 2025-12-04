@@ -13,8 +13,8 @@ int main()
     test_db.read_from_file_test();
     
     
-    cout << "SERVICE TESTING\n" 
-         << "-------------\n" << endl;
+    cout << "\nSERVICE TESTING\n" 
+         << "---------------" << endl;
     test_service.default_constructor_test();
     test_service.constructor_test();
     test_service.get_number_test();
@@ -24,6 +24,14 @@ int main()
     test_service.set_code_test();
     test_service.set_fee_test();
     test_service.display_all_test();
+
+    cout << "\nVERIFY FUNCTION TESTING\n"
+          << "----------------------" << endl;
+     test_db.verify_member_test();
+     test_db.verify_provider_test();
+     test_db.verify_service_test();
+
+
     
     
     

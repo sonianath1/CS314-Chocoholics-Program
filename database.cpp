@@ -981,69 +981,61 @@ void Database::generate_weekly_report()
 
 
 
-void Database::verify_member(int member_number)
+bool Database::verify_member(int member_number)
 {
-	NoEntityFound invalidMember;   // variable to throw
+	//NoEntityFound invalidMember;   // variable to throw
 	int index = hash_function(member_number, members_size);
 	Member* toVerify = find(Members, member_number, index);
 
-	try   
-	{
-		if (!toVerify)
-			throw invalidMember;      // cout << "\nInvalid Number" << endl;
-		else if (toVerify->get_number() == member_number && toVerify->get_status() == "Validated")
-			cout << "\nVerified" << endl;
-		else if (toVerify->get_number() == member_number && toVerify->get_status() == "Member Suspended")
-			cout << "\nMember Suspended" << endl;
+	if (toVerify->get_number() == member_number && toVerify->get_status() == "Validated") {
+		cout << "\nVerified" << endl;
+		return true;
 	}
-	catch(NoEntityFound invalidMemberNumber)
-	{
+	else if (toVerify->get_number() == member_number && toVerify->get_status() == "Member Suspended") {
+		cout << "\nMember Suspended" << endl;
+		return false;
+	}
+	else if (!toVerify) {
 		cout << "\nInvalid Number" << endl;
+		return false; 
 	}
 
-	return;
+	return false;
 }
 
-void Database::verify_provider(int provider_number)
+bool Database::verify_provider(int provider_number)
 {
-	NoEntityFound invalidProvider;   // variable to thro
 	int index = hash_function(provider_number, providers_size);
 	Provider* toVerify = find(Providers, provider_number, index);
 
-	try   // this needs to be caught somewhere
-	{
-		if (!toVerify)
-			throw invalidProvider;    // cout << "\nInvalid Number" << endl;
-		else if (toVerify->get_number() == provider_number)
-			cout << "\nVerified" << endl;
-	}
-	catch(NoEntityFound invalidProviderNumber)
-	{
+	if (!toVerify) {
 		cout << "\nInvalid Number" << endl;
+		return false;
 	}
-
-	return;
+	else if (toVerify->get_number() == provider_number) {
+		cout << "\nVerified" << endl;
+		return true;
+	}
+	
+	return false;
 }
 
-void Database::verify_service(int service_number)
+bool Database::verify_service(int service_number)
 {
-	NoServiceFound invalidService;   // variable to throw
 	int index = hash_function(service_number, prov_dir_size);
 	Service* toVerify = find(ProviderDirectory, service_number, index);
 
-	try   // this needs to be caught somewhere
-	{
-		if (!toVerify)
-			throw invalidService;     // cout << "\nInvalid Number" << endl;
-		else if (toVerify->get_number() == service_number)    // ?
-			cout << "\nService: " << toVerify->get_name() << endl;                 // ?
-	}
-	catch(NoServiceFound invalidServiceNumber)
-	{
+	if (!toVerify) {
+		//throw invalidService;     // cout << "\nInvalid Number" << endl;
 		cout << "\nInvalid Number" << endl;
+		return false;
 	}
-
-	return;
+	else if (toVerify->get_number() == service_number) {   // ?
+		cout << "\nService: " << toVerify->get_name() << endl;    
+		return true;
+	}             
+	
+	return false;
 }
 
 // Yasmine
