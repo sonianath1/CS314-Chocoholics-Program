@@ -2,10 +2,10 @@
 
 // TESTING PROGRAM's MAIN, SHOULD BE COMPILED IN A SEPARATE PROGRAM THAN MAIN.CPP
 int main()
-{
+{    
     DatabaseTest test_db;
     ServiceTest test_service;
-
+    
     cout << "SMOKE TESTING\n" 
          << "-------------\n" << endl;
     test_db.constructor_test();
@@ -31,7 +31,7 @@ int main()
     test_service.set_fee_test();
     test_service.display_all_test();
     
-    
+
     
     return 0;
 }
