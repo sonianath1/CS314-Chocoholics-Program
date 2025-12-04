@@ -1046,22 +1046,78 @@ void DatabaseTest::record_provided_service_test()
 
 void DatabaseTest::verify_member_test()
 {
+    Database test_db;
+    int validMember = 900887990;
+    int invalidMember = 323;
+    int suspendedMember = 900901234;
 
+    cout << "\nVerify member test." << endl;
+    
+    cout << "The following tests should print 'Verified', 'Invalid Member', and 'Member Suspended', respectively." << endl; 
+    assert(test_db.verify_member(validMember) == true);  // should return true
+    assert(test_db.verify_member(invalidMember) == false);   // should return false
+    assert(test_db.verify_member(suspendedMember) == false);   // should return false
+
+    return;
 }
 
 void DatabaseTest::verify_provider_test()
 {
+    Database test_db;
+    int validProvider = 700567890;
+    int invalidProvider = 323;
 
+    cout << "\nVerify provider test." << endl;
+    
+    cout << "The following tests should print 'Verified' and 'Invalid Number', respectively." << endl; 
+    assert(test_db.verify_provider(validProvider) == true);  // should return true
+    assert(test_db.verify_provider(invalidProvider) == false);   // should return false
+
+    return;
 }
 
 void DatabaseTest::verify_service_test()
 {
+    Database test_db;
+    int validService = 100900;
+    int invalidService = 323;
 
+    cout << "\nVerify service test." << endl;
+    
+    cout << "The following tests should print 'Service: Stress Management' and 'Invalid Number', respectively." << endl; 
+    assert(test_db.verify_provider(validService) == true);  // should return true
+    assert(test_db.verify_provider(invalidService) == false);   // should return false
+
+    return;
 }
 
 void DatabaseTest::hash_function_test()
 {
+	// tests that the hash function returns a hash between 0 and table_size (inclusive)
+	// for normal and big numbers with each of the 3 tables
+    	Database test_db;
+	int normalNum = 12;
+	int bigNum = 999999999;
+	int hash = 0;
 
+	cout << "Hash function test." << endl;
+
+	hash = test_db.hash_function(normalNum, test_db.members_size); 
+	assert(hash >= 0 && hash < test_db.members_size);
+	hash = test_db.hash_function(bigNum, test_db.members_size); 
+	assert(hash >= 0 && hash < test_db.members_size);
+
+	hash = test_db.hash_function(normalNum, test_db.providers_size); 
+	assert(hash >= 0 && hash < test_db.providers_size);
+	hash = test_db.hash_function(bigNum, test_db.providers_size); 
+	assert(hash >= 0 && hash < test_db.providers_size);
+
+	hash = test_db.hash_function(normalNum, test_db.prov_dir_size); 
+	assert(hash >= 0 && hash < test_db.prov_dir_size);
+	hash = test_db.hash_function(bigNum, test_db.prov_dir_size); 
+	assert(hash >= 0 && hash < test_db.prov_dir_size);
+
+	return;
 }
 
 // ---------------------------------------------------
