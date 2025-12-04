@@ -1,10 +1,10 @@
 CC=g++
 FLAGS=-std=c++17 -g -Wall
-SOURCES=main.cpp database.cpp entities.cpp 
+SOURCES=main.cpp database.cpp entities.cpp menus.cpp 
 TESTSOURCES=test_main.cpp database.cpp entities.cpp database_test.cpp entities_test.cpp  
-OBJS=main.o database.o entities.o 
+OBJS=main.o database.o entities.o menus.o
 TESTOBJS=test_main.o database.o entities.o database_test.o entities_test.o
-DEPS=database.h entities.h error.h node.h
+DEPS=database.h entities.h error.h node.h menus.h
 
 all: chocanprogram chocanprogramtest
 
