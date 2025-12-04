@@ -89,12 +89,11 @@ class EntityTest
 {
 	public:
 		void constructor_test();
-		void get_number_test();								// get identification number
-		void get_name_test();								// get name of entity
-		void compare_number_test();	// compare entity number with incoming number
-		void update_data();					// update entity data
+		void get_number_test();
+		void get_name_test();
+		void compare_number_test();
+		void update_data();
 
-		// setters	
 		void set_name_test();
 		void set_number_test();
 		void get_address_test();

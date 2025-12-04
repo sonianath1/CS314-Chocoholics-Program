@@ -48,8 +48,6 @@ Database::Database(int size_members, int size_providers, int size_prov_dir)
 // Destructor
 Database::~Database()
 {
-	write_to_file(); // adding new data / updated data into DB
-
 	// templated remove all function in .h file
 	remove_all(Members, members_size);
 	remove_all(Providers, providers_size);

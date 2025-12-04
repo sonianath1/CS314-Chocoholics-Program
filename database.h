@@ -362,7 +362,7 @@ class DatabaseTest
 		void verify_member_test();		// verify that a member exists
 		void verify_provider_test();	// verify that a provider exists
 		void verify_service_test();		// verify that a service exists
-		void hash_function_test();		// hasH function 
+		void hash_function_test();		// hash function 
 };
 
 class ServiceTest
