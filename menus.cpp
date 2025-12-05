@@ -76,25 +76,43 @@ int get_provider()
 void provider_menu(Database & database)
 {
     int menu_choice = 0;
-    //int provider_num = 0;
-    //int member_num = 0;
+    int provider_num = 0;
+    int member_num = 0;
     bool result = true;
+    bool validated = false;
 
     //loop until valid number is entered
     do
     {
         system("clear");
-        //TODO add a loop to continuously get the provider number or fix exception handling
         provider_num = get_provider();        
-        /*
         result = database.verify_provider(provider_num);
-        */
-        
+        //user was not found in the database
+        if (!result)
+        {
+            int choice = 0;
+            cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+            choice = get_integer("\n> ");
+            if (choice != 1)
+            {
+                break;
+            }
+        }
+        else
+        {
+            validated = true;
+        }
+    
     }while(!result);
 
     
     continue_confirm();
 
+    //user chose not to try again
+    if (!validated)
+    {
+        return;
+    }
     //sub-menu loop
     do
     {
@@ -103,21 +121,32 @@ void provider_menu(Database & database)
         menu_choice = get_integer("\n> ");
         switch (menu_choice)
         {
+            //checking the user in
             case(provider_menu_options::check_in):
-                //TODO update loop once expection handling for member lookup is confirmed
-
                 system("clear");
-                /*
+                
                 do
                 {
                     member_num = get_member();
                     result = database.verify_member(member_num);
+                    if (!result)
+                    {
+                        int choice = 0;
+                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        choice = get_integer("\n> ");
+                        if (choice != 1)
+                        {
+                            break;
+                        }
+                    }
+
                 }while(!member_num);
 
                 continue_confirm();
-                */
+                
                 break;
 
+            //checking the user out
             case(provider_menu_options::check_out):
                 //TODO update loop once expection handling for member lookup is confirmed
                 system("clear");
@@ -227,9 +256,9 @@ void op_sub_member(Database & database)
                 system("clear");
                 cout << "\nadd";
 
-                Member temp_member();
+                //Member temp_member();
 
-                database.add_member(temp_member); 
+                //database.add_member(temp_member); 
 
                 continue_confirm();
                 break;
@@ -320,4 +349,22 @@ void continue_confirm()
 
     return;
 }
+
+//get input for provider object
+void provider_input()
+{
+    /*
+    string;
+    getline(cin,
+    */
+    return;
+}
+
+//get input for member object
+void member_input()
+{
+
+    return;
+}
+
 
