@@ -13,8 +13,8 @@ using namespace std;
 //gets integer, validates that it's not empty
 int get_integer(string prompt);
 
-//calls get integer, validates that it's 9 numbers long
-int get_number(string prompt);
+//calls get integer, validates that it is an exact numbers long
+int get_number(string prompt, size_t exact_digits);
 
 //calls get_number for member
 int get_member();
@@ -48,6 +48,9 @@ void provider_input(Database & database);
 
 //get input for member object
 void member_input(Database & database);
+
+//get input for the a provided service
+void service_input(Database & database, int provider_num);
 
 //gets input for string with max digit limit
 string get_string(size_t max_digits, string prompt);

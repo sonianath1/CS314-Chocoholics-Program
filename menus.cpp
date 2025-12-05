@@ -31,8 +31,8 @@ int get_integer(string prompt)
 }
 
 
-//calls get integer, validates that it's 9 numbers long
-int get_number(string prompt)
+//calls get integer, validates that it's the exact numbers long
+int get_number(string prompt, size_t exact_digits)
 {
     bool result = false;
     int num = 0;
@@ -42,7 +42,7 @@ int get_number(string prompt)
 
         string conversion = to_string(num);
 
-        if (conversion.length() == 9)
+        if (conversion.length() == exact_digits)
         {
             result = true;
         }
@@ -61,7 +61,7 @@ int get_member()
 {
     string prompt = "Enter member number: ";
 
-    return get_number(prompt);
+    return get_number(prompt, 9);
 }
 
 //calls get_number for provider
@@ -69,7 +69,7 @@ int get_provider()
 {
     string prompt = "Enter provider number: ";
     
-    return get_number(prompt);
+    return get_number(prompt, 9);
 }
 
 //gets a number that is less than a maximum number of digits
@@ -163,11 +163,18 @@ void provider_menu(Database & database)
                         choice = get_integer("\n> ");
                         if (choice != 1)
                         {
+                            validated = false;
                             break;
                         }
                     }
 
-                }while(!member_num);
+                }while(!result);
+
+                //user chose not to try again
+                if (!validated)
+                {
+                    return;
+                }
 
                 continue_confirm();
                 
@@ -175,17 +182,9 @@ void provider_menu(Database & database)
 
             //checking the user out
             case(provider_menu_options::check_out):
-                //TODO update loop once expection handling for member lookup is confirmed
                 system("clear");
-                member_num = get_member();
-                /*
-                do
-                {
-                    result = database.verify_member(member_num);
-                }while(!result);
 
-                continue_confirm();
-                */
+                service_input(database, provider_num); 
                 break;
 
             case(provider_menu_options::request_dir):
@@ -279,13 +278,8 @@ void op_sub_member(Database & database)
         switch(menu_choice)
         {
             case(operator_menu_options::add):
-                //TODO
                 system("clear");
-                cout << "\nadd";
-
-                //Member temp_member();
-
-                //database.add_member(temp_member); 
+                member_input(database);
 
                 continue_confirm();
                 break;
@@ -328,9 +322,8 @@ void op_sub_provider(Database & database)
         switch(menu_choice)
         {
             case(operator_menu_options::add):
-                //TODO
                 system("clear");
-                cout << "\nadd";
+                provider_input(database);
 
                 continue_confirm();
                 break;
@@ -407,7 +400,7 @@ void provider_input(Database & database)
 
     database.add_provider(temp_provider);
 
-    cout << "Successfully added provider with ID " << temp_number << endl;
+    cout << "Provider has been assigned the number " << temp_number << endl;
 
     return;
 }
@@ -442,8 +435,96 @@ void member_input(Database & database)
 
     database.add_member(temp_member);
 
-    cout << "Successfully added member with ID " << temp_number << endl;
+    cout << "Member has been assigned the number " << temp_number << endl;
 
+    return;
+}
+
+//get input for the a provided service
+void service_input(Database & database, int provider_num)
+{
+    /*
+     *
+    std::string current_date_time;	// current date and time
+	std::string service_data_time;	// date and time service was provided
+	int provider_number;			// provider number
+	int member_number;				// member number
+	int service_code;				// service code number
+	std::string comments = "";		// optional comments
+     */
+
+    string temp_current_time;
+    string temp_service_date;
+    int member_num;
+    int service_num;
+    string temp_comments;
+    bool result;
+    bool validated = true;
+    int choice = 0;
+
+    temp_current_time = get_string(19, "Enter current date (MM:DD:YYYY:HH:MM:SS): ");
+
+    temp_service_date = get_string(19, "Enter date service was provided (MM:DD:YYYY:HH:MM:SS): ");
+    
+    do
+    {
+        member_num = get_member();
+        result = database.verify_member(member_num);
+        if (!result)
+        {
+            cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+            choice = get_integer("\n> ");
+            if (choice != 1)
+            {
+                validated = false;
+                break;
+            }
+        }
+
+    }while(!result);
+
+    //user chose not to try to enter a valid member number
+    if (!validated)
+    {
+        return;
+    }
+    
+    do
+    {
+        service_num = get_number("Enter Service Code Number: ", 6);
+        result = database.verify_member(member_num);
+        if (!result)
+        {
+            cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+            choice = get_integer("\n> ");
+            if (choice != 1)
+            {
+                validated = false;
+                break;
+            }
+        }
+
+    }while(!result);
+
+    //user chose not to try to enter a valid service code
+    if (!validated)
+    {
+        return;
+    }
+
+    cout << "Would you like to add comments? (enter 1 for yes, anything else for no)" << endl;
+    choice = get_integer("\n> ");
+
+    //user wants to add comments
+    if (choice == 1)
+    {
+        cout << "Enter comments about the provided service: ";
+        getline(cin, temp_comments);
+    }
+
+    ProvidedService temp_services = {temp_current_time, temp_service_date, provider_num, member_num, service_num, temp_comments};
+
+    database.record_provided_service(temp_services);
     return;
 }
 
