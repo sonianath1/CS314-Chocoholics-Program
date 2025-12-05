@@ -380,16 +380,6 @@ void continue_confirm()
 //get input for provider object and adds it to the database
 void provider_input(Database & database)
 {
-    /*
-     *
-        Provider::Provider(const string _name, const int _number, const address _addr, const std::vector<int> &_services):
-			Entity(_name, _number, _addr), services_provided(_services){}	
-    string street_addr; // street address, max 25 char
-	string city;		// max 14 char
-	string state;		// max 2 char
-	int zip_code;		// max 5 digits
-}
-     */
     string temp_name;
     int temp_number;
     string temp_street;
@@ -417,12 +407,42 @@ void provider_input(Database & database)
 
     database.add_provider(temp_provider);
 
+    cout << "Successfully added provider with ID " << temp_number << endl;
+
     return;
 }
 
 //get input for member object
 void member_input(Database & database)
 {
+    string temp_name;
+    int temp_number;
+    string temp_street;
+    string temp_city;
+    string temp_state;
+    int temp_zip;
+
+    string temp_status = "Active"; 
+
+    temp_name = get_string(25, "Enter name of member: ");
+
+    temp_number = generate_provider_number(database);
+
+    temp_street = get_string(25, "Enter street address: ");
+
+    temp_city = get_string(14, "Enter city: ");
+
+    temp_state = get_string(2, "Enter state abbreviation: ");
+
+    temp_zip = get_zip(5, "Enter zip code: ");
+
+    address temp_address = {temp_street, temp_city, temp_state, temp_zip};
+
+    Member temp_member(temp_name, temp_number, temp_address, temp_status);
+
+    database.add_member(temp_member);
+
+    cout << "Successfully added member with ID " << temp_number << endl;
 
     return;
 }
