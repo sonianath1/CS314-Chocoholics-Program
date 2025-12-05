@@ -4,6 +4,8 @@
 #include <string>
 #include <iostream>
 #include <cstdlib>
+#include <random>
+#include <vector>
 #include "database.h"
 
 using namespace std;
@@ -17,9 +19,11 @@ int get_number(string prompt);
 //calls get_number for member
 int get_member();
 
-
 //calls get_number for provider
 int get_provider();
+
+//gets a number that is less than a maximum number of digits
+int get_zip (size_t max_digits, string prompt);
 
 //contains sub menus for the provider
 void provider_menu(Database & database);
@@ -40,10 +44,19 @@ void op_sub_provider(Database & database);
 void continue_confirm();
 
 //get input for provider object
-void provider_input();
+void provider_input(Database & database);
 
 //get input for member object
-void member_input();
+void member_input(Database & database);
+
+//gets input for string with max digit limit
+string get_string(size_t max_digits, string prompt);
+
+//generates member number making sure it is not duplicated
+int generate_member_number(Database & database);
+
+//generates provider number, making sure it is not duplicated
+int generate_provider_number(Database & database);
 
 namespace provider_menu_options
 {

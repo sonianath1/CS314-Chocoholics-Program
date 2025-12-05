@@ -72,6 +72,32 @@ int get_provider()
     return get_number(prompt);
 }
 
+//gets a number that is less than a maximum number of digits
+int get_zip (size_t max_digits, string prompt)
+{
+    int num = 0;
+    bool result = false;
+
+    do
+    {
+        num = get_integer(prompt);
+
+        string conversion = to_string(num);
+
+        if (conversion.length() > max_digits)
+        {
+            result = true;
+        }
+        else
+        {
+            cout << "Invalid number, exeeds limit of " << max_digits << "characters. Please try again" << endl;
+        }
+    }while (!result);
+
+    return num;
+}
+
+
 //contains sub menus for the provider
 void provider_menu(Database & database)
 {
@@ -106,7 +132,6 @@ void provider_menu(Database & database)
     }while(!result);
 
     
-    continue_confirm();
 
     //user chose not to try again
     if (!validated)
@@ -114,6 +139,8 @@ void provider_menu(Database & database)
         return;
     }
     //sub-menu loop
+
+    continue_confirm();
     do
     {
         system("clear");
@@ -350,21 +377,114 @@ void continue_confirm()
     return;
 }
 
-//get input for provider object
-void provider_input()
+//get input for provider object and adds it to the database
+void provider_input(Database & database)
 {
     /*
-    string;
-    getline(cin,
-    */
+     *
+        Provider::Provider(const string _name, const int _number, const address _addr, const std::vector<int> &_services):
+			Entity(_name, _number, _addr), services_provided(_services){}	
+    string street_addr; // street address, max 25 char
+	string city;		// max 14 char
+	string state;		// max 2 char
+	int zip_code;		// max 5 digits
+}
+     */
+    string temp_name;
+    int temp_number;
+    string temp_street;
+    string temp_city;
+    string temp_state;
+    int temp_zip;
+
+    vector <int> temp_services;
+
+    temp_name = get_string(25, "Enter name of provider: ");
+
+    temp_number = generate_provider_number(database);
+
+    temp_street = get_string(25, "Enter street address: ");
+
+    temp_city = get_string(14, "Enter city: ");
+
+    temp_state = get_string(2, "Enter state abbreviation: ");
+
+    temp_zip = get_zip(5, "Enter zip code: ");
+
+    address temp_address = {temp_street, temp_city, temp_state, temp_zip};
+
+    Provider temp_provider(temp_name, temp_number, temp_address, temp_services);
+
+    database.add_provider(temp_provider);
+
     return;
 }
 
 //get input for member object
-void member_input()
+void member_input(Database & database)
 {
 
     return;
 }
 
+//gets input for string with max digit limit
+string get_string(size_t max_digits, string prompt)
+{
+    string temp_string;
 
+    do
+    {
+        cout << prompt;
+        getline(cin, temp_string);
+
+        if (temp_string.length() > max_digits)
+        {
+            cout << "Entry exeeds max digits of " << max_digits << ". Please try again" << endl;
+        }
+
+    }while(temp_string.length() > max_digits);
+
+    return temp_string;
+}
+
+//generates member number making sure it is not duplicated
+int generate_member_number(Database & database)
+{
+
+    bool result = false;
+    int temp_num;
+    do
+    {
+        temp_num = 100000000 + (rand() % 999999999);
+
+        if (!database.verify_member(temp_num))
+        {
+            //found a number that isn't taken
+            result = true;
+        }
+
+    }while(!result);
+
+    return temp_num;
+}
+
+//generates provider number, making sure it is not duplicated
+int generate_provider_number(Database & database)
+{
+
+    bool result = false;
+    int temp_num;
+    do
+    {
+        temp_num = 100000000 + (rand() % 999999999);
+
+        if (!database.verify_provider(temp_num))
+        {
+            //found a number that isn't taken
+            result = true;
+        }
+
+    }while(!result);
+
+    return temp_num;
+}
