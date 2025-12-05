@@ -18,7 +18,7 @@ Amount to transfer: 85 $
 ------------------------------------
 Provider name: Dr. Ana Rodriguez
 Provider number: 700567890
-Amount to transfer: 95 $
+Amount to transfer: 190 $
 ------------------------------------
 Provider name: Dr. Olivia Chen
 Provider number: 700789012

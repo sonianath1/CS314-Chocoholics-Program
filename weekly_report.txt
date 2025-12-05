@@ -69,10 +69,16 @@ Service: 100100-Aerobic Exercise
 Fee: 60 $ 
 Comments: Aerobic routine instruction
 ---------------------------------------------------------
+Service Date: gfdghfd
+Member: 900887990-Quinn Rivera
+Provider: 700567890-Dr. Ana Rodriguez
+Service: 100900-Stress Management
+Fee: 95 $ 
+---------------------------------------------------------
 
-Total Number of services : 10
-Unique Members served    : 10
-Total Fees for the week  : 1125 $
+Total Number of services : 11
+Unique Members served    : 11
+Total Fees for the week  : 1220 $
 
   EFT Summary per provider
 -----------------------------------------------
@@ -85,7 +91,7 @@ Total Amount: 75$
 Provider: 700456789, Dr. David Wilson
 Total Amount: 85$
 Provider: 700567890, Dr. Ana Rodriguez
-Total Amount: 95$
+Total Amount: 190$
 Provider: 700789012, Dr. Olivia Chen
 Total Amount: 150$
 Provider: 700678901, Dr. Marcus Lee

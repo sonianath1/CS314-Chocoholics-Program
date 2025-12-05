@@ -86,11 +86,11 @@ int get_zip (size_t max_digits, string prompt)
 
         if (conversion.length() > max_digits)
         {
-            result = true;
+            cout << "Invalid number, exeeds limit of " << max_digits << "characters. Please try again" << endl;
         }
         else
         {
-            cout << "Invalid number, exeeds limit of " << max_digits << "characters. Please try again" << endl;
+            result = true;
         }
     }while (!result);
 
@@ -117,6 +117,8 @@ void provider_menu(Database & database)
         if (!result)
         {
             int choice = 0;
+            
+		    cout << "\nInvalid Number" << endl;
             cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
             choice = get_integer("\n> ");
             if (choice != 1)
@@ -159,6 +161,7 @@ void provider_menu(Database & database)
                     if (!result)
                     {
                         int choice = 0;
+		                cout << "\nInvalid Number" << endl;
                         cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
                         choice = get_integer("\n> ");
                         if (choice != 1)
@@ -185,17 +188,14 @@ void provider_menu(Database & database)
                 system("clear");
 
                 service_input(database, provider_num); 
+
+                continue_confirm();
                 break;
 
             case(provider_menu_options::request_dir):
                 system("clear");
-                cout << "request directory" << endl;
-                bool result = database.write_provider_directory_data();
 
-                if (!result)
-                {
-                    cerr << "Unable to load directory. Please try again." << endl;
-                }
+                database.display_prov_dir();
 
                 continue_confirm();
                 break;
@@ -268,6 +268,8 @@ void op_sub_member(Database & database)
 {
     int menu_choice = 0;
     int member_num = 0;
+    bool validated = false;
+    bool result = false;
 
     do
     {
@@ -286,18 +288,66 @@ void op_sub_member(Database & database)
 
             case(operator_menu_options::remove):
                 system("clear");
-                member_num = get_member();
+                do
+                {
+                    member_num = get_member();
+                    result = database.verify_member(member_num);
+                    if (!result)
+                    {
+                        int choice = 0;
+		                cout << "\nInvalid Number" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        choice = get_integer("\n> ");
+                        if (choice != 1)
+                        {
+                            validated = false;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        validated = true;
+                    }
 
-                database.delete_member(member_num);
+                }while(!result);
+
+                if (validated)
+                {
+                    database.delete_member(member_num);
+                }
 
                 continue_confirm();
                 break;
 
             case(operator_menu_options::update):
-                system("clear");
-                member_num = get_member();
+                do
+                {
+                    member_num = get_member();
+                    result = database.verify_member(member_num);
+                    if (!result)
+                    {
+                        int choice = 0;
+		                cout << "\nInvalid Number" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        choice = get_integer("\n> ");
+                        if (choice != 1)
+                        {
+                            validated = false;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        validated = true;
+                    }
 
-                database.update_member(member_num);
+                }while(!result);
+
+
+                if (validated)
+                {
+                    database.update_member(member_num);
+                }
 
                 continue_confirm();
                 break;
@@ -312,6 +362,8 @@ void op_sub_provider(Database & database)
 {
     int menu_choice = 0;
     int provider_num = 0;
+    bool validated = false;
+    bool result = false;
 
     do
     {
@@ -324,25 +376,78 @@ void op_sub_provider(Database & database)
             case(operator_menu_options::add):
                 system("clear");
                 provider_input(database);
-
+                
                 continue_confirm();
                 break;
 
             case(operator_menu_options::remove):
-                system("clear");
-                provider_num = get_provider();
+                
+                do
+                {
+                    system("clear");
+                    provider_num = get_provider();        
+                    result = database.verify_provider(provider_num);
+                    //user was not found in the database
+                    if (!result)
+                    {
+                        int choice = 0;
+                        
+                        cout << "\nInvalid Number" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        choice = get_integer("\n> ");
+                        if (choice != 1)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        validated = true;
+                    }
+                    
+                }while(!result);
 
-                database.delete_provider(provider_num);
+
+                if (validated)
+                {
+                    database.delete_provider(provider_num);
+                }
 
                 continue_confirm();
                 break;
 
             case(operator_menu_options::update):
-                system("clear");
 
-                provider_num = get_provider();
+                do
+                {
+                    system("clear");
+                    provider_num = get_provider();        
+                    result = database.verify_provider(provider_num);
+                    //user was not found in the database
+                    if (!result)
+                    {
+                        int choice = 0;
+                        
+                        cout << "\nInvalid Number" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        choice = get_integer("\n> ");
+                        if (choice != 1)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        validated = true;
+                    }
+                    
+                }while(!result);
 
-                database.update_provider(provider_num);
+
+                if (validated)
+                {
+                    database.update_provider(provider_num);
+                }
 
                 continue_confirm();
                 break;
@@ -443,16 +548,6 @@ void member_input(Database & database)
 //get input for the a provided service
 void service_input(Database & database, int provider_num)
 {
-    /*
-     *
-    std::string current_date_time;	// current date and time
-	std::string service_data_time;	// date and time service was provided
-	int provider_number;			// provider number
-	int member_number;				// member number
-	int service_code;				// service code number
-	std::string comments = "";		// optional comments
-     */
-
     string temp_current_time;
     string temp_service_date;
     int member_num;
@@ -472,6 +567,7 @@ void service_input(Database & database, int provider_num)
         result = database.verify_member(member_num);
         if (!result)
         {
+		    cout << "\nInvalid Number" << endl;
             cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
             choice = get_integer("\n> ");
             if (choice != 1)
@@ -492,15 +588,25 @@ void service_input(Database & database, int provider_num)
     do
     {
         service_num = get_number("Enter Service Code Number: ", 6);
-        result = database.verify_member(member_num);
+        result = database.verify_service(service_num);
         if (!result)
         {
+		    cout << "\nInvalid Number" << endl;
             cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
             choice = get_integer("\n> ");
             if (choice != 1)
             {
                 validated = false;
                 break;
+            }
+        }
+        else
+        {
+            cout << "Is this the correct service? (enter 1 for yes, anything else for no)" << endl;
+            choice = get_integer("\n> ");
+            if (choice != 1)
+            {
+                result = false;
             }
         }
 
@@ -525,6 +631,8 @@ void service_input(Database & database, int provider_num)
     ProvidedService temp_services = {temp_current_time, temp_service_date, provider_num, member_num, service_num, temp_comments};
 
     database.record_provided_service(temp_services);
+
+    cout << "Service recorded. Ask manager for the weekly report to see fee" << endl;
     return;
 }
 

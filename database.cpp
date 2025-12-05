@@ -249,7 +249,7 @@ void Database::update_member(int member_number)
 	{
 		case 1:
 			cout << "\nEnter the member's full name: ";
-			getline(cin, inputString); cin.ignore(100, '\n');
+			getline(cin, inputString);
 			found->set_name(inputString);
 			cout << "Member name successfully updated." << endl;
 			break;
@@ -263,13 +263,13 @@ void Database::update_member(int member_number)
 
 		case 3:
 			cout << "Enter the street address: ";
-			getline(cin, newAddress.street_addr); cin.ignore(100, '\n');
+			getline(cin, newAddress.street_addr);
 			cout << "Enter the city: ";
-			getline(cin, newAddress.city); cin.ignore(100, '\n');
+			getline(cin, newAddress.city);
 			cout << "Enter the state: ";
-			getline(cin, newAddress.state); cin.ignore(100, '\n');
+			getline(cin, newAddress.state);
 			cout << "Enter the zip code: ";
-			cin >> newAddress.zip_code; cin.ignore(100, '\n');
+			cin >> newAddress.zip_code;
 			found->set_address(newAddress);
 			cout << "Provider address successfully updated." << endl;
 			break;
@@ -474,7 +474,7 @@ void Database::update_provider(int provider_number)
 	{
 		case 1:
 			cout << "\nEnter the provider's full name: ";
-			getline(cin, inputString); cin.ignore(100, '\n');
+			getline(cin, inputString);
 			found->set_name(inputString);
 			cout << "Provider name successfully updated." << endl;
 			break;
@@ -488,11 +488,11 @@ void Database::update_provider(int provider_number)
 
 		case 3: 
 			cout << "\nEnter the street address: ";
-			getline(cin, newAddress.street_addr); cin.ignore(100, '\n');
+			getline(cin, newAddress.street_addr);
 			cout << "Enter the city: ";
-			getline(cin, newAddress.city); cin.ignore(100, '\n');
+			getline(cin, newAddress.city);
 			cout << "Enter the state: ";
-			getline(cin, newAddress.state); cin.ignore(100, '\n');
+			getline(cin, newAddress.state);
 			cout << "Enter the zip code: ";
 			cin >> newAddress.zip_code; cin.ignore(100, '\n');
 			found->set_address(newAddress);
@@ -1038,7 +1038,6 @@ bool Database::verify_provider(int provider_number)
 	}
 	catch (NoEntityFound invalidProvider)
 	{
-		cout << "\nInvalid Number" << endl;
 		return false;
 	}
 

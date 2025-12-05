@@ -74,5 +74,9 @@ int main(void)
     cout<<"Weekly report generated."<<endl;
     */
 
+    test.write_member_data();
+    test.write_provider_data();
+    test.write_provided_service_data();
+
 	return 0;
 }
