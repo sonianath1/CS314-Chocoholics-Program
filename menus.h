@@ -4,6 +4,8 @@
 #include <string>
 #include <iostream>
 #include <cstdlib>
+#include <random>
+#include <vector>
 #include "database.h"
 
 using namespace std;
@@ -11,15 +13,17 @@ using namespace std;
 //gets integer, validates that it's not empty
 int get_integer(string prompt);
 
-//calls get integer, validates that it's 9 numbers long
-int get_number(string prompt);
+//calls get integer, validates that it is an exact numbers long
+int get_number(string prompt, size_t exact_digits);
 
 //calls get_number for member
 int get_member();
 
-
 //calls get_number for provider
 int get_provider();
+
+//gets a number that is less than a maximum number of digits
+int get_zip (size_t max_digits, string prompt);
 
 //contains sub menus for the provider
 void provider_menu(Database & database);
@@ -38,6 +42,24 @@ void op_sub_provider(Database & database);
 
 //confirm function that allows viewer to still see screen before it is cleared
 void continue_confirm();
+
+//get input for provider object
+void provider_input(Database & database);
+
+//get input for member object
+void member_input(Database & database);
+
+//get input for the a provided service
+void service_input(Database & database, int provider_num);
+
+//gets input for string with max digit limit
+string get_string(size_t max_digits, string prompt);
+
+//generates member number making sure it is not duplicated
+int generate_member_number(Database & database);
+
+//generates provider number, making sure it is not duplicated
+int generate_provider_number(Database & database);
 
 namespace provider_menu_options
 {
@@ -112,6 +134,13 @@ Welcome to the Provider Portal!
     2. Delete provider
     3. Update provider
     4. Go back)";
+
+    const string welcome = R"(Welcome to the Chocoholid Anonymous Data Processor!
+
+Chocoholics Anonymous (ChocAn) is an organization dedicated to helping 
+people addicted to chocolate in all its glorious forms. This software
+manages all data given by members and providers, and allows for managers
+and operators to view and edit the data.)";
 
     const string goodbye = "Thank you!\n";
 }
