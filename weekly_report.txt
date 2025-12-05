@@ -72,10 +72,10 @@ Comments: Aerobic routine instruction
 
 Total Number of services : 10
 Unique Members served    : 10
-Total Fees for the week  : 1125$
+Total Fees for the week  : 1125 $
 
   EFT Summary per provider
---------------------------------------------------------------------------------
+-----------------------------------------------
 Provider: 700123456, Dr. Helen Moore
 Total Amount: 50$
 Provider: 700234567, Dr. Samuel Lin

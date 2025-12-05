@@ -18,6 +18,6 @@ chocanprogramtest: $(TESTOBJS)
 	$(CC) -o $@ $^ $(FLAGS)
 
 clean cls:
-	rm -f chocanprogram *.o *.~ \#*
+	rm -f chocanprogram chocanprogramtest *.o *.zip *.~ \#*
 zip:
 	zip CS314-GROUP-9.zip *.cpp *.h [Mm]akefile
