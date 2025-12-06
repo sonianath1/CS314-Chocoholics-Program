@@ -36,7 +36,7 @@ int main(void)
     do
     {
         system("clear");
-        cout << "ChocoAn" << endl;
+        cout << menu_text::welcome << endl;
         cout << menu_text::main;
         menu_choice = get_integer("\n> ");
         switch (menu_choice)
@@ -73,6 +73,10 @@ int main(void)
     test.generate_weekly_report();
     cout<<"Weekly report generated."<<endl;
     */
+
+    test.write_member_data();
+    test.write_provider_data();
+    test.write_provided_service_data();
 
 	return 0;
 }

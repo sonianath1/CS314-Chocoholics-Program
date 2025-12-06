@@ -31,8 +31,8 @@ int get_integer(string prompt)
 }
 
 
-//calls get integer, validates that it's 9 numbers long
-int get_number(string prompt)
+//calls get integer, validates that it's the exact numbers long
+int get_number(string prompt, size_t exact_digits)
 {
     bool result = false;
     int num = 0;
@@ -42,7 +42,7 @@ int get_number(string prompt)
 
         string conversion = to_string(num);
 
-        if (conversion.length() == 9)
+        if (conversion.length() == exact_digits)
         {
             result = true;
         }
@@ -61,7 +61,7 @@ int get_member()
 {
     string prompt = "Enter member number: ";
 
-    return get_number(prompt);
+    return get_number(prompt, 9);
 }
 
 //calls get_number for provider
@@ -69,8 +69,34 @@ int get_provider()
 {
     string prompt = "Enter provider number: ";
     
-    return get_number(prompt);
+    return get_number(prompt, 9);
 }
+
+//gets a number that is less than a maximum number of digits
+int get_zip (size_t max_digits, string prompt)
+{
+    int num = 0;
+    bool result = false;
+
+    do
+    {
+        num = get_integer(prompt);
+
+        string conversion = to_string(num);
+
+        if (conversion.length() > max_digits)
+        {
+            cout << "Invalid number, exeeds limit of " << max_digits << "characters. Please try again" << endl;
+        }
+        else
+        {
+            result = true;
+        }
+    }while (!result);
+
+    return num;
+}
+
 
 //contains sub menus for the provider
 void provider_menu(Database & database)
@@ -78,21 +104,45 @@ void provider_menu(Database & database)
     int menu_choice = 0;
     int provider_num = 0;
     int member_num = 0;
+    bool result = true;
+    bool validated = false;
 
     //loop until valid number is entered
     do
     {
         system("clear");
-        //TODO add a loop to continuously get the provider number or fix exception handling
         provider_num = get_provider();        
-        //database.verify_provider(provider_num);
-        
-    }while(!provider_num);
+        result = database.verify_provider(provider_num);
+        //user was not found in the database
+        if (!result)
+        {
+            int choice = 0;
+            
+		    cout << "\nInvalid Number" << endl;
+            cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+            choice = get_integer("\n> ");
+            if (choice != 1)
+            {
+                break;
+            }
+        }
+        else
+        {
+            validated = true;
+        }
+    
+    }while(!result);
 
     
-    continue_confirm();
 
+    //user chose not to try again
+    if (!validated)
+    {
+        return;
+    }
     //sub-menu loop
+
+    continue_confirm();
     do
     {
         system("clear");
@@ -100,37 +150,52 @@ void provider_menu(Database & database)
         menu_choice = get_integer("\n> ");
         switch (menu_choice)
         {
+            //checking the user in
             case(provider_menu_options::check_in):
-                //TODO update loop once expection handling for member lookup is confirmed
-
                 system("clear");
+                
                 do
                 {
                     member_num = get_member();
-                    //database.verify_member(member_num);
-                }while(!member_num);
+                    result = database.verify_member(member_num);
+                    if (!result)
+                    {
+                        int choice = 0;
+		                cout << "\nInvalid Number" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        choice = get_integer("\n> ");
+                        if (choice != 1)
+                        {
+                            validated = false;
+                            break;
+                        }
+                    }
 
+                }while(!result);
+
+                //user chose not to try again
+                if (!validated)
+                {
+                    return;
+                }
 
                 continue_confirm();
+                
                 break;
 
+            //checking the user out
             case(provider_menu_options::check_out):
-                //TODO update loop once expection handling for member lookup is confirmed
                 system("clear");
-                member_num = get_member();
-                    //database.verify_member(member_num);
+
+                service_input(database, provider_num); 
+
                 continue_confirm();
                 break;
 
             case(provider_menu_options::request_dir):
                 system("clear");
-                cout << "request directory" << endl;
-                bool result = database.write_provider_directory_data();
 
-                if (!result)
-                {
-                    cerr << "Unable to load directory. Please try again." << endl;
-                }
+                database.display_prov_dir();
 
                 continue_confirm();
                 break;
@@ -203,6 +268,8 @@ void op_sub_member(Database & database)
 {
     int menu_choice = 0;
     int member_num = 0;
+    bool validated = false;
+    bool result = false;
 
     do
     {
@@ -213,26 +280,74 @@ void op_sub_member(Database & database)
         switch(menu_choice)
         {
             case(operator_menu_options::add):
-                //TODO
                 system("clear");
-                cout << "\nadd";
+                member_input(database);
+
                 continue_confirm();
                 break;
 
             case(operator_menu_options::remove):
                 system("clear");
-                member_num = get_member();
+                do
+                {
+                    member_num = get_member();
+                    result = database.verify_member(member_num);
+                    if (!result)
+                    {
+                        int choice = 0;
+		                cout << "\nInvalid Number" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        choice = get_integer("\n> ");
+                        if (choice != 1)
+                        {
+                            validated = false;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        validated = true;
+                    }
 
-                database.delete_member(member_num);
+                }while(!result);
+
+                if (validated)
+                {
+                    database.delete_member(member_num);
+                }
 
                 continue_confirm();
                 break;
 
             case(operator_menu_options::update):
-                system("clear");
-                member_num = get_member();
+                do
+                {
+                    member_num = get_member();
+                    result = database.verify_member(member_num);
+                    if (!result)
+                    {
+                        int choice = 0;
+		                cout << "\nInvalid Number" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        choice = get_integer("\n> ");
+                        if (choice != 1)
+                        {
+                            validated = false;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        validated = true;
+                    }
 
-                database.update_member(member_num);
+                }while(!result);
+
+
+                if (validated)
+                {
+                    database.update_member(member_num);
+                }
 
                 continue_confirm();
                 break;
@@ -247,6 +362,8 @@ void op_sub_provider(Database & database)
 {
     int menu_choice = 0;
     int provider_num = 0;
+    bool validated = false;
+    bool result = false;
 
     do
     {
@@ -257,28 +374,80 @@ void op_sub_provider(Database & database)
         switch(menu_choice)
         {
             case(operator_menu_options::add):
-                //TODO
-                system("\nclear");
-                cout << "add";
+                system("clear");
+                provider_input(database);
+                
                 continue_confirm();
                 break;
 
             case(operator_menu_options::remove):
-                //TODO
-                system("\nclear");
-                provider_num = get_provider();
+                
+                do
+                {
+                    system("clear");
+                    provider_num = get_provider();        
+                    result = database.verify_provider(provider_num);
+                    //user was not found in the database
+                    if (!result)
+                    {
+                        int choice = 0;
+                        
+                        cout << "\nInvalid Number" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        choice = get_integer("\n> ");
+                        if (choice != 1)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        validated = true;
+                    }
+                    
+                }while(!result);
 
-                database.delete_provider(provider_num);
+
+                if (validated)
+                {
+                    database.delete_provider(provider_num);
+                }
 
                 continue_confirm();
                 break;
 
             case(operator_menu_options::update):
-                system("clear");
 
-                provider_num = get_provider();
+                do
+                {
+                    system("clear");
+                    provider_num = get_provider();        
+                    result = database.verify_provider(provider_num);
+                    //user was not found in the database
+                    if (!result)
+                    {
+                        int choice = 0;
+                        
+                        cout << "\nInvalid Number" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        choice = get_integer("\n> ");
+                        if (choice != 1)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        validated = true;
+                    }
+                    
+                }while(!result);
 
-                database.update_provider(provider_num);
+
+                if (validated)
+                {
+                    database.update_provider(provider_num);
+                }
 
                 continue_confirm();
                 break;
@@ -304,4 +473,227 @@ void continue_confirm()
     }while(confirm != CONTINUE);
 
     return;
+}
+
+//get input for provider object and adds it to the database
+void provider_input(Database & database)
+{
+    string temp_name;
+    int temp_number;
+    string temp_street;
+    string temp_city;
+    string temp_state;
+    int temp_zip;
+
+    vector <int> temp_services;
+
+    temp_name = get_string(25, "Enter name of provider: ");
+
+    temp_number = generate_provider_number(database);
+
+    temp_street = get_string(25, "Enter street address: ");
+
+    temp_city = get_string(14, "Enter city: ");
+
+    temp_state = get_string(2, "Enter state abbreviation: ");
+
+    temp_zip = get_zip(5, "Enter zip code: ");
+
+    address temp_address = {temp_street, temp_city, temp_state, temp_zip};
+
+    Provider temp_provider(temp_name, temp_number, temp_address, temp_services);
+
+    database.add_provider(temp_provider);
+
+    cout << "Provider has been assigned the number " << temp_number << endl;
+
+    return;
+}
+
+//get input for member object
+void member_input(Database & database)
+{
+    string temp_name;
+    int temp_number;
+    string temp_street;
+    string temp_city;
+    string temp_state;
+    int temp_zip;
+
+    string temp_status = "Active"; 
+
+    temp_name = get_string(25, "Enter name of member: ");
+
+    temp_number = generate_provider_number(database);
+
+    temp_street = get_string(25, "Enter street address: ");
+
+    temp_city = get_string(14, "Enter city: ");
+
+    temp_state = get_string(2, "Enter state abbreviation: ");
+
+    temp_zip = get_zip(5, "Enter zip code: ");
+
+    address temp_address = {temp_street, temp_city, temp_state, temp_zip};
+
+    Member temp_member(temp_name, temp_number, temp_address, temp_status);
+
+    database.add_member(temp_member);
+
+    cout << "Member has been assigned the number " << temp_number << endl;
+
+    return;
+}
+
+//get input for the a provided service
+void service_input(Database & database, int provider_num)
+{
+    string temp_current_time;
+    string temp_service_date;
+    int member_num;
+    int service_num;
+    string temp_comments;
+    bool result;
+    bool validated = true;
+    int choice = 0;
+
+    temp_current_time = get_string(19, "Enter current date (MM:DD:YYYY:HH:MM:SS): ");
+
+    temp_service_date = get_string(19, "Enter date service was provided (MM:DD:YYYY:HH:MM:SS): ");
+    
+    do
+    {
+        member_num = get_member();
+        result = database.verify_member(member_num);
+        if (!result)
+        {
+		    cout << "\nInvalid Number" << endl;
+            cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+            choice = get_integer("\n> ");
+            if (choice != 1)
+            {
+                validated = false;
+                break;
+            }
+        }
+
+    }while(!result);
+
+    //user chose not to try to enter a valid member number
+    if (!validated)
+    {
+        return;
+    }
+    
+    do
+    {
+        service_num = get_number("Enter Service Code Number: ", 6);
+        result = database.verify_service(service_num);
+        if (!result)
+        {
+		    cout << "\nInvalid Number" << endl;
+            cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+            choice = get_integer("\n> ");
+            if (choice != 1)
+            {
+                validated = false;
+                break;
+            }
+        }
+        else
+        {
+            cout << "Is this the correct service? (enter 1 for yes, anything else for no)" << endl;
+            choice = get_integer("\n> ");
+            if (choice != 1)
+            {
+                result = false;
+            }
+        }
+
+    }while(!result);
+
+    //user chose not to try to enter a valid service code
+    if (!validated)
+    {
+        return;
+    }
+
+    cout << "Would you like to add comments? (enter 1 for yes, anything else for no)" << endl;
+    choice = get_integer("\n> ");
+
+    //user wants to add comments
+    if (choice == 1)
+    {
+        cout << "Enter comments about the provided service: ";
+        getline(cin, temp_comments);
+    }
+
+    ProvidedService temp_services = {temp_current_time, temp_service_date, provider_num, member_num, service_num, temp_comments};
+
+    database.record_provided_service(temp_services);
+
+    cout << "Service recorded. Ask manager for the weekly report to see fee" << endl;
+    return;
+}
+
+//gets input for string with max digit limit
+string get_string(size_t max_digits, string prompt)
+{
+    string temp_string;
+
+    do
+    {
+        cout << prompt;
+        getline(cin, temp_string);
+
+        if (temp_string.length() > max_digits)
+        {
+            cout << "Entry exeeds max digits of " << max_digits << ". Please try again" << endl;
+        }
+
+    }while(temp_string.length() > max_digits);
+
+    return temp_string;
+}
+
+//generates member number making sure it is not duplicated
+int generate_member_number(Database & database)
+{
+
+    bool result = false;
+    int temp_num;
+    do
+    {
+        temp_num = 100000000 + (rand() % 999999999);
+
+        if (!database.verify_member(temp_num))
+        {
+            //found a number that isn't taken
+            result = true;
+        }
+
+    }while(!result);
+
+    return temp_num;
+}
+
+//generates provider number, making sure it is not duplicated
+int generate_provider_number(Database & database)
+{
+
+    bool result = false;
+    int temp_num;
+    do
+    {
+        temp_num = 100000000 + (rand() % 999999999);
+
+        if (!database.verify_provider(temp_num))
+        {
+            //found a number that isn't taken
+            result = true;
+        }
+
+    }while(!result);
+
+    return temp_num;
 }

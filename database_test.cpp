@@ -253,7 +253,7 @@ void DatabaseTest::update_member_test()
     // populate the stream with premade inputs
     istringstream iss_name("1\nOTTER");
     istringstream iss_number("2\n900000003");
-    istringstream iss_addr("3\n203 NE Corner Blvd\n\nColden\n\nWA\n\n53984");
+    istringstream iss_addr("3\n203 NE Corner Blvd\nColden\nWA\n53984");
     istringstream iss_stat("4\nInvalid Number");
     
 
@@ -547,7 +547,7 @@ void DatabaseTest::update_provider_test()
     // populate the stream with premade inputs
     istringstream iss_name("1\nOTTER");
     istringstream iss_number("2\n700000003");
-    istringstream iss_addr("3\n203 NE Corner Blvd\n\nColden\n\nWA\n\n53984");
+    istringstream iss_addr("3\n203 NE Corner Blvd\nColden\nWA\n53984");
     istringstream iss_service("4\n100400");
     
     // update the provider's name

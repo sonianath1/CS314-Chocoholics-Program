@@ -118,11 +118,12 @@ class Database
 		void display_prov_dir();
 		void display_recorded_ser();
 		friend class DatabaseTest;                                  // friend database testing class
-
-	private:
-		bool verify_member(int member_number);		// verify that a member exists
+                                                                    
+        bool verify_member(int member_number);		// verify that a member exists
 		bool verify_provider(int provider_number);	// verify that a provider exists
 		bool verify_service(int service_number);	// verify that a service exists
+
+	private:
 		int hash_function(int key_value, int table_size);		// hash function 
 
 		// for the destructor	

@@ -3,7 +3,9 @@
 // TESTING PROGRAM's MAIN, SHOULD BE COMPILED IN A SEPARATE PROGRAM THAN MAIN.CPP
 int main()
 
-{
+
+{    
+
      DatabaseTest test_db;
      ServiceTest test_service;
      EntityTest test_entity;
