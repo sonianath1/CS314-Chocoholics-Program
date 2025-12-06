@@ -20,4 +20,4 @@ chocanprogramtest: $(TESTOBJS)
 clean cls:
 	rm -f chocanprogram chocanprogramtest *.o *.zip *.~ \#*
 zip:
-	zip CS314-GROUP-9.zip *
+	zip -r CS314-GROUP-9.zip *
