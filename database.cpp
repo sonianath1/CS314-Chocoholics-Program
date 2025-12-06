@@ -1012,7 +1012,6 @@ bool Database::verify_member(int member_number)
 		toVerify = find(Members, member_number, index); 
 	}
 	catch (NoEntityFound invalidMember) {
-		cout << "\nInvalid Number" << endl;
 		return false;
 	}
 

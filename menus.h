@@ -135,7 +135,7 @@ Welcome to the Provider Portal!
     3. Update provider
     4. Go back)";
 
-    const string welcome = R"(Welcome to the Chocoholid Anonymous Data Processor!
+    const string welcome = R"(Welcome to the Chocoholics Anonymous Data Processor!
 
 Chocoholics Anonymous (ChocAn) is an organization dedicated to helping 
 people addicted to chocolate in all its glorious forms. This software

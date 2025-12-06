@@ -17,9 +17,12 @@ maintaining a consistent database.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Installation:
 
+Prerequisites:
+~~~~~~~~~~~~~~
+    This software can only be run on a Linux system. It must have the capacity to run g++
+
 1. Download Repository from https://github.com/sonianath1/CS314-Chocoholics-Program.git
 2. Use command "make all" to make all the executables associated with this software.
-
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Testing:

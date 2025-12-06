@@ -119,7 +119,7 @@ void provider_menu(Database & database)
             int choice = 0;
             
 		    cout << "\nInvalid Number" << endl;
-            cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+            cout << "Would you like to try again? (enter 1 for yes, any other number for no)" << endl;
             choice = get_integer("\n> ");
             if (choice != 1)
             {
@@ -162,7 +162,7 @@ void provider_menu(Database & database)
                     {
                         int choice = 0;
 		                cout << "\nInvalid Number" << endl;
-                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, any other number for no)" << endl;
                         choice = get_integer("\n> ");
                         if (choice != 1)
                         {
@@ -296,7 +296,7 @@ void op_sub_member(Database & database)
                     {
                         int choice = 0;
 		                cout << "\nInvalid Number" << endl;
-                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, any other number for no)" << endl;
                         choice = get_integer("\n> ");
                         if (choice != 1)
                         {
@@ -328,7 +328,7 @@ void op_sub_member(Database & database)
                     {
                         int choice = 0;
 		                cout << "\nInvalid Number" << endl;
-                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, any other number for no)" << endl;
                         choice = get_integer("\n> ");
                         if (choice != 1)
                         {
@@ -393,7 +393,7 @@ void op_sub_provider(Database & database)
                         int choice = 0;
                         
                         cout << "\nInvalid Number" << endl;
-                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, any other number for no)" << endl;
                         choice = get_integer("\n> ");
                         if (choice != 1)
                         {
@@ -429,7 +429,7 @@ void op_sub_provider(Database & database)
                         int choice = 0;
                         
                         cout << "\nInvalid Number" << endl;
-                        cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+                        cout << "Would you like to try again? (enter 1 for yes, any other number for no)" << endl;
                         choice = get_integer("\n> ");
                         if (choice != 1)
                         {
@@ -568,7 +568,7 @@ void service_input(Database & database, int provider_num)
         if (!result)
         {
 		    cout << "\nInvalid Number" << endl;
-            cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+            cout << "Would you like to try again? (enter 1 for yes, any other number for no)" << endl;
             choice = get_integer("\n> ");
             if (choice != 1)
             {
@@ -592,7 +592,7 @@ void service_input(Database & database, int provider_num)
         if (!result)
         {
 		    cout << "\nInvalid Number" << endl;
-            cout << "Would you like to try again? (enter 1 for yes, anything else for no)" << endl;
+            cout << "Would you like to try again? (enter 1 for yes, any other number for no)" << endl;
             choice = get_integer("\n> ");
             if (choice != 1)
             {
@@ -602,7 +602,7 @@ void service_input(Database & database, int provider_num)
         }
         else
         {
-            cout << "Is this the correct service? (enter 1 for yes, anything else for no)" << endl;
+            cout << "Is this the correct service? (enter 1 for yes, any other number for no)" << endl;
             choice = get_integer("\n> ");
             if (choice != 1)
             {
@@ -618,7 +618,7 @@ void service_input(Database & database, int provider_num)
         return;
     }
 
-    cout << "Would you like to add comments? (enter 1 for yes, anything else for no)" << endl;
+    cout << "Would you like to add comments? (enter 1 for yes, any other number for no)" << endl;
     choice = get_integer("\n> ");
 
     //user wants to add comments
