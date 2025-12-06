@@ -763,11 +763,6 @@ void Database::display_recorded_ser()
 
 
 
-
-
-
-
-
 void Database::generate_weekly_report()
 {
 	//will hold all service data from prodiver directory test fule
