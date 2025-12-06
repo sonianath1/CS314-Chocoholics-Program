@@ -846,7 +846,7 @@ void Database::generate_weekly_report()
 		eft<<"*********ChocAn EFT Report ***************"<<endl<<endl;
 	}
 
-	report<<"********** ChpcAn Weekly Report **********"<<endl;
+	report<<"********** ChocAn Weekly Report **********"<<endl;
 	cout<<"             --------------------                "<<endl<<endl;
 
 
